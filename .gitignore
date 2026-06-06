@@ -2,5 +2,5 @@ cases/*
 reports/*
 archives/*
 docs/*
-scripts/__pycache__/session.cpython-314.pyc
+scripts/__pycache__/*
 scripts/.env
