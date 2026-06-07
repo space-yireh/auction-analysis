@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2024타경61277 | 고양시 덕양구 지축로 74 5층517호 분석 리포트</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: '맑은 고딕', 'Apple SD Gothic Neo', sans-serif; background: #f0f2f5; color: #222; font-size: 14px; }
+  .container { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+  /* 헤더 */
+  .header { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: #fff; border-radius: 12px; padding: 28px 32px; margin-bottom: 20px; position: relative; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .header .sub { font-size: 13px; opacity: 0.85; margin-bottom: 14px; }
+  .header .meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; opacity: 0.9; }
+  .header .meta span { display: flex; align-items: center; gap: 5px; }
+  .badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; }
+  .badge-yellow { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+  .badge-green { background: #d4edda; color: #155724; border: 1px solid #28a745; }
+  .badge-red { background: #f8d7da; color: #721c24; border: 1px solid #dc3545; }
+  .risk-badge { position: absolute; top: 28px; right: 32px; font-size: 16px; padding: 6px 18px; border-radius: 25px; font-weight: 800; }
+  .risk-yellow { background: #ffc107; color: #333; }
+  .risk-green { background: #28a745; color: #fff; }
+  .risk-red { background: #dc3545; color: #fff; }
+
+  /* 카드 */
+  .card { background: #fff; border-radius: 10px; padding: 22px 26px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .card h2 { font-size: 15px; font-weight: 700; color: #1a237e; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e8eaf6; display: flex; align-items: center; gap: 8px; }
+  .card h2 .step { background: #1a237e; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+  .notice-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px 14px; border-radius: 4px; font-size: 12px; margin-bottom: 14px; }
+
+  /* 기본정보 그리드 */
+  .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .info-item { background: #f8f9fa; border-radius: 6px; padding: 10px 14px; }
+  .info-item .label { font-size: 11px; color: #6c757d; margin-bottom: 3px; }
+  .info-item .value { font-size: 14px; font-weight: 600; color: #222; }
+  .info-item .value.highlight { color: #c62828; font-size: 16px; }
+  .info-item .value.blue { color: #1565c0; }
+  .info-full { grid-column: 1 / -1; }
+
+  /* 권리 시간표 */
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: #e0e0e0; }
+  .tl-item { position: relative; margin-bottom: 14px; padding-left: 20px; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; }
+  .tl-dot.base { background: #c62828; box-shadow: 0 0 0 3px rgba(198,40,40,0.2); }
+  .tl-dot.normal { background: #546e7a; }
+  .tl-dot.extinct { background: #9e9e9e; }
+  .tl-date { font-size: 11px; color: #6c757d; margin-bottom: 2px; }
+  .tl-content { font-size: 13px; font-weight: 600; }
+  .tl-tag { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; font-weight: 400; }
+  .tag-base { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+  .tag-extinct { background: #f5f5f5; color: #757575; }
+  .tag-owner { background: #e3f2fd; color: #1565c0; }
+  .tag-trust { background: #f3e5f5; color: #6a1b9a; }
+
+  /* 임차인 테이블 */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #e8eaf6; color: #1a237e; font-weight: 700; padding: 9px 12px; text-align: center; border: 1px solid #c5cae9; }
+  td { padding: 9px 12px; border: 1px solid #e0e0e0; text-align: center; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .td-ok { color: #388e3c; font-weight: 700; }
+  .td-warn { color: #e65100; font-weight: 700; }
+  .td-bad { color: #c62828; font-weight: 700; }
+  .td-left { text-align: left; }
+
+  /* 리스크 체크 */
+  .risk-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .risk-item { background: #f8f9fa; border-radius: 6px; padding: 12px 16px; border-left: 4px solid #e0e0e0; }
+  .risk-item.ok { border-left-color: #4caf50; }
+  .risk-item.warn { border-left-color: #ff9800; }
+  .risk-item.bad { border-left-color: #f44336; }
+  .risk-item .ri-title { font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+  .risk-item .ri-body { font-size: 12px; color: #555; }
+
+  /* 입지 분석 */
+  .infra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .infra-item { background: #f8f9fa; border-radius: 6px; padding: 10px 12px; text-align: center; }
+  .infra-item .icon { font-size: 20px; margin-bottom: 4px; }
+  .infra-item .name { font-size: 11px; color: #555; margin-bottom: 2px; }
+  .infra-item .status { font-size: 12px; font-weight: 700; }
+  .infra-ok { color: #388e3c; }
+  .infra-warn { color: #e65100; }
+  .score-bar-wrap { background: #e0e0e0; border-radius: 10px; height: 10px; margin: 6px 0; }
+  .score-bar { height: 10px; border-radius: 10px; background: linear-gradient(90deg, #1a237e, #42a5f5); }
+  .station-grade { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sg-item { background: #e8eaf6; border-radius: 8px; padding: 8px 14px; flex: 1; min-width: 120px; text-align: center; }
+  .sg-item .sg-name { font-size: 11px; color: #555; margin-bottom: 2px; }
+  .sg-item .sg-val { font-size: 14px; font-weight: 700; color: #1a237e; }
+
+  /* 배당 시뮬레이션 */
+  .scenario-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .sc-tab { flex: 1; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; border: 2px solid #e0e0e0; transition: all .2s; }
+  .sc-tab.active { border-color: #1a237e; background: #e8eaf6; }
+  .sc-tab .sc-label { font-size: 11px; color: #777; }
+  .sc-tab .sc-price { font-size: 15px; font-weight: 700; color: #1a237e; }
+  .dist-table th { background: #37474f; color: #fff; }
+  .dist-total { background: #fafafa; font-weight: 700; }
+
+  /* 종합 판단 */
+  .verdict-box { background: #fff8e1; border: 2px solid #ffc107; border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; }
+  .verdict-box h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .verdict-box p { font-size: 13px; line-height: 1.7; }
+  .bid-range { display: flex; gap: 12px; flex-wrap: wrap; }
+  .bid-item { flex: 1; min-width: 140px; background: #f8f9fa; border-radius: 8px; padding: 12px 16px; text-align: center; }
+  .bid-item .bi-label { font-size: 11px; color: #777; margin-bottom: 4px; }
+  .bid-item .bi-val { font-size: 18px; font-weight: 800; color: #c62828; }
+  .check-list { list-style: none; }
+  .check-list li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; display: flex; gap: 8px; align-items: flex-start; }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list .ci { font-size: 15px; flex-shrink: 0; }
+
+  /* 수익 시뮬레이터 */
+  .slider-group { margin-bottom: 16px; }
+  .slider-label { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .slider-label span { font-size: 13px; font-weight: 600; color: #333; }
+  .slider-label .val { color: #1a237e; font-size: 15px; font-weight: 800; }
+  input[type=range] { width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px; background: #c5cae9; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #1a237e; border-radius: 50%; cursor: pointer; }
+  .result-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+  .result-card { background: #f8f9fa; border-radius: 8px; padding: 12px 14px; text-align: center; }
+  .result-card .rc-label { font-size: 11px; color: #777; margin-bottom: 4px; }
+  .result-card .rc-val { font-size: 16px; font-weight: 800; }
+  .rc-good { color: #388e3c; }
+  .rc-warn { color: #e65100; }
+  .rc-bad { color: #c62828; }
+  .exit-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+  .exit-card { background: #f8f9fa; border-radius: 8px; padding: 14px; border: 2px solid transparent; }
+  .exit-card.best { border-color: #1a237e; }
+  .exit-card .ec-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .exit-card .ec-body { font-size: 11px; color: #555; line-height: 1.6; }
+  .bep-box { margin-top: 14px; background: #e8eaf6; border-radius: 8px; padding: 12px 16px; }
+  .bep-box .bep-label { font-size: 12px; color: #555; margin-bottom: 4px; }
+  .bep-box .bep-val { font-size: 16px; font-weight: 700; color: #1a237e; }
+  #bep-warning { display: none; color: #c62828; font-size: 12px; margin-top: 4px; font-weight: 600; }
+
+  /* 버튼 */
+  .site-btn-wrap { text-align: center; margin: 24px 0 8px; }
+  .site-btn { display: inline-block; background: #1a237e; color: #fff; text-decoration: none; padding: 14px 40px; border-radius: 30px; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; transition: background .2s; }
+  .site-btn:hover { background: #283593; }
+
+  /* 상업용 안내 */
+  .commercial-notice { background: #e3f2fd; border-left: 4px solid #1565c0; padding: 10px 14px; border-radius: 4px; font-size: 12px; margin-bottom: 14px; }
+
+  @media print {
+    body { background: #fff; }
+    .container { padding: 0; }
+    .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+    .site-btn-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 헤더 -->
+<div class="header">
+  <span class="risk-badge risk-yellow">🟡 주의</span>
+  <div class="sub">의정부지방법원 고양지원 | 경매2계 | 부동산임의경매</div>
+  <h1>2024타경61277 | 고양시 덕양구 지축로 74, 5층 517호</h1>
+  <div class="meta">
+    <span>📅 매각기일: 2026.06.24</span>
+    <span>🏢 근린생활시설 (집합건물)</span>
+    <span>📐 전용 40.6㎡</span>
+    <span>💰 최저가: 6,891만원 (감정가 24%)</span>
+  </div>
+</div>
+
+<!-- 상업용 안내 -->
+<div class="card">
+  <div class="commercial-notice">
+    ⚠️ <strong>상업용 물건 안내:</strong> 이 물건은 근린생활시설(상가) 집합건물입니다. 현재 분석 스킬(v1.6)은 주거용 전용이며, 상업용 스킬은 개발 예정입니다. 상가건물임대차보호법(대항력 요건: 사업자등록, 환산보증금 기준 소액임차인) 적용에 유의하시기 바랍니다.
+  </div>
+</div>
+
+<!-- STEP 0A: 공통 투자 필터 -->
+<div class="card">
+  <h2><span class="step">STEP 0A</span> 공통 투자 필터</h2>
+  <div class="info-grid">
+    <div class="info-item">
+      <div class="label">안전 마진 필터</div>
+      <div class="value" style="color:#388e3c">✅ 통과 (24% — 49% 이하)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">출구 전략 필터</div>
+      <div class="value" style="color:#388e3c">✅ 통과</div>
+    </div>
+    <div class="info-item info-full">
+      <div class="label">출구 전략 3문항</div>
+      <div class="value" style="font-size:13px; font-weight:400; line-height:1.7">
+        ① 누구에게? → 상가 임대 투자자 / 직접 사용 수요자 (의원·치료시설 등)<br>
+        ② 법적 논리? → 현 임차인 대항력 없음 → 명도소송 또는 협의 명도<br>
+        ③ 얼마에? → 감정가 2.87억 대비 최저가 6,891만원 → 상가 시세 1~1.5억 추정
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 0B: 물건 유형 -->
+<div class="card">
+  <h2><span class="step">STEP 0B</span> 물건 유형 분류</h2>
+  <div class="notice-box">
+    TYPE-F: 기타·복합 (집합건물 구분소유 — 상업용 근린생활시설)<br>
+    특이사항: 바른쎌한방병원이 건물 다수 층 사용, 이건(517호)은 그중 일부 호실
+  </div>
+  <div class="risk-grid">
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 공유자 우선매수권 없음</div>
+      <div class="ri-body">단독 구분소유권 — 공유지분 아님</div>
+    </div>
+    <div class="risk-item warn">
+      <div class="ri-title">⚠️ 상업용 물건 수요 제한</div>
+      <div class="ri-body">반복 유찰 5회: 상가 수요 부족이 주요 원인으로 추정</div>
+    </div>
+    <div class="risk-item warn">
+      <div class="ri-title">⚠️ 전 낙찰자 미납 이력</div>
+      <div class="ri-body">2026.04.15 낙찰(1.3억) → 2026.05.29 대금 미납 → 재매각</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 법정지상권 해당 없음</div>
+      <div class="ri-body">집합건물 구분소유, 토지·건물 일체 매각</div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 1: 물건 기본정보 -->
+<div class="card">
+  <h2><span class="step">STEP 1</span> 물건 기본정보</h2>
+  <div class="info-grid">
+    <div class="info-item">
+      <div class="label">사건번호</div>
+      <div class="value">2024타경61277</div>
+    </div>
+    <div class="info-item">
+      <div class="label">법원/담당계</div>
+      <div class="value">의정부지방법원 고양지원 경매2계</div>
+    </div>
+    <div class="info-item">
+      <div class="label">채무자/소유자</div>
+      <div class="value">조현우 (개인, 동일인)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">채권자</div>
+      <div class="value">농협은행 (승계인 있음)</div>
+    </div>
+    <div class="info-item info-full">
+      <div class="label">소재지</div>
+      <div class="value">경기도 고양시 덕양구 지축로 74, 5층 517호 (지축동, 벨라미)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">물건 유형</div>
+      <div class="value">집합건물 (구분소유)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">용도</div>
+      <div class="value">근린생활시설 (상업용)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">구조 및 면적</div>
+      <div class="value">철근콘크리트 40.6㎡ (전유)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">감정평가액</div>
+      <div class="value blue">287,000,000원</div>
+    </div>
+    <div class="info-item">
+      <div class="label">현 최저매각가격</div>
+      <div class="value highlight">68,910,000원 (감정가 24%)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">유찰 현황</div>
+      <div class="value">3회 유찰 + 2회 변경 + 1회 낙찰후미납</div>
+    </div>
+    <div class="info-item">
+      <div class="label">매각기일</div>
+      <div class="value">2026.06.24 (재매각 1회차)</div>
+    </div>
+    <div class="info-item">
+      <div class="label">청구금액</div>
+      <div class="value">155,180,083원</div>
+    </div>
+    <div class="info-item">
+      <div class="label">배당요구종기</div>
+      <div class="value">2024.05.07</div>
+    </div>
+    <div class="info-item info-full">
+      <div class="label">특이사항</div>
+      <div class="value" style="font-size:13px; font-weight:400">대지권 미등기(최저매각가격에 포함) / 매수보증금 최저가의 20% / 재매각 예정 회차: 6.24→7.29→9.02→10.07</div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: 권리 시간표 -->
+<div class="card">
+  <h2><span class="step">STEP 2</span> 말소기준권리 및 권리 시간표</h2>
+  <div class="notice-box">
+    <strong>말소기준권리: 2022.09.02 농협은행 근저당권 (채권최고액 180,000,000원)</strong><br>
+    말소기준권리 이후 모든 권리 소멸. 낙찰자 인수 권리 없음.
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot normal"></div>
+      <div class="tl-date">2022.08.02</div>
+      <div class="tl-content">소유권보존 — 코리아신탁(주) <span class="tl-tag tag-trust">신탁</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot owner"></div>
+      <div class="tl-date">2022.09.02</div>
+      <div class="tl-content">소유권이전 — 조현우 (신탁재산처분, 거래가액 241,118,200원) <span class="tl-tag tag-owner">신탁해지</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot base"></div>
+      <div class="tl-date">2022.09.02</div>
+      <div class="tl-content" style="color:#c62828">【말소기준권리】 근저당권 — 농협은행 (채권최고액 1.8억, 채권최고액의 86%가 청구액) <span class="tl-tag tag-base">기준권리</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot extinct"></div>
+      <div class="tl-date">2024.01.18</div>
+      <div class="tl-content" style="color:#757575">임의경매개시결정 — 채권자: 농협은행 <span class="tl-tag tag-extinct">소멸</span></div>
+    </div>
+  </div>
+
+  <div style="margin-top: 16px; background: #f8f9fa; border-radius: 8px; padding: 12px 16px;">
+    <div style="font-size: 12px; color: #555; margin-bottom: 6px;">신탁 이력 검토</div>
+    <div style="font-size: 13px;">
+      코리아신탁(주) 명의 보존 → 2022.09.02 신탁재산처분에 의해 조현우에게 이전 + 신탁등기 말소.<br>
+      <strong>판정: 신탁 잔여권리 없음 확인</strong> (등기부상 신탁등기 말소 완료)
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: 임차인 대항력 판단 -->
+<div class="card">
+  <h2><span class="step">STEP 3</span> 임차인 현황 및 대항력 판단</h2>
+  <div class="notice-box">
+    ⚠️ 상가건물임대차보호법 적용: 대항력 요건은 <strong>사업자등록 신청일의 익일</strong>. 사업자등록일이 서류에 미기재되어 별도 확인 필요.
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>점유자</th>
+        <th>점유 부분</th>
+        <th>임대차기간</th>
+        <th>보증금</th>
+        <th>월차임</th>
+        <th>사업자등록일</th>
+        <th>확정일자</th>
+        <th>배당요구</th>
+        <th>대항력</th>
+        <th>판정</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>이재호<br>(바른쎌한방병원)</td>
+        <td>517호 40㎡<br>점포</td>
+        <td>2023.06.30~<br>2028.06.30</td>
+        <td>7,087,210원</td>
+        <td>806,710원</td>
+        <td class="td-warn">미기재<br>(확인 필요)</td>
+        <td class="td-bad">없음</td>
+        <td class="td-bad">없음</td>
+        <td class="td-ok">없음 추정</td>
+        <td class="td-ok">소멸 추정</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 14px; background: #e8f5e9; border-radius: 8px; padding: 12px 16px; font-size: 13px;">
+    <strong>대항력 판단 근거:</strong><br>
+    점유 시작 2023.06.30 &gt; 말소기준권리 2022.09.02 → 사업자등록일도 이후일 가능성 높음 → <strong>대항력 없음(소멸) 추정</strong><br>
+    단, 사업자등록을 말소기준권리일(2022.09.02) 이전에 했다면 대항력 있을 수 있으나 임대차 계약 자체가 2023년 시작이므로 현실적으로 불가능.
+  </div>
+
+  <div style="margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 12px 16px; font-size: 12px;">
+    <strong>환산보증금 계산 (상가건물임대차보호법):</strong><br>
+    보증금 7,087,210원 + 월세 806,710원 × 100 = <strong>환산보증금 87,758,210원</strong><br>
+    과밀억제권역(고양시) 상가소액임차인 기준: 환산보증금 6,500만원 이하 → <strong>기준 초과 → 소액 최우선변제 해당 없음</strong>
+  </div>
+
+  <div style="margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 12px 16px; font-size: 12px;">
+    <strong>⚠️ 위장임차인 체크:</strong><br>
+    □ 조현우(소유자)와 이재호(임차인) 성씨 상이 — 친족 관계 불명<br>
+    □ 전입일/사업자등록일 미기재 → 의심 징후 1개 (사업자등록 현황서 미등재)<br>
+    □ 확정일자 없음, 배당요구 없음 → 의심 징후 2개<br>
+    <strong>→ 의심 징후 2개 이상: 위장임차인 가능성 있음 (현장 및 사업자등록 직접 확인 필요)</strong>
+  </div>
+</div>
+
+<!-- STEP 4: 특수 리스크 -->
+<div class="card">
+  <h2><span class="step">STEP 4</span> 특수 리스크 체크</h2>
+  <div class="risk-grid">
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 법정지상권</div>
+      <div class="ri-body">해당없음 — 집합건물 구분소유, 토지·건물 일체 매각</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 유치권</div>
+      <div class="ri-body">서류상 신고 없음 (현황조사서 미언급) — 현장 확인 권고</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 공유지분 경매</div>
+      <div class="ri-body">해당없음 — 단독 구분소유권</div>
+    </div>
+    <div class="risk-item warn">
+      <div class="ri-title">⚠️ 체납 공과금</div>
+      <div class="ri-body">교부권자: 국민건강보험공단, 국세청 등 다수 기관<br>법정기일 선순위 조세채권 규모 불명 → 별도 확인 필요</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 신탁 이력</div>
+      <div class="ri-body">코리아신탁 → 2022.09.02 말소 완료. 우선수익자 잔존 없음 확인</div>
+    </div>
+    <div class="risk-item warn">
+      <div class="ri-title">⚠️ 대지권 미등기</div>
+      <div class="ri-body">대지권(지축동 1005-5, 1355.2㎡)이 등기 미완료이나 최저매각가격에 포함됨. 대지권 이전비용 추가 발생 가능</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="ri-title">✅ 공부 불일치</div>
+      <div class="ri-body">서류상 이상 없음 (건축물대장 미수령으로 서류 미확인)</div>
+    </div>
+    <div class="risk-item warn">
+      <div class="ri-title">⚠️ 집합건물 특수사항</div>
+      <div class="ri-body">관리비 체납 규모 불명 (전 소유자 체납 공용부분 승계). 바른쎌한방병원 전체 임차 건물 내 호실로 공용시설 이용 현황 확인 필요</div>
+    </div>
+  </div>
+
+  <!-- 반복 유찰 원인 분석 -->
+  <div style="margin-top: 14px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 14px 16px;">
+    <div style="font-weight: 700; margin-bottom: 8px; color: #e65100;">⚠️ 반복 유찰 원인 분석 (실질 5회)</div>
+    <div style="font-size: 13px; line-height: 1.8;">
+      ☑ 상업용 물건 — 주거 대비 수요층 한정 (병원·의료시설 용도 선호자)<br>
+      ☑ 한방병원이 건물 전체를 사용 중인 구조 — 517호 단독 활용의 경우 독립적 출입·동선 제한 가능성<br>
+      ☑ 전 낙찰자(1.3억) 대금 미납 — 내부 문제 발견 또는 자금 조달 실패 추정<br>
+      ☑ 건물 내 동일 법인의 다수 호실 경매 가능성 미확인<br>
+      → <strong>구조적 원인 존재: 낙찰 후에도 동일 문제 지속 가능성 있음</strong>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4-A: 입지 분석 -->
+<div class="card">
+  <h2><span class="step">STEP 4-A</span> 입지 분석</h2>
+
+  <div class="infra-grid">
+    <div class="infra-item">
+      <div class="icon">🌿</div>
+      <div class="name">자연환경(공원)</div>
+      <div class="status infra-warn">△ 확인 필요</div>
+    </div>
+    <div class="infra-item">
+      <div class="icon">🛒</div>
+      <div class="name">대형마트</div>
+      <div class="status infra-warn">△ 인근 확인 필요</div>
+    </div>
+    <div class="infra-item">
+      <div class="icon">🏫</div>
+      <div class="name">초등학교</div>
+      <div class="status infra-ok">✓ 지축초 인근</div>
+    </div>
+    <div class="infra-item">
+      <div class="icon">🏥</div>
+      <div class="name">의료시설</div>
+      <div class="status infra-ok">✓ 건물 내 한방병원</div>
+    </div>
+    <div class="infra-item">
+      <div class="icon">🚌</div>
+      <div class="name">광역버스</div>
+      <div class="status infra-ok">✓ 지축역 인근</div>
+    </div>
+    <div class="infra-item">
+      <div class="icon">🏪</div>
+      <div class="name">편의점·근린상가</div>
+      <div class="status infra-ok">✓ 신도시 내 편의시설</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <div style="font-size: 12px; color: #777; margin-bottom: 4px;">생활 인프라 점수</div>
+    <div class="score-bar-wrap"><div class="score-bar" style="width:55%"></div></div>
+    <div style="font-size: 12px; color: #555;">약 5~6점/10점 (보통 수준) — 일부 확인 불가 항목 있음</div>
+  </div>
+
+  <div class="station-grade">
+    <div class="sg-item">
+      <div class="sg-name">3호선 지축역</div>
+      <div class="sg-val">직접 역세권</div>
+      <div style="font-size:11px; color:#555; margin-top:2px">약 300~500m 추정 (도보 5~7분)</div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-name">GTX-A 창릉역</div>
+      <div class="sg-val">영향권</div>
+      <div style="font-size:11px; color:#555; margin-top:2px">개통 후 고양 교통망 개선 기대</div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-name">고양지축 공공주택지구</div>
+      <div class="sg-val">신도시 개발 수혜</div>
+      <div style="font-size:11px; color:#555; margin-top:2px">지축지구 상업시설 — 개발 진행 중</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14px; background: #f3e5f5; border-left: 4px solid #8e24aa; border-radius: 4px; padding: 10px 14px; font-size: 12px;">
+    <strong>교통 호재 진위 검증:</strong><br>
+    • 3호선 지축역: 이미 개통 (확정 사항)<br>
+    • GTX-A: 수서~운정 구간 일부 개통, 창릉역 포함 전 구간 공정 진행 중 (공식 개통 일정 별도 확인 필요)<br>
+    • 고양은평선: 기본계획 승인 단계, 2026년 착공·2031년 개통 목표 (공정률 낮아 지연 가능성 있음)
+  </div>
+
+  <div style="margin-top: 12px; padding: 10px 14px; background: #e8f5e9; border-radius: 6px; font-size: 13px;">
+    <strong>입지 종합 판정: 🟡 보통</strong><br>
+    3호선 직접 역세권으로 교통은 양호하나, 상가 건물 5층 호실로 실제 유동 인구 기반 상권은 제한적. 신도시 지구 내 상업시설 수요가 전제 조건.
+  </div>
+</div>
+
+<!-- STEP 5: 배당 시뮬레이션 -->
+<div class="card">
+  <h2><span class="step">STEP 5</span> 배당 시뮬레이션</h2>
+
+  <div class="notice-box">
+    반복 유찰 물건(3회 이상): A=현 최저가, B=현 최저가+20%, C=청구채권액<br>
+    C시나리오: 청구채권액 1.55억 &gt; 최저가 6,891만원 → C시나리오 유효
+  </div>
+
+  <div class="scenario-tabs">
+    <div class="sc-tab active">
+      <div class="sc-label">A 시나리오</div>
+      <div class="sc-price">6,891만원</div>
+    </div>
+    <div class="sc-tab">
+      <div class="sc-label">B 시나리오 (+20%)</div>
+      <div class="sc-price">8,269만원</div>
+    </div>
+    <div class="sc-tab">
+      <div class="sc-label">C 시나리오 (청구채권)</div>
+      <div class="sc-price">1억5,518만원</div>
+    </div>
+  </div>
+
+  <table class="dist-table">
+    <thead>
+      <tr>
+        <th>순위</th>
+        <th>권리자</th>
+        <th>청구금액</th>
+        <th>A배당 (6,891만)</th>
+        <th>B배당 (8,269만)</th>
+        <th>C배당 (1.55억)</th>
+        <th>비고</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>집행비용</td>
+        <td>추정</td>
+        <td>약 300만원</td>
+        <td>약 350만원</td>
+        <td>약 500만원</td>
+        <td>잔여 6,591만 / 7,919만 / 1.50억</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>선순위 조세채권</td>
+        <td>미확인</td>
+        <td>?</td>
+        <td>?</td>
+        <td>?</td>
+        <td>법정기일 확인 필수</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>소액임차인 최우선변제</td>
+        <td>-</td>
+        <td colspan="3" style="text-align:center">해당없음 (상가·환산보증금 초과)</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>당해세</td>
+        <td>미확인</td>
+        <td>?</td>
+        <td>?</td>
+        <td>?</td>
+        <td>재산세 등 교부청구 존재</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>이재호 (임차인)<br>우선변제권</td>
+        <td>7,087,210원</td>
+        <td colspan="3" style="text-align:center">해당없음 (확정일자 없음, 사업자등록일 미확인)</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>농협은행 (근저당)</td>
+        <td>155,180,083원</td>
+        <td class="td-warn">약 6,200만원<br>(청구액의 40%)</td>
+        <td class="td-warn">약 7,500만원<br>(청구액의 48%)</td>
+        <td class="td-ok">약 1.43억원<br>(청구액의 92%)</td>
+        <td>채권최고액 1.8억 / 청구액 1.55억 (청구액/최고액 86%)</td>
+      </tr>
+      <tr class="dist-total">
+        <td colspan="2">신청채권자 미배당액</td>
+        <td>1.55억</td>
+        <td class="td-bad">약 9,300만원</td>
+        <td class="td-bad">약 8,000만원</td>
+        <td class="td-warn">약 1,200만원</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 12px; background: #ffebee; border-radius: 6px; padding: 10px 14px; font-size: 12px;">
+    ⚠️ 핵심: A/B 시나리오에서 농협은행 대폭 미달. C시나리오(청구채권액 낙찰)에서야 근저당권자 손익분기 근접. 전 낙찰자 1.3억 낙찰이 이에 해당하나 미납 이유 불명.
+  </div>
+</div>
+
+<!-- STEP 6: 종합 판단 -->
+<div class="card">
+  <h2><span class="step">STEP 6</span> 종합 판단</h2>
+
+  <div class="verdict-box">
+    <h3>🟡 리스크 등급: 주의</h3>
+    <p>
+      말소기준권리(2022.09.02 농협 근저당)가 명확하고 인수 권리는 없으나, 상업용 집합건물로 수요층이 제한적입니다.
+      임차인(이재호, 바른쎌한방병원) 대항력은 없는 것으로 추정되나 사업자등록일 별도 확인이 필요합니다.
+      체납 공과금 및 관리비 규모가 불명확하며, 반복 유찰 구조적 원인(상가 5층, 병원 전체 임차 건물 내 부속 호실)이 존재합니다.
+      전 낙찰자 미납 이력은 투자 판단에 신중을 기할 것을 시사합니다.
+    </p>
+  </div>
+
+  <div style="margin-bottom: 14px;">
+    <div style="font-weight: 700; margin-bottom: 10px;">적정 입찰가 범위</div>
+    <div class="bid-range">
+      <div class="bid-item">
+        <div class="bi-label">보수적 (최저가)</div>
+        <div class="bi-val">6,891만원</div>
+      </div>
+      <div class="bid-item">
+        <div class="bi-label">적정 입찰가</div>
+        <div class="bi-val">7,500~9,000만원</div>
+      </div>
+      <div class="bid-item">
+        <div class="bi-label">손익분기 한계</div>
+        <div class="bi-val">약 1억원</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-weight: 700; margin-bottom: 10px;">입찰 전 필수 확인사항</div>
+    <ul class="check-list">
+      <li><span class="ci">①</span> <strong>임차인 이재호 사업자등록일 확인</strong> — 2022.09.02 이전이면 대항력 발생 가능 (관할 세무서 또는 임차인 직접 확인)</li>
+      <li><span class="ci">②</span> <strong>체납 공과금 규모 확인</strong> — 교부권자(국세청, 건강보험공단, 고양시) 체납액 법원 경매기록에서 확인</li>
+      <li><span class="ci">③</span> <strong>관리비 체납 확인</strong> — 건물 관리사무소 직접 문의 (공용부분 체납액 낙찰자 승계)</li>
+      <li><span class="ci">④</span> <strong>건물 내 타 호실 경매 현황 확인</strong> — 바른쎌한방병원 점유 다수 층의 경매 진행 여부 (동일 채무자 여부 확인)</li>
+      <li><span class="ci">⑤</span> <strong>전 낙찰자(1.3억) 미납 사유 파악</strong> — 법원 기록 열람 또는 부동산 중개사 통해 현황 파악</li>
+    </ul>
+  </div>
+</div>
+
+<!-- STEP 7: 수익 시뮬레이터 -->
+<div class="card">
+  <h2><span class="step">STEP 7</span> 수익 계산 & 출구 전략 시뮬레이터</h2>
+
+  <div class="notice-box">
+    현 임차인(이재호): 보증금 7,087,210원 / 월차임 806,710원 / 계약 만료 2028.06.30 기준
+  </div>
+
+  <!-- 슬라이더 -->
+  <div class="slider-group">
+    <div class="slider-label">
+      <span>낙찰가</span>
+      <span class="val" id="val-bid">7,000만원</span>
+    </div>
+    <input type="range" id="slider-bid" min="6891" max="15000" value="7000" step="100">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-top:2px">
+      <span>6,891만(최저)</span><span>1.5억</span>
+    </div>
+  </div>
+
+  <div class="slider-group">
+    <div class="slider-label">
+      <span>월 차임 (현 임차인 기준)</span>
+      <span class="val" id="val-rent">807,000원</span>
+    </div>
+    <input type="range" id="slider-rent" min="500" max="2000" value="807" step="50">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-top:2px">
+      <span>50만원</span><span>200만원</span>
+    </div>
+  </div>
+
+  <div class="result-cards">
+    <div class="result-card">
+      <div class="rc-label">실투자금 (취득세 4% 포함)</div>
+      <div class="rc-val" id="r-invest">약 7,340만원</div>
+    </div>
+    <div class="result-card">
+      <div class="rc-label">연 임대수익</div>
+      <div class="rc-val rc-good" id="r-annual">약 968만원</div>
+    </div>
+    <div class="result-card">
+      <div class="rc-label">연 수익률</div>
+      <div class="rc-val rc-good" id="r-rate">13.2%</div>
+    </div>
+  </div>
+
+  <!-- 출구 전략 카드 -->
+  <div style="font-weight:700; margin: 16px 0 10px; font-size:13px;">출구 전략 시나리오</div>
+  <div class="exit-cards">
+    <div class="exit-card">
+      <div class="ec-title">📋 시나리오 A — 임대 운영</div>
+      <div class="ec-body">
+        현 임차인 유지 (계약 2028.06까지)<br>
+        연 수익률 <strong id="exit-a-rate">13.2%</strong> 달성<br>
+        장점: 즉시 현금흐름 확보<br>
+        단점: 임차인 협조 여부·사업 지속성 불확실
+      </div>
+    </div>
+    <div class="exit-card best">
+      <div class="ec-title">⭐ 시나리오 B — 명도 후 재임대 <strong style="color:#1a237e">(추천)</strong></div>
+      <div class="ec-body">
+        대항력 없는 임차인 명도 후<br>
+        신규 임차인 유치 (월 100~150만 목표)<br>
+        명도비 약 100~200만원 + 3개월 공실<br>
+        리모델링 후 시세 임대 → 수익률 개선
+      </div>
+    </div>
+    <div class="exit-card">
+      <div class="ec-title">🏷️ 시나리오 C — 단기 매각</div>
+      <div class="ec-body">
+        명도 완료 후 현물 매각<br>
+        목표 매각가: 1.1~1.5억 (감정가 40~52%)<br>
+        예상 차익: 3,000~7,000만원<br>
+        조건: 시장 상황·병원 수요 회복 필요
+      </div>
+    </div>
+  </div>
+
+  <!-- 손익분기 -->
+  <div class="bep-box">
+    <div class="bep-label">손익분기 낙찰가 (목표 수익률 10% 기준)</div>
+    <div class="bep-val" id="bep-val">월 807,000원 임대 시 → 약 7,870만원</div>
+    <div id="bep-warning">⚠️ 현재 낙찰가가 손익분기선을 초과했습니다. 수익성을 재검토하세요.</div>
+  </div>
+</div>
+
+<!-- 사이트 보기 버튼 -->
+<div class="site-btn-wrap">
+  <a class="site-btn" href="https://www.tankauction.com/ca/caView.php?tid=2264004&chkNo=48&TotNo=100" target="_blank">🔗 사이트 보기</a>
+</div>
+
+<div style="text-align:center; color:#aaa; font-size:11px; margin-bottom:20px;">
+  분석 생성일: 2026.06.07 | SKILL v1.6 | ※ 본 분석은 참고용이며 투자 결정은 반드시 전문가 상담 후 판단하시기 바랍니다.
+</div>
+
+</div><!-- /container -->
+
+<script>
+function fmt(n) {
+  if (n >= 10000) return (n/10000).toFixed(0) + '억' + (n%10000 > 0 ? ' ' + (n%10000).toLocaleString() + '만' : '');
+  return n.toLocaleString() + '만원';
+}
+function calc() {
+  var bid = parseInt(document.getElementById('slider-bid').value);
+  var rent = parseInt(document.getElementById('slider-rent').value);
+
+  document.getElementById('val-bid').textContent = bid.toLocaleString() + '만원';
+  document.getElementById('val-rent').textContent = (rent * 1000).toLocaleString() + '원';
+
+  var invest = Math.round(bid * 1.04) + 100; // 취득세 4% + 부대비 100만
+  var annual = rent * 12;
+  var rate = (annual / invest * 100).toFixed(1);
+
+  document.getElementById('r-invest').textContent = '약 ' + invest.toLocaleString() + '만원';
+  document.getElementById('r-annual').textContent = '약 ' + annual.toLocaleString() + '만원';
+  var rEl = document.getElementById('r-rate');
+  rEl.textContent = rate + '%';
+  rEl.className = 'rc-val ' + (rate >= 10 ? 'rc-good' : rate >= 6 ? 'rc-warn' : 'rc-bad');
+
+  // 출구A
+  document.getElementById('exit-a-rate').textContent = rate + '%';
+
+  // BEP (목표 10%)
+  var bep = Math.round(rent * 12 / 0.10 - 100);
+  document.getElementById('bep-val').textContent = '월 ' + (rent * 1000).toLocaleString() + '원 임대 시 → 약 ' + bep.toLocaleString() + '만원';
+
+  var warning = document.getElementById('bep-warning');
+  if (bid > bep) {
+    warning.style.display = 'block';
+  } else {
+    warning.style.display = 'none';
+  }
+}
+
+document.getElementById('slider-bid').addEventListener('input', calc);
+document.getElementById('slider-rent').addEventListener('input', calc);
+calc();
+</script>
+</body>
+</html>

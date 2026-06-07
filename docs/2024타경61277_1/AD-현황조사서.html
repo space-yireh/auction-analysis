@@ -1,0 +1,241 @@
+
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="Generator" content="origin">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=1000, maximum-scale=1.0">
+			<title>탱크옥션</title>
+	<meta name="Description" content="법원경매,부동산경매">
+		<link rel="stylesheet" type="text/css" href="/css/font.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tank.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/style.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/button.css?ver=20260524">
+			<link rel="stylesheet" type="text/css" href="/css/viewMob.css?ver=20260524">
+		
+	<link rel="stylesheet" type="text/css" href="/css/input.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tab.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tooltip.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/swiper-5.2.0/css/swiper.css">
+	<link href='/img/icon/icon192x192.png' rel='icon' type='image/png' />
+	<link href='/img/icon/icon192x192.png' rel='shortcut icon' type='image/png' />
+	<link href='/img/icon/icon128x128.png' rel='apple-touch-icon'  type='image/png'/>
+
+	<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.history.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script src="/js/swiper-5.2.0/js/swiper.js"></script>
+	<!-- 테스트후 삭제-->
+	<!--<script type="text/javascript" src="/js/crypto-js.min.js"></script>-->
+	<!-- 테스트후 삭제-->
+	<script type="text/javascript" src="/js/jquery.ui.datepicker-ko.js"></script>
+	<script type="text/javascript" src="/js/jquery.number.min.js"></script>
+	<script type="text/javascript" src="/js/Json.js?ver=20260524"></script>
+	<script type="text/javascript" src="/js/Func.js?ver=20260524"></script>
+	<script type="text/javascript" src="/js/login.js?ver=20260524"></script>
+<!--	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>-->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+	<!--// 프린트 -->
+<!--	<script type="text/javascript" src="/js/printThis.js"></script>-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js"></script>
+	<script type="text/javascript">
+		function supports_local_storage(){return (typeof window.localStorage != 'undefined');}
+		var lsg_chk=supports_local_storage();
+		var TK={'k2':'0','mob':''};
+		var TK_FILE={'CA':'/FILE/CA/','PA':'/FILEPA/PA/','INC':'/FILEINC/'};	
+		var TK_INT_GY={};
+		var TK_INT_GO={};
+		var TK_INT_DEL={'did':''};
+		
+	</script>
+	</head>
+<style>
+	html>/**/body{overflow-y:auto !important}
+</style>
+	<body style="padding:0;overflow-x:hidden">
+<div id="pop_wrap">
+
+<link rel='stylesheet' type='text/css' href='/css/court_solar.css?ver=20260524'><style>
+	html>/**/body{overflow-x:auto !important}
+	.Ltbl_dt, .Ltbl_list{width:100%;max-width:920px !important}
+</style>
+<div class='center bold' style='background:lavender;padding:6px 0 5px'>자료등록/수집일 2025-02-27</div><div class='print_view center'></div><div id='fileV'><div id='filePopView'>
+		<div style='padding:10px 0;width:90%;max-width:920px;margin:0 auto'>
+			<div style='width:100%;margin-top:3px'>
+				<div class='fright' style='display:flex;align-items:center;justify-content:center;'>
+					
+		<span id='selfNumViewBtn' style='display:flex;align-items:center;justify-content:center;margin-right:10px;background:#ddd;border-radius:25px;padding:6px 10px;opacity: 0;'>
+			<div class='toggleSwitchBox' style='margin-right:5px'>
+				<label class='toggleSwitch'>
+					<input id='setting_checkbox' type='checkbox' class='settings'>
+					<p>
+						<span style='padding:4px 0 0 6px'>ON</span>
+						<span style='padding:4px 2px 0 2px'>OFF</span>
+					</p>
+				</label>
+			</div>
+			<div class='modalTitle'>본건만 보기</div>
+		</span>
+		
+					<span onclick='prtGo();' class='button btn_small btn_white radius_30' id='prt_btn' style='padding:6px 15px;font-size:13px'>인쇄</span>
+				</div>
+			</div>
+			<div id='fileV_con' class='clear'>
+			<div class='table_title'><h3>기본정보</h3></div>
+			<div class='tbl_txt'><h4>사건번호 : </h4> 2024타경61277 임의경매 [전자]</div>
+			<div class='tbl_txt'><h4>조사일시 : </h4> 
+			2024년02월23일11시00분 
+			</div>
+		
+				<div class='tbl_txt'><h4>부동산 임대차 정보</h4></div>
+				<table class='Ltbl_list' summary='부동산 임대차정보 표'>
+					<caption>부동산 임대차정보</caption>
+					<thead>
+						<tr>
+							<th width='10%'>번호</th>
+							<th>소재지</th>
+							<th width='12%'>임대차관계</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr class='allNum'>
+						<td>1</td>
+						<td class='txtleft'>경기도 고양시 덕양구 지축로 74, 5층517호 (지축동,벨라미)</td>
+						<td>1명</td>
+					</tr>
+					</tbody>
+				</table>
+				<div class='table_title'>
+					<h3>부동산의 현황 및 점유관계 조사서 </h3>
+				</div>
+				<div class='tbl_txt'>
+					<h4>1. 부동산의 점유관계</h4>
+				</div>
+				<table class='Ltbl_dt' summary='부동산의 점유관계 표'>
+					<caption>부동산의 점유관계</caption>
+        <tbody class='allNum'>
+					<tr>
+						<th width='15%' class='txtcenter'>소재지</th>
+						<td>1. 경기도 고양시 덕양구 지축로 74, 5층517호 (지축동,벨라미)</td>
+					</tr>
+					<tr>
+						<th class='txtcenter'>점유관계</th>
+						<td>임차인(별지)점유</td>
+					</tr>
+					<tr>
+						<th class='txtcenter'>기타</th>
+						<td>현장조사시 만난 임차인 이재호가 운영하는 바른쎌한방병원 직원 김지혜에게 현황조사에 대하여 설명하고 현황조사 안내문 교부하였으며 김지혜 진술에 의하면 임차인이 전부 점유하고 있다고 하나 점유관계 등은 별도 확인이 필요함(전입세대확인서 및 상가건물임대차 현황서에는 등재되어있지않으나 확인이 필요함)<br /></td>
+					</tr>
+          <tr height='10px'></tr>
+        </tbody>
+          
+				</table>
+				<div class='tbl_txt'>
+					<h4>2. 부동산의 현황</h4>
+					<ul>
+				<li style='background-image:none;'>1.철근콘크리트구조 스라브지붕 9층 제1,2종근린생활시설, 업무시설 및 의료시설<br />
+2. 건물 몇개층 전체를 바른쎌한방병원으로 사용중이었었으며, 이건(517호)는 그 중 일부분임</li>
+				<div class='table_title'>
+					<h3>임대차관계조사서</h3>
+				</div>
+				<table class='Ltbl_dt' summary='임차 목적물의 용도 및 임대차 계약등의 내용 표'>
+				<caption>임차 목적물의 용도 및 임대차 계약등의 내용</caption>
+          <tr class='allNum'>
+            <td colspan='5' class='bg_white'>
+              [소재지] 1.경기도 고양시 덕양구 지축로 74, 5층517호 (지축동,벨라미)
+            </td>
+          </tr>
+						<tbody class='allNum'>
+						<tr>
+							<td width='8%' rowspan='5' class='txtcenter'>1</td>
+							<th width='15%' class='txtcenter'>점유인</th>
+							<td width='31%'>이재호</td>
+							<th width='15%' class='txtcenter'>당사자구분</th>
+							<td width='31%'>임차인</td>
+						</tr>
+						<tr>
+							<th class='txtcenter'>점유부분</th>
+							<td>517호 40㎡</td>
+							<th class='txtcenter'>용도</th>
+							<td>점포</td>
+						</tr>
+						<tr>
+							<th class='txtcenter'>점유기간</th>
+							<td colspan='3'>2023.06.30~2028.06.30</td>
+						</tr>
+						<tr>
+							<th class='txtcenter'>보증(전세)금</th>
+							<td>7,087,210</td>
+						<th class='txtcenter'>차임</th>
+							<td>806,710</td>
+						</tr>
+						<tr>
+							<th class='txtcenter'>전입일자</th>
+							<td></td>
+							<th class='txtcenter'>확정일자</th>
+							<td></td>
+						</tr>
+						<tr><td colspan='5' class='bg_white'></td></tr>
+						</tbody>
+				
+				</table>
+				
+					<div class='tbl_txt'>
+						<h4>기타사항</h4>
+						<ul>
+							<li>1.상가 임대차관계는 점유자(임차인)가 제시하는 계약서 및 진술에 의하여 작성(전입세대확인서 및 상가건물임대차 현황서에 등재되어있지 않으나 별도확인 필요함)<br />
+2. 바른쎌한방병원은 몇개층을 사용하고 있었으며 이건은 그중 일부분인 해당 호실(517호)에 대한 계약임<br />
+</li>
+						</ul>
+					</div></div></div></div>
+		</div></div></div></div> <!-- tk_wrap -->
+<!--floating div tank.css-->
+<div id="FLOATING_DIV" style="display:none">
+	<div id="FLOATING_DIV_MASK"	class="FLOATING_DIV_MASK"></div>
+	<div class="FLOATING_DIV_BLOCK">
+		<div id="FLOATING_CONTENT" class="FLOATING_CONTENT"	onclick="event.cancelBubble=true"></div>
+	</div>
+</div>
+<!--floating div -->
+</body>
+</html><script>
+//인쇄
+function prtGo() 
+{
+	var prtHtml=[];
+	prtHtml.push("<div style='border-bottom:1px solid #ddd;padding:10px 0'>");
+	prtHtml.push("	<div class='fleft'>자료등록/수집일 : 2025-02-27</div>");
+	prtHtml.push("	<div class='fright'>(출력시간 : 2026-06-07 03:50 PM)</div>");
+	prtHtml.push("	<div class='clear'></div>");
+	prtHtml.push("</div>");
+	prtHtml.push("<div class='clear' style='width:920px;margin 0 auto'>"+$('#fileV_con').html()+"</div>");
+	prtHtml.push("<div class='clear' style='width:920px;margin 0 auto;background:#ddd;margin-top:30px'><div style='padding:10px'>제공된 정보가 실제 정보와 일치하지 않거나 정보 제공 이후 중요한 변동 사항이 생길 수 있으므로, 법원사이트의 정보를 반드시 재확인 후 입찰 하시기 바랍니다.</div></div>");
+	var prtContents=prtHtml.join("");
+	printThis_(prtContents);
+}
+
+$(() => {
+		// .selfNum클래스가 있는 dome이 1개라도 있으면 selfNumViewBtn 표기
+		if($(".selfNum").length > 0) {
+			$("#selfNumViewBtn").show();
+			$("#selfNumViewBtn").css({"opacity":"1"});
+		} else {
+			$("#selfNumViewBtn").hide();
+			$("#selfNumViewBtn").css({"opacity":"0"});
+		}
+		// 체크박스 클릭 이벤트리스너
+		$('.settings[type="checkbox"]').on('click', (item) => {
+			const value = $(item.currentTarget).is(':checked') ? 1 : 0;
+			if(value) {
+				$(".allNum").hide();
+				$(".selfNum").show();
+			} else {
+				$(".allNum").hide();
+				$(".allNum").show();
+			}
+		});
+})
+</script>

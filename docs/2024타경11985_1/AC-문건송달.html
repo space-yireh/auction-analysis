@@ -1,0 +1,524 @@
+
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="Generator" content="origin">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=1000, maximum-scale=1.0">
+			<title>탱크옥션</title>
+	<meta name="Description" content="법원경매,부동산경매">
+		<link rel="stylesheet" type="text/css" href="/css/font.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tank.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/style.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/button.css?ver=20260524">
+			<link rel="stylesheet" type="text/css" href="/css/viewMob.css?ver=20260524">
+		
+	<link rel="stylesheet" type="text/css" href="/css/input.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tab.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tooltip.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/swiper-5.2.0/css/swiper.css">
+	<link href='/img/icon/icon192x192.png' rel='icon' type='image/png' />
+	<link href='/img/icon/icon192x192.png' rel='shortcut icon' type='image/png' />
+	<link href='/img/icon/icon128x128.png' rel='apple-touch-icon'  type='image/png'/>
+
+	<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.history.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script src="/js/swiper-5.2.0/js/swiper.js"></script>
+	<!-- 테스트후 삭제-->
+	<!--<script type="text/javascript" src="/js/crypto-js.min.js"></script>-->
+	<!-- 테스트후 삭제-->
+	<script type="text/javascript" src="/js/jquery.ui.datepicker-ko.js"></script>
+	<script type="text/javascript" src="/js/jquery.number.min.js"></script>
+	<script type="text/javascript" src="/js/Json.js?ver=20260524"></script>
+	<script type="text/javascript" src="/js/Func.js?ver=20260524"></script>
+	<script type="text/javascript" src="/js/login.js?ver=20260524"></script>
+<!--	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>-->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+	<!--// 프린트 -->
+<!--	<script type="text/javascript" src="/js/printThis.js"></script>-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js"></script>
+	<script type="text/javascript">
+		function supports_local_storage(){return (typeof window.localStorage != 'undefined');}
+		var lsg_chk=supports_local_storage();
+		var TK={'k2':'0','mob':''};
+		var TK_FILE={'CA':'/FILE/CA/','PA':'/FILEPA/PA/','INC':'/FILEINC/'};	
+		var TK_INT_GY={};
+		var TK_INT_GO={};
+		var TK_INT_DEL={'did':''};
+		
+	</script>
+	</head>
+<style>
+	html>/**/body{overflow-y:auto !important}
+</style>
+	<body style="padding:0;overflow-x:hidden">
+<div id="pop_wrap">
+
+<link rel='stylesheet' type='text/css' href='/css/court_solar.css?ver=20260524'><style>
+	html>/**/body{overflow-x:auto !important}
+	.Ltbl_dt, .Ltbl_list{width:100%;max-width:920px !important}
+</style>
+<div class='center bold' style='background:lavender;padding:6px 0 5px'>자료등록/수집일 2026-06-05</div><div class='print_view center'></div><div id='fileV'><div id='filePopView'>
+		<div style='padding:10px 0;width:90%;max-width:920px;margin:0 auto'>
+			<div style='width:100%;margin-top:3px'>
+				<div class='fright' style='display:flex;align-items:center;justify-content:center;'>
+					
+		<span id='selfNumViewBtn' style='display:flex;align-items:center;justify-content:center;margin-right:10px;background:#ddd;border-radius:25px;padding:6px 10px;opacity: 0;'>
+			<div class='toggleSwitchBox' style='margin-right:5px'>
+				<label class='toggleSwitch'>
+					<input id='setting_checkbox' type='checkbox' class='settings'>
+					<p>
+						<span style='padding:4px 0 0 6px'>ON</span>
+						<span style='padding:4px 2px 0 2px'>OFF</span>
+					</p>
+				</label>
+			</div>
+			<div class='modalTitle'>본건만 보기</div>
+		</span>
+		
+					<span onclick='prtGo();' class='button btn_small btn_white radius_30' id='prt_btn' style='padding:6px 15px;font-size:13px'>인쇄</span>
+				</div>
+			</div>
+			<div id='fileV_con' class='clear'>
+			<div class='table_title'>
+				<h3>문건처리내역</h3>
+			</div>
+			<table class='Ltbl_dt' summary='문건처리내역 표'>
+				<caption>문건처리내역</caption>
+				<thead>
+					<tr>
+						<th width='16%' class='txtcenter'>접수일</th>
+						<th width='64%' class='txtcenter'>접수내역</th>
+						<th width='20%' class='txtcenter'>결과</th>
+					</tr>
+				</thead>
+				<tbody>
+		
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.10.31</td>
+					<td>등기소 수OOOOO OOO 등기필증 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.12</td>
+					<td>근저당권자 세OOOOOOOO 채권계산서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.19</td>
+					<td>집행관 집OOO 현황조사보고서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.28</td>
+					<td>감정인 보OOOOOOOOO 감정평가서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.28</td>
+					<td>채권자 주OOO OOOO 보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.12.31</td>
+					<td>채권자 주OOO OOOO 주소보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.01.10</td>
+					<td>교부권자 화OO OOOOO 교부청구서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.01.31</td>
+					<td>채권자 양OO OOOOOOOOOOOOOO OOOO 송달료 및 법원예납금환급신청서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.01.31</td>
+					<td>채권자 양OO OOOOOOOOOOOOOO OOOO 채권자변경신고서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.02.12</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 열람및복사신청 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.02.27</td>
+					<td>승계인 유OOOOOOOOOOOOOOOOO 사실조회촉탁신청 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.03.12</td>
+					<td>작성자 황OO 사실조회 회신서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.03.13</td>
+					<td>기타 이OO OOOO 사실조회회신 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.03.13</td>
+					<td>작성자 황OO 사실조회 회신서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.03.17</td>
+					<td>승계인 유OOOOOOOOOOOOOOOOO 보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.04.07</td>
+					<td>교부권자 화OOOOOOO 교부청구 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.04.16</td>
+					<td>승계인 유OOOOOOOOOOOOOOOOO 보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.06.02</td>
+					<td>승계인 유OOOOOOOOOOOOOOOOO 보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.08.18</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.09.29</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 보정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.04.28</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 열람및복사신청 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.05.28</td>
+					<td>최고가매수인 등기촉탁공동신청 및 지정서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.05.28</td>
+					<td>최고가매수인 부동산소유권이전등기촉탁신청서 제출</td>
+					<td></td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.05.28</td>
+					<td>최고가매수인 매각대금완납증명</td>
+					<td></td>
+				</tr>
+			
+				</tbody>
+			</table>
+		
+			<div class='table_title'>
+				<h3>송달내역</h3>
+			</div>
+			<table class='Ltbl_dt' summary='송달내역 표'>
+				<caption>송달내역</caption>
+				<tr>
+					<th width='16%' class='txtcenter'>송달일</th>
+					<th width='64%' class='txtcenter'>송달내역</th>
+					<th width='20%' class='txtcenter'>송달결과</th>
+				</tr>
+		
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.04</td>
+					<td>채권자 주OOO OOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2024.11.07 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.04</td>
+					<td>채무자겸소유자 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2024.11.07 수취인불명</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.05</td>
+					<td>주무관서 화OOO 최고서 발송</td>
+					<td class='txtcenter'>2024.11.06 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.05</td>
+					<td>주무관서 관OOO 최고서 발송</td>
+					<td class='txtcenter'>2024.11.06 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.05</td>
+					<td>주무관서 국OOOOOOO OOOO 최고서 발송</td>
+					<td class='txtcenter'>2024.11.06 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.05</td>
+					<td>주무관서 동OOOOO 최고서 발송</td>
+					<td class='txtcenter'>2024.11.06 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.05</td>
+					<td>근저당권자 세OOOOOOOO 최고서 발송</td>
+					<td class='txtcenter'>2024.11.06 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.05</td>
+					<td>감정인 보OOOOOOOOO OOO 평가명령 발송</td>
+					<td class='txtcenter'>2024.11.12 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.17</td>
+					<td>채권자 주OOO OOOO 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2024.11.20 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.11.22</td>
+					<td>채권자 주OOO OOOO 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2024.11.26 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.12.02</td>
+					<td>채무자겸소유자 1 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2024.12.06 주소불명</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2024.12.22</td>
+					<td>채권자 주OOO OOOO 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2024.12.26 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.02.03</td>
+					<td>채무자겸소유자 주OOOOOO 압류채권자승계통지서(임의경매) 발송</td>
+					<td class='txtcenter'>2025.02.13 폐문부재</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.02.17</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.02.20 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.02.28</td>
+					<td>기타 이OO OOOO 사실조회서 발송</td>
+					<td class='txtcenter'>2025.03.06 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.03.18</td>
+					<td>채무자겸소유자 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2025.03.25 폐문부재</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.04.07</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.04.10 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.04.17</td>
+					<td>채무자겸소유자 1 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2025.05.07 폐문부재</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.05.25</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.05.28 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.06.09</td>
+					<td>채무자겸소유자 1 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2025.06.28 폐문부재</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.08.07</td>
+					<td>승계인 유OOOOOOOOOOOOOOOOO 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.08.12 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.08.07</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.08.12 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.08.29</td>
+					<td>채무자겸소유자 1 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2025.09.01 수취인불명</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.09.22</td>
+					<td>승계인 유OOOOOOOOOOOOOOOOO 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.09.25 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.09.22</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 주소보정명령등본 발송</td>
+					<td class='txtcenter'>2025.09.25 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.09.30</td>
+					<td>채무자겸소유자 주OOOOOO 개시결정정본 발송</td>
+					<td class='txtcenter'>2025.10.10 수취인불명</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.11.10</td>
+					<td>채무자겸소유자1 주OOOOOO 개시결정정본 / 압류채권자승계통지서(임의경매) 발송</td>
+					<td class='txtcenter'>2025.11.25 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.12.04</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2025.12.05 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.12.04</td>
+					<td>근저당권자 세OOOOOOOO 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2025.12.05 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.12.04</td>
+					<td>교부권자 화OOOOOOO 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2025.12.05 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2025.12.04</td>
+					<td>채무자겸소유자 주OOOOOO 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2025.12.05 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.04.28</td>
+					<td>최고가매수인 대금지급기한통지서 발송</td>
+					<td class='txtcenter'>2026.05.06 도달</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.04.30</td>
+					<td>채권자 유OOOOOOOOOOOOO OOOO(OOOO OOOO OOOO) 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2026.05.04 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.04.30</td>
+					<td>근저당권자 세OOOOOOOO 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2026.05.04 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.04.30</td>
+					<td>교부권자 화OOOOOOO 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2026.05.04 송달간주</td>
+				</tr>
+			
+				<tr class='Ltbl_list_lvl0'>
+					<td class='txtcenter'>2026.04.30</td>
+					<td>채무자겸소유자 주OOOOOO 매각기일 및 매각결정기일통지서 발송</td>
+					<td class='txtcenter'>2026.05.01 도달</td>
+				</tr>
+			
+			</table>
+		</div></div></div>
+		</div></div></div></div> <!-- tk_wrap -->
+<!--floating div tank.css-->
+<div id="FLOATING_DIV" style="display:none">
+	<div id="FLOATING_DIV_MASK"	class="FLOATING_DIV_MASK"></div>
+	<div class="FLOATING_DIV_BLOCK">
+		<div id="FLOATING_CONTENT" class="FLOATING_CONTENT"	onclick="event.cancelBubble=true"></div>
+	</div>
+</div>
+<!--floating div -->
+</body>
+</html><script>
+//인쇄
+function prtGo() 
+{
+	var prtHtml=[];
+	prtHtml.push("<div style='border-bottom:1px solid #ddd;padding:10px 0'>");
+	prtHtml.push("	<div class='fleft'>자료등록/수집일 : 2026-06-05</div>");
+	prtHtml.push("	<div class='fright'>(출력시간 : 2026-06-07 03:35 PM)</div>");
+	prtHtml.push("	<div class='clear'></div>");
+	prtHtml.push("</div>");
+	prtHtml.push("<div class='clear' style='width:920px;margin 0 auto'>"+$('#fileV_con').html()+"</div>");
+	prtHtml.push("<div class='clear' style='width:920px;margin 0 auto;background:#ddd;margin-top:30px'><div style='padding:10px'>제공된 정보가 실제 정보와 일치하지 않거나 정보 제공 이후 중요한 변동 사항이 생길 수 있으므로, 법원사이트의 정보를 반드시 재확인 후 입찰 하시기 바랍니다.</div></div>");
+	var prtContents=prtHtml.join("");
+	printThis_(prtContents);
+}
+
+$(() => {
+		// .selfNum클래스가 있는 dome이 1개라도 있으면 selfNumViewBtn 표기
+		if($(".selfNum").length > 0) {
+			$("#selfNumViewBtn").show();
+			$("#selfNumViewBtn").css({"opacity":"1"});
+		} else {
+			$("#selfNumViewBtn").hide();
+			$("#selfNumViewBtn").css({"opacity":"0"});
+		}
+		// 체크박스 클릭 이벤트리스너
+		$('.settings[type="checkbox"]').on('click', (item) => {
+			const value = $(item.currentTarget).is(':checked') ? 1 : 0;
+			if(value) {
+				$(".allNum").hide();
+				$(".selfNum").show();
+			} else {
+				$(".allNum").hide();
+				$(".allNum").show();
+			}
+		});
+})
+</script>

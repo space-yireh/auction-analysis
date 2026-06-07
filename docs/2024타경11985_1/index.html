@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2024타경11985(2) 분석 리포트 | 더샵동탄센텀폴리스2단지 5020호</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: '맑은 고딕', 'Apple SD Gothic Neo', sans-serif; background: #f0f2f5; color: #1a1a2e; font-size: 14px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+  /* 헤더 */
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 30px; border-radius: 16px; margin-bottom: 20px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+  .case-number { font-size: 13px; opacity: 0.7; margin-bottom: 6px; }
+  .case-title { font-size: 22px; font-weight: 700; line-height: 1.4; }
+  .case-sub { font-size: 13px; opacity: 0.8; margin-top: 6px; }
+  .risk-badge { padding: 8px 20px; border-radius: 20px; font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .risk-green { background: #22c55e; color: white; }
+  .risk-yellow { background: #f59e0b; color: white; }
+  .risk-red { background: #ef4444; color: white; }
+  .header-meta { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+  .header-meta-item { text-align: center; }
+  .header-meta-item .label { font-size: 11px; opacity: 0.6; }
+  .header-meta-item .value { font-size: 18px; font-weight: 700; margin-top: 2px; }
+  .header-meta-item .value.highlight { color: #fbbf24; }
+
+  /* 경고 배너 */
+  .warning-banner { background: #fff7ed; border: 2px solid #f97316; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: flex-start; gap: 12px; }
+  .warning-banner .icon { font-size: 20px; flex-shrink: 0; }
+  .warning-banner .text { font-size: 13px; color: #9a3412; line-height: 1.6; }
+  .warning-banner strong { color: #7c2d12; }
+
+  /* 섹션 카드 */
+  .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 2px solid #f1f5f9; }
+  .card-step { background: #1a1a2e; color: white; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .card-title { font-size: 16px; font-weight: 700; color: #1a1a2e; }
+  .card-subtitle { font-size: 12px; color: #64748b; margin-left: auto; }
+
+  /* 테이블 */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f8fafc; color: #475569; font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  tr:hover td { background: #fafbff; }
+  .td-label { color: #64748b; font-weight: 500; white-space: nowrap; width: 160px; }
+  .td-value { color: #1e293b; font-weight: 600; }
+
+  /* 배지 */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .badge-red { background: #fee2e2; color: #dc2626; }
+  .badge-green { background: #dcfce7; color: #16a34a; }
+  .badge-yellow { background: #fef3c7; color: #d97706; }
+  .badge-blue { background: #dbeafe; color: #2563eb; }
+  .badge-gray { background: #f1f5f9; color: #475569; }
+  .badge-purple { background: #ede9fe; color: #7c3aed; }
+
+  /* 권리 시간표 */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: #e2e8f0; }
+  .timeline-item { position: relative; margin-bottom: 14px; }
+  .timeline-item::before { content: ''; position: absolute; left: -22px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #cbd5e1; border: 2px solid white; box-shadow: 0 0 0 2px #cbd5e1; }
+  .timeline-item.anchor::before { background: #ef4444; box-shadow: 0 0 0 2px #ef4444; }
+  .timeline-item.somel::before { background: #94a3b8; }
+  .timeline-date { font-size: 11px; color: #94a3b8; margin-bottom: 2px; }
+  .timeline-content { font-size: 13px; font-weight: 600; }
+  .timeline-note { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .anchor-label { display: inline-block; background: #ef4444; color: white; font-size: 10px; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+
+  /* 리스크 체크 */
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .risk-item { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+  .risk-item.ok { border-color: #86efac; background: #f0fdf4; }
+  .risk-item.warn { border-color: #fcd34d; background: #fffbeb; }
+  .risk-item.danger { border-color: #fca5a5; background: #fef2f2; }
+  .risk-item-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .risk-item-body { font-size: 12px; color: #475569; line-height: 1.6; }
+
+  /* 입지 체크 */
+  .infra-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .infra-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; background: #f8fafc; border: 1px solid #e2e8f0; }
+  .infra-item.check { background: #f0fdf4; border-color: #86efac; }
+  .infra-item.nocheck { background: #fef9f0; border-color: #fcd34d; }
+  .infra-icon { font-size: 20px; flex-shrink: 0; }
+  .infra-text { font-size: 12px; }
+  .infra-text strong { display: block; font-weight: 600; color: #1e293b; }
+  .infra-text span { color: #64748b; }
+
+  /* 배당 시뮬레이션 */
+  .scenario-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .scenario-tab { padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: 2px solid transparent; }
+  .scenario-tab.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  .scenario-tab:not(.active) { background: #f1f5f9; color: #475569; }
+  .dividend-table th { background: #1a1a2e; color: white; }
+  .dividend-table .no-dividend { color: #ef4444; font-weight: 700; }
+  .dividend-table .full-dividend { color: #16a34a; font-weight: 700; }
+
+  /* 종합 판단 */
+  .verdict-box { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 2px solid #86efac; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .verdict-box.warn { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fcd34d; }
+  .verdict-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .verdict-body { font-size: 13px; line-height: 1.8; color: #374151; }
+
+  /* 수익 계산 */
+  .scenario-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .scenario-card { border-radius: 10px; padding: 18px; border: 2px solid #e2e8f0; }
+  .scenario-card.best { border-color: #3b82f6; background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .scenario-card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .scenario-card-item { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
+  .scenario-card-item .label { color: #6b7280; }
+  .scenario-card-item .val { font-weight: 600; color: #1e293b; }
+  .scenario-card-item .val.good { color: #16a34a; }
+  .scenario-card-item .val.warn { color: #d97706; }
+
+  /* 확인사항 */
+  .checklist { list-style: none; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px; line-height: 1.6; }
+  .checklist li::before { content: '!'; background: #f97316; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .checklist li:last-child { border-bottom: none; }
+
+  /* 사이트 버튼 */
+  .site-btn-wrap { text-align: center; padding: 30px 0 10px; }
+  .site-btn { display: inline-block; background: linear-gradient(135deg, #1a1a2e, #0f3460); color: white; padding: 14px 40px; border-radius: 12px; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: transform 0.15s; }
+  .site-btn:hover { transform: translateY(-2px); }
+
+  /* 구분선 */
+  .divider { height: 1px; background: #e2e8f0; margin: 16px 0; }
+
+  /* 유찰 이력 */
+  .bidding-history { display: flex; gap: 8px; flex-wrap: wrap; }
+  .bid-item { text-align: center; padding: 10px 14px; border-radius: 8px; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 12px; }
+  .bid-item.fail { border-color: #fca5a5; background: #fef2f2; }
+  .bid-item.current { border-color: #3b82f6; background: #eff6ff; font-weight: 700; }
+  .bid-item .bid-round { font-weight: 700; margin-bottom: 4px; }
+  .bid-item .bid-price { color: #374151; }
+  .bid-item .bid-result { font-size: 11px; margin-top: 4px; }
+  .bid-item.fail .bid-result { color: #ef4444; }
+  .bid-item.current .bid-result { color: #2563eb; }
+
+  /* 그리드 2열 */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* 수익률 게이지 */
+  .gauge-wrap { margin-top: 12px; }
+  .gauge-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
+  .gauge-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #3b82f6, #22c55e); }
+  .gauge-labels { display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; }
+
+  @media print {
+    body { background: white; }
+    .container { padding: 0; }
+    .card { box-shadow: none; border: 1px solid #e2e8f0; page-break-inside: avoid; }
+    .site-btn-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== 헤더 ===== -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="case-number">수원지방법원 2024타경11985 (물건번호 2) · 경매17계</div>
+      <div class="case-title">더샵동탄센텀폴리스2단지 그랑파사쥬<br>5층 5020호 (제2종근린생활시설)</div>
+      <div class="case-sub">경기도 화성시 동탄대로5길 9 · 전유 31.18㎡(9.43평)</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="risk-badge risk-green">🟢 권리 안전</div>
+      <div style="margin-top:8px;"><span class="risk-badge risk-yellow" style="font-size:12px;">🟡 투자 주의</span></div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="header-meta-item">
+      <div class="label">감정평가액</div>
+      <div class="value">3억 7,400만</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">현 최저매각가</div>
+      <div class="value highlight">6,286만</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">감정가 대비</div>
+      <div class="value highlight">16.8%</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">유찰횟수</div>
+      <div class="value highlight">5회</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">매각기일</div>
+      <div class="value">2026.06.22</div>
+    </div>
+    <div class="header-meta-item">
+      <div class="label">말소기준</div>
+      <div class="value">2023.04.18</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 상업용 주의 배너 ===== -->
+<div class="warning-banner">
+  <div class="icon">⚠️</div>
+  <div class="text">
+    <strong>분석 범위 안내:</strong> 본 물건은 제2종근린생활시설(상업용)로 주거용 SKILL.md 분석 범위를 벗어납니다.
+    권리분석은 동일 기준으로 수행하며, 임대 수익 계산은 상가건물임대차보호법 기준(환산보증금·사업자등록)을 적용해야 합니다.
+    본 리포트의 수익 시뮬레이션은 <strong>참고용</strong>이며, 상가 전문 투자자의 별도 검토를 권장합니다.
+  </div>
+</div>
+
+<!-- ===== STEP 0A: 투자 필터 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">0A</div>
+    <div class="card-title">공통 투자 필터</div>
+    <div class="card-subtitle">SKILL v1.6 기준</div>
+  </div>
+  <div class="grid-2">
+    <div class="risk-item ok">
+      <div class="risk-item-title">✅ 안전 마진 필터 — 통과</div>
+      <div class="risk-item-body">
+        현 최저가 62,858,000원 ÷ 감정가 374,000,000원 = <strong>16.8%</strong><br>
+        기준 49% 이하 → ✅ 충분한 안전 마진 확보
+      </div>
+    </div>
+    <div class="risk-item warn">
+      <div class="risk-item-title">⚠️ 출구 전략 필터 — 조건부</div>
+      <div class="risk-item-body">
+        ① 매수자: 상가 임대 투자자 / 일반 매매 시장<br>
+        ② 법적 논리: 소송 불필요 (공실, 임차인 없음)<br>
+        ③ 목표가: 감정가 3억7천만 대비 시세 매각<br>
+        → <strong>5층 소형이라 매수자 찾기 어려울 수 있음</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STEP 0B: 물건 유형 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">0B</div>
+    <div class="card-title">물건 유형 분류 및 핵심 체크</div>
+  </div>
+  <table>
+    <tr>
+      <td class="td-label">유형 코드</td>
+      <td class="td-value"><span class="badge badge-purple">TYPE-F 상업용 집합건물</span></td>
+    </tr>
+    <tr>
+      <td class="td-label">분류 근거</td>
+      <td>제2종근린생활시설 구분소유권, 공부상 상업용도 확인</td>
+    </tr>
+    <tr>
+      <td class="td-label">핵심 리스크</td>
+      <td><span class="badge badge-red">5층 위치</span> <span class="badge badge-red">소형(9.4평)</span> <span class="badge badge-yellow">공실 2년+</span></td>
+    </tr>
+  </table>
+  <div style="margin-top:14px;" class="risk-item warn">
+    <div class="risk-item-title">⚠️ 5회 유찰의 구조적 원인</div>
+    <div class="risk-item-body">
+      □ <strong>5층 위치</strong>: 상가는 저층 선호, 5층은 에스컬레이터·엘리베이터 없이 접근 어려움 → 임대 수요 극히 제한적<br>
+      □ <strong>소형 면적(31.18㎡ ≈ 9.4평)</strong>: 활용 용도 한정 (소형 오피스·학원·미용실 등)<br>
+      □ <strong>신규 건물(2022.12 준공) 공실 지속</strong>: 2년 이상 임차인 미확보 → 수요 미스매치 신호<br>
+      □ <strong>감정평가에서도 호별요인 0.97 적용</strong>: 비교사례(2층) 대비 3% 할인 → 공식 평가에서도 위치 열세 인정
+    </div>
+  </div>
+</div>
+
+<!-- ===== STEP 1: 물건 기본정보 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">1</div>
+    <div class="card-title">물건 기본정보</div>
+  </div>
+  <table>
+    <tr><td class="td-label">사건번호</td><td class="td-value">수원지방법원 2024타경11985 (물건번호 2)</td></tr>
+    <tr><td class="td-label">법원·담당계</td><td>수원지방법원 경매17계 (031-210-1378)</td></tr>
+    <tr><td class="td-label">채무자/소유자</td><td class="td-value">주식회사베라솔 (법인) — 동일인</td></tr>
+    <tr><td class="td-label">소재지</td><td>경기도 화성시 동탄구 동탄대로5길 9<br>더샵동탄센텀폴리스2단지그랑파사쥬 제5층 제5020호</td></tr>
+    <tr><td class="td-label">물건 유형</td><td>집합건물 구분소유권 (제2종근린생활시설)</td></tr>
+    <tr><td class="td-label">전유면적</td><td class="td-value">31.1797㎡ (약 9.43평)</td></tr>
+    <tr><td class="td-label">공용면적</td><td>45.5085㎡ (합계 76.6882㎡)</td></tr>
+    <tr><td class="td-label">대지권면적</td><td>6.2734㎡ (5,578.8분의 6.2734)</td></tr>
+    <tr><td class="td-label">용도지역</td><td>일반상업지역 (동탄2지구)</td></tr>
+    <tr><td class="td-label">사용승인일</td><td>2022.12.21</td></tr>
+    <tr><td class="td-label">감정평가액</td><td class="td-value">374,000,000원 (기준시점: 2024.11.25)</td></tr>
+    <tr><td class="td-label">현 최저매각가</td><td class="td-value" style="color:#ef4444;">62,858,000원 (감정가의 16.8%)</td></tr>
+    <tr><td class="td-label">청구금액</td><td>983,932,557원 (하나은행)</td></tr>
+    <tr><td class="td-label">배당요구종기</td><td>2025.01.13</td></tr>
+    <tr><td class="td-label">현황</td><td><span class="badge badge-gray">공실</span> — 현황조사 시 공실, 임차인 없음</td></tr>
+  </table>
+
+  <div style="margin-top:16px;">
+    <div style="font-weight:600; margin-bottom:10px; color:#475569;">유찰 이력 (물건번호 2)</div>
+    <div class="bidding-history">
+      <div class="bid-item fail">
+        <div class="bid-round">1회차</div>
+        <div class="bid-price">3억 7,400만</div>
+        <div class="bid-result">유찰</div>
+      </div>
+      <div class="bid-item fail">
+        <div class="bid-round">2회차</div>
+        <div class="bid-price">2억 6,180만</div>
+        <div class="bid-result">유찰</div>
+      </div>
+      <div class="bid-item fail">
+        <div class="bid-round">3회차</div>
+        <div class="bid-price">1억 8,326만</div>
+        <div class="bid-result">유찰</div>
+      </div>
+      <div class="bid-item fail">
+        <div class="bid-round">4회차</div>
+        <div class="bid-price">1억 2,828만</div>
+        <div class="bid-result">유찰</div>
+      </div>
+      <div class="bid-item fail">
+        <div class="bid-round">5회차</div>
+        <div class="bid-price">8,979만</div>
+        <div class="bid-result">유찰</div>
+      </div>
+      <div class="bid-item current">
+        <div class="bid-round">6회차</div>
+        <div class="bid-price">6,286만</div>
+        <div class="bid-result">2026.06.22</div>
+      </div>
+      <div class="bid-item" style="background:#f8fafc;border-style:dashed;">
+        <div class="bid-round">7회차</div>
+        <div class="bid-price">4,400만 예정</div>
+        <div class="bid-result">2026.08.05</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:#eff6ff;border-radius:8px;font-size:12px;color:#1e40af;">
+    📌 <strong>참고:</strong> 5019호(67.8㎡)는 2026.04.13 감정가의 35.6%인 310,500,000원에 낙찰·대금납부 완료. 5020호와 연접한 더 큰 호실.
+  </div>
+</div>
+
+<!-- ===== STEP 2: 권리 시간표 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">2</div>
+    <div class="card-title">말소기준권리 특정 및 권리 시간표</div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2022.12.27</div>
+      <div class="timeline-content">소유권보존 — 신한자산신탁주식회사 <span class="badge badge-gray">신탁원부 2022-20212호</span></div>
+      <div class="timeline-note">분양 목적 신탁 보존등기 → 하단에서 말소 확인</div>
+    </div>
+    <div class="timeline-item anchor">
+      <div class="timeline-date">2023.04.18 ★</div>
+      <div class="timeline-content" style="color:#ef4444;">
+        말소기준권리 <span class="anchor-label">기준권리</span><br>
+        을구1: 근저당권설정 — 주식회사하나은행
+      </div>
+      <div class="timeline-note">
+        채권최고액: 1,200,000,000원 / 채무자: 주식회사베라솔<br>
+        공동담보목록 2023-1518 (이천시 해월리 물건 + 5019호 + 5020호 등 다수)<br>
+        ⚠️ <strong>청구금액 983,932,557원 vs 채권최고액 12억원</strong> — 채권최고액의 82%<br>
+        → 5019호 310,500,000원 낙찰 후 잔여채권 약 6~7억원 추정
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2023.04.18 (동일일)</div>
+      <div class="timeline-content">소유권이전 — 주식회사베라솔 (매매, 422,680,000원)</div>
+      <div class="timeline-note">1번신탁등기 말소 (신탁재산의 처분) → 신탁 완전 해소 확인</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2023.06.13</div>
+      <div class="timeline-content">을구2: 근저당권설정 — 세현제삼차주식회사</div>
+      <div class="timeline-note">채권최고액: 36,000,000원 → 말소기준권리 이후 → 낙찰로 소멸</div>
+    </div>
+    <div class="timeline-item somel">
+      <div class="timeline-date">2024.10.29</div>
+      <div class="timeline-content">갑구3: 임의경매개시결정 — 하나은행 신청</div>
+      <div class="timeline-note">→ 말소기준권리 이후 → 낙찰로 소멸</div>
+    </div>
+    <div class="timeline-item somel">
+      <div class="timeline-date">2024.11.05</div>
+      <div class="timeline-content">갑구4: 가압류 — 푸른새마을금고 (청구금액 500,000,000원)</div>
+      <div class="timeline-note">→ 말소기준권리 이후 → 낙찰로 소멸</div>
+    </div>
+    <div class="timeline-item somel">
+      <div class="timeline-date">2025.09.03</div>
+      <div class="timeline-content">갑구5: 압류 — 화성시 (징수과-012805)</div>
+      <div class="timeline-note">→ 말소기준권리 이후 → 낙찰로 소멸 (단, 당해세 배당 우선 여부 확인 필요)</div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <table>
+      <thead><tr><th>구분</th><th>접수일</th><th>권리자</th><th>금액</th><th>낙찰 후</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-red">말소기준권리</span></td><td>2023.04.18</td><td>하나은행 (근저당)</td><td>채권최고액 12억</td><td style="color:#16a34a;font-weight:600;">소멸</td></tr>
+        <tr><td><span class="badge badge-gray">이후 소멸</span></td><td>2023.06.13</td><td>세현제삼차 (근저당)</td><td>3,600만</td><td style="color:#16a34a;font-weight:600;">소멸</td></tr>
+        <tr><td><span class="badge badge-gray">이후 소멸</span></td><td>2024.10.29</td><td>임의경매개시결정</td><td>—</td><td style="color:#16a34a;font-weight:600;">소멸</td></tr>
+        <tr><td><span class="badge badge-gray">이후 소멸</span></td><td>2024.11.05</td><td>푸른새마을금고 (가압류)</td><td>5억</td><td style="color:#16a34a;font-weight:600;">소멸</td></tr>
+        <tr><td><span class="badge badge-yellow">당해세 확인</span></td><td>2025.09.03</td><td>화성시 (압류)</td><td>미상</td><td>배당 우선 확인 필요</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:#f0fdf4;border-radius:8px;font-size:12px;color:#15803d;">
+    ✅ <strong>결론:</strong> 낙찰자가 인수해야 할 권리 없음. 말소기준권리(2023.04.18) 이후 모든 등기 소멸.
+    신탁이력(2022-20212호)은 2023.04.18 완전 말소 확인.
+  </div>
+</div>
+
+<!-- ===== STEP 3: 임차인 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">3</div>
+    <div class="card-title">임차인 현황 및 대항력 판단</div>
+  </div>
+  <div class="risk-item ok">
+    <div class="risk-item-title">✅ 임차인 없음 — 완전 공실</div>
+    <div class="risk-item-body">
+      • 매각물건명세서: "조사된 임차내역없음" (2025.12.02 / 2026.04.29 두 차례 확인)<br>
+      • 현황조사서: 상가건물임대차현황서 해당사항 없음, 폐문부재<br>
+      • 전입세대확인서: 세대주 존재하지 않음<br>
+      • 현황: 공실 상태 (2024.11.14 현황조사 기준)<br>
+      <br>
+      → <strong>대항력 있는 임차인 없음. 배당 요구 임차인 없음. 명도 비용 불필요.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STEP 4: 특수 리스크 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">4</div>
+    <div class="card-title">특수 리스크 체크</div>
+  </div>
+  <div class="risk-grid">
+    <div class="risk-item ok">
+      <div class="risk-item-title">✅ 법정지상권</div>
+      <div class="risk-item-body">집합건물 구분소유권으로 대지권 포함. 법정지상권 성립 불가.</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="risk-item-title">✅ 유치권</div>
+      <div class="risk-item-body">현황조사서상 유치권 신고 없음. 공실 상태로 점유자 없어 유치권 성립 여지 없음.</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="risk-item-title">✅ 공유지분</div>
+      <div class="risk-item-body">주식회사베라솔 단독 소유. 공유지분 경매 아님.</div>
+    </div>
+    <div class="risk-item warn">
+      <div class="risk-item-title">⚠️ 체납 공과금 (화성시 압류)</div>
+      <div class="risk-item-body">
+        갑구5: 2025.09.03 화성시 압류 (징수과-012805)<br>
+        → 지방세 체납 추정. 규모 미상.<br>
+        → 당해세(재산세 등)는 근저당보다 우선 배당 가능<br>
+        → <strong>현장·법원에서 체납액 확인 필요</strong>
+      </div>
+    </div>
+    <div class="risk-item ok">
+      <div class="risk-item-title">✅ 공부 불일치</div>
+      <div class="risk-item-body">감정평가서: "공부와의 차이 해당 없음." 위반건축물 없음.</div>
+    </div>
+    <div class="risk-item ok">
+      <div class="risk-item-title">✅ 신탁 이력</div>
+      <div class="risk-item-body">
+        2022.12.27 신한자산신탁 소유권보존 (신탁원부 2022-20212호)<br>
+        → 2023.04.18 신탁 완전 말소 확인<br>
+        → 대지권 별도등기(신탁)도 2023.04.18 말소 확인<br>
+        → <strong>신탁 잔여권리 없음</strong>
+      </div>
+    </div>
+    <div class="risk-item warn">
+      <div class="risk-item-title">⚠️ 집합건물 관리비 체납</div>
+      <div class="risk-item-body">
+        공실 2년 이상 → 관리비 체납 가능성 높음<br>
+        → 낙찰자는 <strong>공용부분 체납 관리비만 승계</strong><br>
+        → 전유부분 관리비는 미승계<br>
+        → <strong>관리사무소 체납액 확인 필수</strong>
+      </div>
+    </div>
+    <div class="risk-item warn">
+      <div class="risk-item-title">⚠️ 공동담보 잔여채권</div>
+      <div class="risk-item-body">
+        5019호 310,500,000원 낙찰로 하나은행 일부 회수<br>
+        잔여 공동담보: 이천시 해월리 물건들 (목록 2026-29693)<br>
+        → 이천시 물건 경매 진행 시 채권 일부 추가 소멸 가능<br>
+        → 5020호 낙찰가에 잔여채권 전액 집중될 수 있음
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STEP 4-A: 입지 분석 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">4A</div>
+    <div class="card-title">입지 분석</div>
+    <div class="card-subtitle">동탄2지구 노선상가지대</div>
+  </div>
+
+  <div class="infra-grid">
+    <div class="infra-item check">
+      <div class="infra-icon">🌿</div>
+      <div class="infra-text">
+        <strong>동탄호수공원</strong>
+        <span>도보 3~5분 인접 ✓</span>
+      </div>
+    </div>
+    <div class="infra-item check">
+      <div class="infra-icon">🛒</div>
+      <div class="infra-text">
+        <strong>대형마트</strong>
+        <span>인근 Hi마트 등 ✓</span>
+      </div>
+    </div>
+    <div class="infra-item check">
+      <div class="infra-icon">🏫</div>
+      <div class="infra-text">
+        <strong>학교</strong>
+        <span>이솔초·정현초 등 ✓</span>
+      </div>
+    </div>
+    <div class="infra-item check">
+      <div class="infra-icon">🚌</div>
+      <div class="infra-text">
+        <strong>버스</strong>
+        <span>동탄대로변 정류장 ✓</span>
+      </div>
+    </div>
+    <div class="infra-item check">
+      <div class="infra-icon">🏢</div>
+      <div class="infra-text">
+        <strong>근린상가</strong>
+        <span>건물 내 상가 ✓</span>
+      </div>
+    </div>
+    <div class="infra-item nocheck">
+      <div class="infra-icon">🚇</div>
+      <div class="infra-text">
+        <strong>지하철</strong>
+        <span>GTX-A 동탄역 3km+ △</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:14px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
+    <div style="font-weight:700;margin-bottom:8px;font-size:13px;">교통 현황</div>
+    <table>
+      <tr>
+        <td class="td-label">GTX-A 동탄역</td>
+        <td>약 3~4km → <span class="badge badge-gray">비역세권 (1,500m 초과)</span> — 실질 프리미엄 효과 미미</td>
+      </tr>
+      <tr>
+        <td class="td-label">버스 교통</td>
+        <td>동탄대로변 노선버스 다수 → 수원·서울 방면 광역버스 운행</td>
+      </tr>
+      <tr>
+        <td class="td-label">차량 접근</td>
+        <td>동탄대로 폭 50m, 인접 도로 20m·15m → 차량 접근 우수</td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="margin-top:14px;padding:12px 16px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:13px;color:#1e40af;">
+    <strong>🟡 입지 종합 판정: 보통</strong><br>
+    생활 인프라 5개 충족(우수 기준), 동탄호수공원 인접의 장점이 있으나 GTX 비역세권.
+    <strong>5층 상업용</strong>이라는 특성상 입지 우위가 임대 수요로 직결되지 않는 것이 핵심 문제.
+  </div>
+</div>
+
+<!-- ===== STEP 5: 배당 시뮬레이션 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">5</div>
+    <div class="card-title">배당 시뮬레이션</div>
+    <div class="card-subtitle">5회 이상 유찰 물건 기준</div>
+  </div>
+
+  <div style="margin-bottom:14px;padding:10px 14px;background:#fef9f0;border:1px solid #fde68a;border-radius:8px;font-size:12px;color:#92400e;">
+    <strong>C시나리오 제외:</strong> 청구채권액(983,932,557원)이 현 최저매각가격(62,858,000원)보다 훨씬 높아 낙찰 가능 가격대에서 실현 불가 → A·B시나리오만 표시
+  </div>
+
+  <table class="dividend-table">
+    <thead>
+      <tr>
+        <th>순위</th>
+        <th>권리자</th>
+        <th>청구금액</th>
+        <th>A배당<br><small>6,286만원</small></th>
+        <th>B배당<br><small>7,543만원</small></th>
+        <th>비고</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>집행비용</td>
+        <td>약 60~100만</td>
+        <td>60~100만</td>
+        <td>60~100만</td>
+        <td>추정치</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>당해세 (화성시)</td>
+        <td>미상</td>
+        <td>잔여액 일부</td>
+        <td>잔여액 일부</td>
+        <td>체납액 확인 필요</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>소액임차인 최우선변제</td>
+        <td>—</td>
+        <td>해당없음</td>
+        <td>해당없음</td>
+        <td>임차인 없음</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>우선변제권 임차인</td>
+        <td>—</td>
+        <td>해당없음</td>
+        <td>해당없음</td>
+        <td>임차인 없음</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>하나은행 (근저당)</td>
+        <td>청구액 잔여분</td>
+        <td class="no-dividend">약 5,900~6,200만</td>
+        <td class="no-dividend">약 7,100~7,400만</td>
+        <td>채권 청구액 대비 극소 배당</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>세현제삼차 (근저당)</td>
+        <td>3,600만</td>
+        <td class="no-dividend">0원</td>
+        <td class="no-dividend">0원</td>
+        <td>잔액 없음</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>푸른새마을금고 (가압류)</td>
+        <td>5억</td>
+        <td class="no-dividend">0원</td>
+        <td class="no-dividend">0원</td>
+        <td>잔액 없음</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:14px;padding:12px 14px;background:#f0fdf4;border-radius:8px;font-size:13px;">
+    <strong>✅ 낙찰자 입장 핵심:</strong> 인수해야 할 권리 없음. 낙찰가 전액이 집행비용·당해세·근저당권자에게 배당되며,
+    <strong>낙찰자는 깨끗한 소유권 취득 가능</strong>.
+  </div>
+</div>
+
+<!-- ===== STEP 6: 종합 판단 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">6</div>
+    <div class="card-title">종합 판단 및 수익 계산</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="verdict-box">
+      <div class="verdict-title">🟢 권리분석 리스크: 안전</div>
+      <div class="verdict-body">
+        ✅ 말소기준권리 명확 (2023.04.18 근저당)<br>
+        ✅ 임차인 없음 (완전 공실)<br>
+        ✅ 인수 권리 없음<br>
+        ✅ 법정지상권 불가<br>
+        ✅ 신탁 잔여권리 없음<br>
+        ⚠️ 화성시 압류 당해세 규모 확인 필요
+      </div>
+    </div>
+    <div class="verdict-box warn">
+      <div class="verdict-title">🟡 투자 리스크: 주의</div>
+      <div class="verdict-body">
+        ⚠️ 5층 소형상가 → 임대 수요 극히 제한적<br>
+        ⚠️ 신축 후 2년 공실 → 구조적 수요 미스매치<br>
+        ⚠️ 관리비 체납 공용부분 승계 (규모 미확인)<br>
+        ⚠️ 5회 유찰 → 가격만의 문제가 아닌 구조적 원인<br>
+        ⚠️ 매각(EXIT) 시 매수자 찾기 어려울 수 있음
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div style="font-weight:700;font-size:14px;margin-bottom:12px;">수익 시나리오 (A: 62,858,000원 낙찰 기준)</div>
+    <div class="scenario-cards">
+      <div class="scenario-card">
+        <div class="scenario-card-title">📊 실투자금 산출</div>
+        <div class="scenario-card-item"><span class="label">낙찰가</span><span class="val">62,858,000원</span></div>
+        <div class="scenario-card-item"><span class="label">취득세 (상가 4.6%)</span><span class="val">약 2,891,000원</span></div>
+        <div class="scenario-card-item"><span class="label">법무사·경매비</span><span class="val">약 1,500,000원</span></div>
+        <div class="scenario-card-item"><span class="label">관리비 체납분</span><span class="val warn">미확인 (현장확인必)</span></div>
+        <div class="divider"></div>
+        <div class="scenario-card-item"><span class="label" style="font-weight:700;">실투자금 추정</span><span class="val" style="font-size:16px;color:#1e293b;">약 6,700~7,500만원</span></div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-card-title">🏢 임대 운영 시나리오</div>
+        <div class="scenario-card-item"><span class="label">예상 월세 (5층 9평)</span><span class="val">50~80만원/월</span></div>
+        <div class="scenario-card-item"><span class="label">예상 보증금</span><span class="val">1,000~2,000만원</span></div>
+        <div class="scenario-card-item"><span class="label">연 임대수익</span><span class="val">600~960만원</span></div>
+        <div class="divider"></div>
+        <div class="scenario-card-item"><span class="label">예상 수익률</span><span class="val good">9~14% (임차 성공 시)</span></div>
+        <div class="scenario-card-item"><span class="label">리스크</span><span class="val warn">공실 지속 가능성</span></div>
+      </div>
+
+      <div class="scenario-card best">
+        <div class="scenario-card-title">💡 단기 매각 시나리오 <span class="badge badge-blue">추천</span></div>
+        <div class="scenario-card-item"><span class="label">감정가 기준 시세</span><span class="val">374,000,000원</span></div>
+        <div class="scenario-card-item"><span class="label">실매각 예상가</span><span class="val">2억~3억 5천만원</span></div>
+        <div class="scenario-card-item"><span class="label">낙찰가 대비 차익</span><span class="val good">1억 3천~2억 8천만원</span></div>
+        <div class="divider"></div>
+        <div class="scenario-card-item"><span class="label">조건</span><span class="val warn">매수자 찾기 어려울 수 있음</span></div>
+        <div style="margin-top:8px;font-size:11px;color:#3b82f6;">
+          5019호 낙찰가(310,500,000원)가 기준 — 5020호는 면적 절반+호별열세 적용 시 약 1.4~2억원 예상.
+          그래도 낙찰가(6,300만) 대비 충분한 차익.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div style="font-weight:700;margin-bottom:10px;">손익분기 낙찰가 역산</div>
+    <div style="padding:14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">
+      <strong>임대 수익률 5% 기준 최대 낙찰가:</strong><br>
+      연 임대수익 720만원(중간값) ÷ 5% = 1억 4,400만원<br>
+      → 최대 낙찰가: 1억 4,400만 - 부대비용 500만 = <strong>약 1억 3,900만원</strong><br>
+      → 현 최저가 6,286만원은 이 기준의 45% → <strong>충분한 안전 마진</strong><br>
+      <br>
+      <strong>단기 매각 기준 최대 낙찰가:</strong><br>
+      예상 매각가 1억5천~2억 × (1 - 30% 마진) = <strong>1억~1억 4천만원</strong>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:16px;background:#f0fdf4;border:2px solid #86efac;border-radius:10px;">
+    <div style="font-weight:700;font-size:14px;margin-bottom:8px;">🎯 적정 입찰가 범위</div>
+    <div style="font-size:22px;font-weight:700;color:#15803d;margin-bottom:8px;">
+      70,000,000 ~ 90,000,000원
+    </div>
+    <div style="font-size:12px;color:#374151;line-height:1.8;">
+      • 현 최저가(6,286만) + 소폭 프리미엄 적용 범위<br>
+      • 감정가 대비 19~24% — 5층 소형상가 특성상 보수적 접근<br>
+      • 7천만원 이하 낙찰 시: 임대 성공 시 연 9%+ 수익률 / 매각 시 1억+ 차익 기대<br>
+      • 1억원 초과 입찰은 5층 소형이라는 구조적 리스크 고려 시 <strong style="color:#dc2626;">재검토</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 입찰 전 필수 확인사항 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-step">✓</div>
+    <div class="card-title">입찰 전 필수 확인사항</div>
+  </div>
+  <ul class="checklist">
+    <li>
+      <div>
+        <strong>관리비 체납액 확인</strong> — 공실 2년 이상 경과, 공용부분 관리비 체납이 상당할 가능성.
+        관리사무소 방문 또는 법원 문건송달 내역에서 관리단 교부청구 여부 확인.
+        낙찰자는 <strong>공용부분 체납만 승계</strong>.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>화성시 압류 체납세금 규모 확인</strong> — 갑구5 2025.09.03 압류의 세목과 금액.
+        당해세(재산세·종부세)는 근저당보다 우선 배당되어 낙찰가에서 먼저 공제됨.
+        법원 경매기록 열람 또는 화성시 세무과 문의.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>5층 임대 시세 및 공실률 실사</strong> — 현재 5층 다른 호실(5019호 포함) 임대 여부 및 월세 수준 확인.
+        5019호 낙찰자가 임차인을 구했는지 여부가 5020호 임대 가능성을 가늠하는 핵심 지표.
+        현장 방문 + 인근 부동산 중개소 문의.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>이천시 공동담보 경매 진행 현황</strong> — 공동담보목록 2026-29693에 이천시 해월리 물건들이 포함.
+        해당 물건에서 하나은행이 추가 회수할 경우 5020호 잔여채권 규모 변동.
+        채권자(하나은행)의 배당 수령 후 잔여 채권이 5020호에 집중될 수 있음.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>건물 전체 공실률 및 임대 분위기 확인</strong> — 더샵동탄센텀폴리스2단지 그랑파사쥬 5층 전체 공실 현황.
+        상가 전체가 침체 상태라면 임대 전략 자체를 재검토해야 함.
+        반대로 다른 호실이 잘 임대됐다면 5020호 임대 가능성도 상승.
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== 사이트 보기 버튼 ===== -->
+<div class="site-btn-wrap">
+  <a href="https://www.tankauction.com/ca/caView.php?tid=2477340" target="_blank" class="site-btn">
+    🔗 사이트 보기
+  </a>
+  <div style="margin-top:10px;font-size:12px;color:#94a3b8;">
+    분석 기준일: 2026.06.07 · 서류 기준시점: 2024.11.25 (감정평가서)
+  </div>
+</div>
+
+</div>
+</body>
+</html>

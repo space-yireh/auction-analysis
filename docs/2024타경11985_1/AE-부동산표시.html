@@ -1,0 +1,281 @@
+
+<html lang="ko">
+<head>
+	<meta charset="utf-8" />
+	<meta name="Generator" content="origin">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=1000, maximum-scale=1.0">
+			<title>탱크옥션</title>
+	<meta name="Description" content="법원경매,부동산경매">
+		<link rel="stylesheet" type="text/css" href="/css/font.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tank.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/style.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/button.css?ver=20260524">
+			<link rel="stylesheet" type="text/css" href="/css/viewMob.css?ver=20260524">
+		
+	<link rel="stylesheet" type="text/css" href="/css/input.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tab.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/css/tooltip.css?ver=20260524">
+	<link rel="stylesheet" type="text/css" href="/js/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/swiper-5.2.0/css/swiper.css">
+	<link href='/img/icon/icon192x192.png' rel='icon' type='image/png' />
+	<link href='/img/icon/icon192x192.png' rel='shortcut icon' type='image/png' />
+	<link href='/img/icon/icon128x128.png' rel='apple-touch-icon'  type='image/png'/>
+
+	<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.history.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script src="/js/swiper-5.2.0/js/swiper.js"></script>
+	<!-- 테스트후 삭제-->
+	<!--<script type="text/javascript" src="/js/crypto-js.min.js"></script>-->
+	<!-- 테스트후 삭제-->
+	<script type="text/javascript" src="/js/jquery.ui.datepicker-ko.js"></script>
+	<script type="text/javascript" src="/js/jquery.number.min.js"></script>
+	<script type="text/javascript" src="/js/Json.js?ver=20260524"></script>
+	<script type="text/javascript" src="/js/Func.js?ver=20260524"></script>
+	<script type="text/javascript" src="/js/login.js?ver=20260524"></script>
+<!--	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>-->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+	<!--// 프린트 -->
+<!--	<script type="text/javascript" src="/js/printThis.js"></script>-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js"></script>
+	<script type="text/javascript">
+		function supports_local_storage(){return (typeof window.localStorage != 'undefined');}
+		var lsg_chk=supports_local_storage();
+		var TK={'k2':'0','mob':''};
+		var TK_FILE={'CA':'/FILE/CA/','PA':'/FILEPA/PA/','INC':'/FILEINC/'};	
+		var TK_INT_GY={};
+		var TK_INT_GO={};
+		var TK_INT_DEL={'did':''};
+		
+	</script>
+	</head>
+<style>
+	html>/**/body{overflow-y:auto !important}
+</style>
+	<body style="padding:0;overflow-x:hidden">
+<div id="pop_wrap">
+
+<link rel='stylesheet' type='text/css' href='/css/court_solar.css?ver=20260524'><style>
+	html>/**/body{overflow-x:auto !important}
+	.Ltbl_dt, .Ltbl_list{width:100%;max-width:920px !important}
+</style>
+<div class='center bold' style='background:lavender;padding:6px 0 5px'>자료등록/수집일 2025-12-05</div><div class='print_view center'></div><div id='fileV'><div id='filePopView'>
+		<div style='padding:10px 0;width:90%;max-width:920px;margin:0 auto'>
+			<div style='width:100%;margin-top:3px'>
+				<div class='fright' style='display:flex;align-items:center;justify-content:center;'>
+					
+		<span id='selfNumViewBtn' style='display:flex;align-items:center;justify-content:center;margin-right:10px;background:#ddd;border-radius:25px;padding:6px 10px;opacity: 0;'>
+			<div class='toggleSwitchBox' style='margin-right:5px'>
+				<label class='toggleSwitch'>
+					<input id='setting_checkbox' type='checkbox' class='settings'>
+					<p>
+						<span style='padding:4px 0 0 6px'>ON</span>
+						<span style='padding:4px 2px 0 2px'>OFF</span>
+					</p>
+				</label>
+			</div>
+			<div class='modalTitle'>본건만 보기</div>
+		</span>
+		
+					<span onclick='prtGo();' class='button btn_small btn_white radius_30' id='prt_btn' style='padding:6px 15px;font-size:13px'>인쇄</span>
+				</div>
+			</div>
+			<div id='fileV_con' class='clear'>
+			<div class='table_title'>
+			<h3>부동산표시목록</h3>
+			</div>
+			<table class='Ltbl_list' summary='부동산 표시목록'>
+			<caption>부동산 표시목록</caption>
+			<thead>
+			<tr>
+			<th width='8%'>번호</th>
+			<th width='25%'>소재지 </th>
+			<th width='47%'>용 도/구 조/면 적</th>
+			<th width='20%'>비 고</th>
+			</tr>
+			</thead>
+			<tbody>
+		
+				<tr class='allNum'>
+				<td>1</td>
+				<td>경기도 화성시 동탄대로5길 9, 5층5019호 (송동,더샵동탄센텀폴리스2단지그랑파사쥬)</td>
+				<td class='txtleft'>
+			
+					1동의 건물 표시 <br>
+			
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 송동  725-1<br>
+						
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 송동  725-2<br>
+						
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 송동  725-3<br>
+						
+							&nbsp;&nbsp;&nbsp;&nbsp;더샵동탄센텀폴리스2단지그랑파사쥬<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;[도로명 주소] <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시  동탄대로5길 9 <br>
+						위 지상<br />&nbsp;&nbsp;&nbsp;&nbsp;철근콘크리트구조 철골철근콘크리트구조 (철근)콘크리트지붕 6층 근린생활시설 문화 및 집회시설<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+지3층 79.6416㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+지2층 165.4265㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+지1층 220.8654㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1층 3105.0304㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2층 3422.6461㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3층 3420.3615㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4층 3378.4772㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5층 3390.0591㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+6층 2389.0357㎡<br><br>
+					전유의 건물 표시 <br>
+			
+							&nbsp;&nbsp;&nbsp;&nbsp;건물의 번호 : 5층5019호<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;구&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조 : 철근콘크리트구조 제2종근린생활시설 67.8262㎡<br><br>대지권의 목적인 토지의 표시<br>&nbsp;&nbsp;&nbsp;&nbsp;토지의&nbsp;&nbsp;표시 : <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								1. 경기도화성시송동725-1 <br> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								대 1736.1㎡ <br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								2. 경기도화성시송동725-2 <br> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								대 1974.7㎡ <br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								3. 경기도화성시송동725-3 <br> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								대 1868㎡ <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;대지권의 종류 : <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  1. 소유권 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  2. 소유권 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  3. 소유권 <br> 
+                &nbsp;&nbsp;&nbsp;&nbsp;대지권의 비율 : <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  1. 5578.8 분의 13.6468 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  2. 5578.8 분의 13.6468 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  3. 5578.8 분의 13.6468 <br> 
+                <br> </td><td></td></tr>
+				<tr class='allNum selfNum'>
+				<td>2</td>
+				<td>경기도 화성시 동탄대로5길 9, 5층5020호 (송동,더샵동탄센텀폴리스2단지그랑파사쥬)</td>
+				<td class='txtleft'>
+			
+					1동의 건물 표시 <br>
+			
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 송동  725-1<br>
+						
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 송동  725-2<br>
+						
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 송동  725-3<br>
+						
+							&nbsp;&nbsp;&nbsp;&nbsp;더샵동탄센텀폴리스2단지그랑파사쥬<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;[도로명 주소] <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시  동탄대로5길 9 <br>
+						위 지상<br />&nbsp;&nbsp;&nbsp;&nbsp;철근콘크리트구조 철골철근콘크리트구조 (철근)콘크리트지붕 6층 근린생활시설 문화 및 집회시설<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+지3층 79.6416㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+지2층 165.4265㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+지1층 220.8654㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1층 3105.0304㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2층 3422.6461㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3층 3420.3615㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4층 3378.4772㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5층 3390.0591㎡<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+6층 2389.0357㎡<br><br>
+					전유의 건물 표시 <br>
+			
+							&nbsp;&nbsp;&nbsp;&nbsp;건물의 번호 : 5층5020호<br>
+						&nbsp;&nbsp;&nbsp;&nbsp;구&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조 : 철근콘크리트구조 제2종근린생활시설 31.1797㎡<br><br>대지권의 목적인 토지의 표시<br>&nbsp;&nbsp;&nbsp;&nbsp;토지의&nbsp;&nbsp;표시 : <br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								1. 경기도화성시송동725-1 <br> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								대 1736.1㎡ <br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								2. 경기도화성시송동725-2 <br> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								대 1974.7㎡ <br>
+							
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								3. 경기도화성시송동725-3 <br> 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								대 1868㎡ <br>
+							&nbsp;&nbsp;&nbsp;&nbsp;대지권의 종류 : <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  1. 소유권 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  2. 소유권 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  3. 소유권 <br> 
+                &nbsp;&nbsp;&nbsp;&nbsp;대지권의 비율 : <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  1. 5578.8 분의 6.2734 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  2. 5578.8 분의 6.2734 <br> 
+                
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  3. 5578.8 분의 6.2734 <br> 
+                <br> </td><td></td></tr>
+      <tr>
+        <td colspan='6'>임의경매</td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
+		</div></div></div></div> <!-- tk_wrap -->
+<!--floating div tank.css-->
+<div id="FLOATING_DIV" style="display:none">
+	<div id="FLOATING_DIV_MASK"	class="FLOATING_DIV_MASK"></div>
+	<div class="FLOATING_DIV_BLOCK">
+		<div id="FLOATING_CONTENT" class="FLOATING_CONTENT"	onclick="event.cancelBubble=true"></div>
+	</div>
+</div>
+<!--floating div -->
+</body>
+</html><script>
+//인쇄
+function prtGo() 
+{
+	var prtHtml=[];
+	prtHtml.push("<div style='border-bottom:1px solid #ddd;padding:10px 0'>");
+	prtHtml.push("	<div class='fleft'>자료등록/수집일 : 2025-12-05</div>");
+	prtHtml.push("	<div class='fright'>(출력시간 : 2026-06-07 03:35 PM)</div>");
+	prtHtml.push("	<div class='clear'></div>");
+	prtHtml.push("</div>");
+	prtHtml.push("<div class='clear' style='width:920px;margin 0 auto'>"+$('#fileV_con').html()+"</div>");
+	prtHtml.push("<div class='clear' style='width:920px;margin 0 auto;background:#ddd;margin-top:30px'><div style='padding:10px'>제공된 정보가 실제 정보와 일치하지 않거나 정보 제공 이후 중요한 변동 사항이 생길 수 있으므로, 법원사이트의 정보를 반드시 재확인 후 입찰 하시기 바랍니다.</div></div>");
+	var prtContents=prtHtml.join("");
+	printThis_(prtContents);
+}
+
+$(() => {
+		// .selfNum클래스가 있는 dome이 1개라도 있으면 selfNumViewBtn 표기
+		if($(".selfNum").length > 0) {
+			$("#selfNumViewBtn").show();
+			$("#selfNumViewBtn").css({"opacity":"1"});
+		} else {
+			$("#selfNumViewBtn").hide();
+			$("#selfNumViewBtn").css({"opacity":"0"});
+		}
+		// 체크박스 클릭 이벤트리스너
+		$('.settings[type="checkbox"]').on('click', (item) => {
+			const value = $(item.currentTarget).is(':checked') ? 1 : 0;
+			if(value) {
+				$(".allNum").hide();
+				$(".selfNum").show();
+			} else {
+				$(".allNum").hide();
+				$(".allNum").show();
+			}
+		});
+})
+</script>
