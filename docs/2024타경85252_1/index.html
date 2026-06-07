@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2024타경85252 경매분석 | 수원 장안구 송죽동 베스트빌</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'맑은 고딕','Apple SD Gothic Neo',sans-serif;background:#f5f6fa;color:#333;font-size:14px}
+.container{max-width:960px;margin:0 auto;padding:20px}
+.header{background:linear-gradient(135deg,#1a237e,#283593);color:white;padding:24px;border-radius:12px;margin-bottom:20px}
+.header h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.meta span{background:rgba(255,255,255,.15);padding:4px 10px;border-radius:20px;font-size:12px}
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:700;font-size:13px}
+.badge-yellow{background:#fff3cd;color:#856404}
+.card{background:white;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card h2{font-size:16px;font-weight:700;color:#1a237e;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #e8eaf6}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.info-table{width:100%;border-collapse:collapse}
+.info-table th,.info-table td{padding:7px 10px;border:1px solid #e0e0e0;font-size:13px;text-align:left}
+.info-table th{background:#f5f6fa;font-weight:600;width:35%;color:#555}
+.tl{position:relative;padding-left:4px}
+.tl-item{position:relative;padding:9px 0 9px 22px;border-left:2px solid #e0e0e0}
+.tl-item::before{content:'';position:absolute;left:-7px;top:13px;width:12px;height:12px;border-radius:50%;background:#bdbdbd}
+.tl-item.crit{border-left-color:#ef9a9a}.tl-item.crit::before{background:#d32f2f}
+.tl-item.act::before{background:#1565c0}.tl-item.act{border-left-color:#90caf9}
+.tl-item.warn::before{background:#f57c00}
+.tl-date{font-size:11px;color:#888}
+.tl-title{font-size:13px;font-weight:600}
+.tl-desc{font-size:12px;color:#666;margin-top:2px}
+.tenant-table{width:100%;border-collapse:collapse;font-size:12px}
+.tenant-table th{background:#1a237e;color:white;padding:8px 5px;text-align:center}
+.tenant-table td{padding:7px 5px;border-bottom:1px solid #eee;text-align:center}
+.tenant-table tr:hover td{background:#f9f9f9}
+.tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600}
+.tag-red{background:#fce4ec;color:#c62828}
+.tag-green{background:#e8f5e9;color:#2e7d32}
+.tag-orange{background:#fff3e0;color:#e65100}
+.tag-gray{background:#f5f5f5;color:#616161}
+.tag-blue{background:#e3f2fd;color:#1565c0}
+.risk-item{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px;margin-bottom:8px}
+.risk-item.ok{background:#e8f5e9}.risk-item.warn{background:#fff3e0}.risk-item.danger{background:#fce4ec}
+.risk-icon{font-size:18px;min-width:24px}
+.risk-title{font-size:13px;font-weight:600}
+.risk-desc{font-size:12px;color:#666;margin-top:2px}
+.verdict-box{background:linear-gradient(135deg,#1a237e,#283593);color:white;border-radius:12px;padding:24px;text-align:center;margin:16px 0}
+.verdict-box h3{font-size:13px;opacity:.8;margin-bottom:6px}
+.verdict-box .price{font-size:26px;font-weight:800;margin:8px 0}
+.verdict-box .sub{font-size:12px;opacity:.7}
+.checklist{list-style:none}
+.checklist li{padding:6px 0 6px 24px;position:relative;font-size:13px;border-bottom:1px solid #f0f0f0}
+.checklist li::before{content:'☐';position:absolute;left:0;color:#1a237e;font-weight:700}
+.strategy-card{border:2px solid #e0e0e0;border-radius:10px;padding:16px;position:relative;margin-top:8px}
+.strategy-card.rec{border-color:#1a237e}
+.rec-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#1a237e;color:white;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.strategy-title{font-size:14px;font-weight:700;margin-bottom:8px}
+.strategy-desc{font-size:12px;color:#555;line-height:1.7}
+.slider-group{margin:12px 0}
+.slider-group label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.slider-group label span{font-weight:700;color:#1a237e}
+input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:#e0e0e0;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#1a237e;cursor:pointer}
+.profit-result{background:#e8eaf6;border-radius:10px;padding:16px;margin-top:12px}
+.profit-result .row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px}
+.profit-result .row:last-child{border:none;font-weight:700;font-size:15px;color:#1a237e}
+.bre-bar{height:18px;background:#e0e0e0;border-radius:9px;overflow:hidden;margin:6px 0}
+.bre-fill{height:100%;border-radius:9px;transition:width .4s}
+.bre-safe{background:linear-gradient(to right,#43a047,#66bb6a)}
+.bre-warn{background:linear-gradient(to right,#fb8c00,#ffa726)}
+.bre-danger{background:linear-gradient(to right,#e53935,#ef5350)}
+.warn-box{background:#fff8e1;border-left:4px solid #ff8f00;padding:12px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px;line-height:1.6}
+.info-box{background:#e3f2fd;border-left:4px solid #1565c0;padding:12px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px;line-height:1.6}
+.site-btn{display:block;width:200px;margin:20px auto;padding:14px 0;background:#1a237e;color:white;text-align:center;text-decoration:none;border-radius:30px;font-size:15px;font-weight:700}
+.site-btn:hover{background:#283593}
+.ucnt{font-size:11px;color:#888}
+@media print{body{background:white}.container{max-width:100%;padding:10px}.card{box-shadow:none;border:1px solid #ddd}.site-btn{display:none}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+    <div>
+      <h1>🏢 2024타경85252 · 수원 장안구 송죽동 베스트빌</h1>
+      <div style="font-size:13px;opacity:.9;margin-top:4px">정조로1110번길 14-15 · 지상5층 제2종근린생활시설 (수익형)</div>
+    </div>
+    <span class="badge badge-yellow" style="font-size:15px">🟡 중위험</span>
+  </div>
+  <div class="meta">
+    <span>📅 매각기일 2026.06.08</span>
+    <span>🏛️ 수원지방법원 경매20계</span>
+    <span>🔄 4회차 (3회 유찰)</span>
+    <span>💰 최저가 486,583,000원</span>
+    <span>📉 감정가 대비 34.3%</span>
+    <span>🔑 대항력 임차인 없음</span>
+  </div>
+</div>
+
+<!-- STEP 1 -->
+<div class="card">
+  <h2>📋 STEP 1 · 물건 기본정보</h2>
+  <div class="grid-2">
+    <div>
+      <table class="info-table">
+        <tr><th>사건번호</th><td><strong>2024타경85252</strong></td></tr>
+        <tr><th>사건종류</th><td>부동산임의경매</td></tr>
+        <tr><th>물건번호</th><td>1 (토지+건물 일괄)</td></tr>
+        <tr><th>채무자/소유자</th><td>이정현</td></tr>
+        <tr><th>채권자</th><td>수원화성오산축산업협동조합</td></tr>
+        <tr><th>청구금액</th><td><strong>272,344,655원</strong></td></tr>
+        <tr><th>접수일</th><td>2024.08.21</td></tr>
+        <tr><th>배당요구종기</th><td>2024.11.08</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="info-table">
+        <tr><th>토지</th><td>송죽동 449-23 대 199.3㎡</td></tr>
+        <tr><th>건물</th><td>정조로1110번길 14-15</td></tr>
+        <tr><th>구조/층수</th><td>철근콘크리트조 지상5층</td></tr>
+        <tr><th>연면적(공부)</th><td>494.81㎡ (149.7평)</td></tr>
+        <tr><th>용도(공부)</th><td>제2종근린생활시설</td></tr>
+        <tr><th>용도(현황)</th><td>⚠️ 다세대+상가 혼재</td></tr>
+        <tr><th>감정평가액</th><td><strong>1,418,609,440원</strong></td></tr>
+        <tr><th>현재 최저가</th><td><strong style="color:#c62828">486,583,000원</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="warn-box" style="margin-top:14px">
+    ⚠️ <strong>물건 특이사항:</strong> ①1·2층 공부상 '사무소'이나 현황은 다세대주택 ②3·4층 공부면적보다 실측면적 과대 ③4층 공부상 1가구이나 현황 2가구 ④제시외 건물(발코니 3개·계단실·주택) 매각 포함
+  </div>
+
+  <div style="margin-top:16px">
+    <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:10px">유찰 이력</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="background:#fce4ec;border-radius:8px;padding:8px 14px;text-align:center;min-width:115px">
+        <div class="ucnt">1회 2026.02.24</div>
+        <div style="font-size:12px;font-weight:700;color:#c62828">1,418,609,440</div>
+        <div style="font-size:11px;color:#c62828">유찰</div>
+      </div>
+      <div style="background:#fce4ec;border-radius:8px;padding:8px 14px;text-align:center;min-width:115px">
+        <div class="ucnt">2회 2026.03.30</div>
+        <div style="font-size:12px;font-weight:700;color:#c62828">993,027,000</div>
+        <div style="font-size:11px;color:#c62828">유찰</div>
+      </div>
+      <div style="background:#fce4ec;border-radius:8px;padding:8px 14px;text-align:center;min-width:115px">
+        <div class="ucnt">3회 2026.04.29</div>
+        <div style="font-size:12px;font-weight:700;color:#c62828">695,119,000</div>
+        <div style="font-size:11px;color:#c62828">유찰</div>
+      </div>
+      <div style="background:#e8eaf6;border-radius:8px;padding:8px 14px;text-align:center;min-width:115px;border:2px solid #1a237e">
+        <div class="ucnt">4회 2026.06.08</div>
+        <div style="font-size:12px;font-weight:700;color:#1a237e">486,583,000</div>
+        <div style="font-size:11px;color:#1a237e">▶ 예정</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="card">
+  <h2>⚖️ STEP 2 · 권리 시간표 (말소기준권리)</h2>
+  <div class="grid-2">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:10px">📍 토지 (송죽동 449-23)</div>
+      <div class="tl">
+        <div class="tl-item crit">
+          <div class="tl-date">2013.12.02 ← <strong>토지 말소기준</strong></div>
+          <div class="tl-title" style="color:#c62828">🔴 근저당권 (을구10)</div>
+          <div class="tl-desc">수원화성오산축협 / 채최 324,000,000원</div>
+        </div>
+        <div class="tl-item act">
+          <div class="tl-date">2024.08.02</div>
+          <div class="tl-title">가압류 (갑구18)</div>
+          <div class="tl-desc">우리은행 9,573,317원 → 말소</div>
+        </div>
+        <div class="tl-item act">
+          <div class="tl-date">2024.08.22</div>
+          <div class="tl-title">임의경매개시결정 (갑구19)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024.09~12월</div>
+          <div class="tl-title">압류 3건 — 성북세무서·장안구청·종로구</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:10px">🏢 건물 (정조로1110번길 14-15)</div>
+      <div class="tl">
+        <div class="tl-item crit">
+          <div class="tl-date">2015.01.06 ← <strong>건물 말소기준</strong></div>
+          <div class="tl-title" style="color:#c62828">🔴 근저당권 (을구1)</div>
+          <div class="tl-desc">수원화성오산축협 / 채최 324,000,000원 (토지와 공동담보)</div>
+        </div>
+        <div class="tl-item act">
+          <div class="tl-date">2024.08.02</div>
+          <div class="tl-title">가압류 (갑구18) → 말소</div>
+        </div>
+        <div class="tl-item act">
+          <div class="tl-date">2024.08.22</div>
+          <div class="tl-title">임의경매개시결정 (갑구19)</div>
+        </div>
+        <div class="tl-item warn">
+          <div class="tl-date">2024.09.12</div>
+          <div class="tl-title">주택임차권등기 (을구14)</div>
+          <div class="tl-desc">문재성 80,000,000원 / 401호 → 말소기준 이후 → 매각 시 소멸</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box">
+    💡 <strong>핵심:</strong> 토지 말소기준(2013.12.02)과 건물 말소기준(2015.01.06)이 상이합니다. 임차인 대항력은 <strong>건물 말소기준 2015.01.06 이전 전입</strong> 여부로 판단 — 해당자 없음.
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="card">
+  <h2>👥 STEP 3 · 임차인 대항력 판단</h2>
+  <div style="overflow-x:auto">
+    <table class="tenant-table">
+      <thead>
+        <tr>
+          <th>성명</th><th>호수</th><th>전입일</th><th>확정일자</th><th>보증금</th><th>차임</th>
+          <th>배당요구</th><th>대항력</th><th>우선변제</th><th>소액최우선</th><th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>방운석</strong></td><td>101호</td><td>2018.06.18</td><td>—</td><td>미기재</td><td>—</td>
+          <td><span class="tag tag-gray">없음</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-gray">없음</span></td><td>불명</td><td>—</td>
+        </tr>
+        <tr>
+          <td><strong>강원영</strong></td><td>101호</td><td>2022.09.27</td><td>2022.09.27</td><td>40,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">24.9.23</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-orange">2,200만</span></td><td>계약만료</td>
+        </tr>
+        <tr>
+          <td><strong>이윤옥</strong></td><td>201호</td><td>2015.05.07</td><td>2020.10.16</td><td>5,000,000</td><td>450,000</td>
+          <td><span class="tag tag-blue">24.11.6</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-orange">500만</span></td><td>계약만료</td>
+        </tr>
+        <tr>
+          <td><strong>황정부</strong></td><td>202호</td><td>2021.08.09</td><td>2021.08.09</td><td>95,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">24.9.23</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-gray">해당없음</span></td><td>계약만료</td>
+        </tr>
+        <tr>
+          <td><strong>김진하</strong></td><td>203호</td><td>2022.08.30</td><td>2022.08.30</td><td>35,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">22.9.25</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-orange">2,200만</span></td><td>계약중</td>
+        </tr>
+        <tr>
+          <td><strong>이옥순</strong></td><td>301호</td><td>2015.09.22</td><td>—</td><td>—</td><td>—</td>
+          <td><span class="tag tag-gray">없음</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-gray">없음</span></td><td>—</td><td>손익휘 모친</td>
+        </tr>
+        <tr>
+          <td><strong>손익휘</strong></td><td>301호</td><td>2015.09.22</td><td>2014.10.08</td><td>120,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">24.9.25</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-gray">해당없음</span></td><td>이옥순 자녀</td>
+        </tr>
+        <tr>
+          <td><strong>진혁</strong></td><td>302호</td><td>2022.01.13</td><td>2021.12.13</td><td>120,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">24.9.19</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-gray">해당없음</span></td><td>계약만료</td>
+        </tr>
+        <tr>
+          <td><strong>문재성</strong></td><td>401호</td><td>2021.07.19</td><td>2021.07.19</td><td>80,000,000</td><td>300,000</td>
+          <td><span class="tag tag-blue">24.9.4</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-gray">해당없음</span></td><td>임차권등기</td>
+        </tr>
+        <tr>
+          <td><strong>박노영</strong></td><td>402호</td><td>2018.10.12</td><td>2018.10.16</td><td>100,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">24.9.11</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-gray">해당없음</span></td><td>계약만료</td>
+        </tr>
+        <tr>
+          <td><strong>권오복</strong></td><td>501호</td><td>2021.08.12</td><td>—</td><td>미기재</td><td>—</td>
+          <td><span class="tag tag-gray">없음</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-gray">없음</span></td><td>불명</td><td>한인실 배우자</td>
+        </tr>
+        <tr>
+          <td><strong>한인실</strong></td><td>501호</td><td>2021.08.12</td><td>2019.08.19</td><td>120,000,000</td><td>—</td>
+          <td><span class="tag tag-blue">24.9.11</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-green">있음</span></td><td><span class="tag tag-gray">해당없음</span></td><td>계약중</td>
+        </tr>
+        <tr>
+          <td><strong>김성웅</strong></td><td>102호(상가)</td><td>2024.03.07</td><td>—</td><td>10,000,000</td><td>500,000</td>
+          <td><span class="tag tag-gray">없음</span></td>
+          <td><span class="tag tag-red">없음</span></td>
+          <td><span class="tag tag-gray">없음</span></td><td>—</td><td>상가임차인</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:14px;padding:14px;background:#f5f6fa;border-radius:10px">
+    <div style="font-size:13px;font-weight:700;color:#1a237e;margin-bottom:10px">소액임차인 최우선변제 합산 (근저당보다 우선 공제)</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <div style="background:white;border-radius:8px;padding:10px 16px;border:1px solid #e0e0e0">
+        <div class="ucnt">이윤옥 (201호) 2015기준</div>
+        <div style="font-size:15px;font-weight:700">5,000,000원</div>
+      </div>
+      <div style="background:white;border-radius:8px;padding:10px 16px;border:1px solid #e0e0e0">
+        <div class="ucnt">강원영 (101호) 2021기준</div>
+        <div style="font-size:15px;font-weight:700">22,000,000원</div>
+      </div>
+      <div style="background:white;border-radius:8px;padding:10px 16px;border:1px solid #e0e0e0">
+        <div class="ucnt">김진하 (203호) 2021기준</div>
+        <div style="font-size:15px;font-weight:700">22,000,000원</div>
+      </div>
+      <div style="background:#e8eaf6;border-radius:8px;padding:10px 16px;border:2px solid #1a237e">
+        <div class="ucnt">합계</div>
+        <div style="font-size:18px;font-weight:800;color:#1a237e">49,000,000원</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    ⚠️ <strong>결론:</strong> 대항력 임차인 없음 — 매수인 인수 보증금 없음. 단, 배당 미수 임차인(황정부·진혁·문재성·한인실·이윤옥 잔여분 등)은 자발적 퇴거 거부 가능. <strong>인도명령 + 강제집행 절차 준비 필수.</strong>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="card">
+  <h2>⚠️ STEP 4 · 특수 리스크 체크</h2>
+  <div class="risk-item danger">
+    <div class="risk-icon">🚨</div>
+    <div>
+      <div class="risk-title">위반건축물 의심 — 건축물대장 반드시 확인</div>
+      <div class="risk-desc">공부상 1·2층 '사무소' → 현황 다세대주택. 3·4층 실측면적 공부보다 과대. 4층 공부 1가구 → 현황 2가구. 이행강제금 부과 이력 또는 추후 부과 가능성. 건축물대장 발급 후 위반사항 금액 확인 필수.</div>
+    </div>
+  </div>
+  <div class="risk-item danger">
+    <div class="risk-icon">🏠</div>
+    <div>
+      <div class="risk-title">다수 임차인 명도 — 11명, 6개월~1년 소요 예상</div>
+      <div class="risk-desc">배당 불가 임차인(황정부·진혁·문재성·한인실·이윤옥·강원영일부·김진하일부)은 명도 거부 가능성 높음. 각 세대별 인도명령 + 강제집행 비용 세대당 100~200만원, 총 5,000만~8,000만원 예산 필요.</div>
+    </div>
+  </div>
+  <div class="risk-item warn">
+    <div class="risk-icon">📑</div>
+    <div>
+      <div class="risk-title">주택임차권등기 (문재성, 401호)</div>
+      <div class="risk-desc">2024.09.12 등기 완료. 말소기준(2015.01.06) 이후 등기이므로 매각 시 소멸. 매수인 인수 없음. 단 문재성은 보증금 8,000만원 중 배당 전혀 못 받을 경우 강제집행 대상.</div>
+    </div>
+  </div>
+  <div class="risk-item warn">
+    <div class="risk-icon">💸</div>
+    <div>
+      <div class="risk-title">국세·지방세 체납 압류 다수 — 교부권자 청구액 미확인</div>
+      <div class="risk-desc">성북세무서·장안구청·종로구 압류. 교부권자 실제 청구금액에 따라 우선변제 임차인 배당 재원이 줄어들 수 있음. 법원 교부권자 청구내역 열람 필요.</div>
+    </div>
+  </div>
+  <div class="risk-item ok">
+    <div class="risk-icon">✅</div>
+    <div>
+      <div class="risk-title">법정지상권 — 없음</div>
+      <div class="risk-desc">토지·건물 동일 소유자(이정현), 일괄매각. 법정지상권 발생 요건 없음.</div>
+    </div>
+  </div>
+  <div class="risk-item ok">
+    <div class="risk-icon">✅</div>
+    <div>
+      <div class="risk-title">유치권 신고 — 없음 (현황조사 기준)</div>
+      <div class="risk-desc">현황조사서·문건송달 내 유치권 신고 없음. 현장 재확인 권장.</div>
+    </div>
+  </div>
+  <div class="risk-item ok">
+    <div class="risk-icon">✅</div>
+    <div>
+      <div class="risk-title">대항력 임차인 — 없음 (가장 큰 리스크 해소)</div>
+      <div class="risk-desc">전체 임차인이 건물 말소기준(2015.01.06) 이후 전입. 매수인 인수 보증금 없음.</div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4-A -->
+<div class="card">
+  <h2>📍 STEP 4-A · 입지 분석</h2>
+  <div class="grid-2">
+    <div>
+      <table class="info-table">
+        <tr><th>행정구역</th><td>경기도 수원시 장안구 송죽동</td></tr>
+        <tr><th>최인근 지하철</th><td>화서역(1호선) 약 1.5~2km</td></tr>
+        <tr><th>역세권 등급</th><td>⭐⭐⭐ 버스 연계 접근</td></tr>
+        <tr><th>수원역(1·분당선)</th><td>약 4km, 버스 15분</td></tr>
+        <tr><th>간선도로</th><td>정조로 인근, 버스 접근 양호</td></tr>
+        <tr><th>수원화성</th><td>인근 (문화재보호구역 확인 필요)</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="info-table">
+        <tr><th>인프라 점수</th><td>⭐⭐⭐⭐ 편의시설 양호</td></tr>
+        <tr><th>주거 수요</th><td>수원 구도심 — 안정적</td></tr>
+        <tr><th>임대 시세</th><td>소형 세대 전세 4,000~8,000만원</td></tr>
+        <tr><th>월세 시세</th><td>세대당 40~70만원(보증금 포함)</td></tr>
+        <tr><th>재개발</th><td>별도 확인 필요 (수원시 도시정비)</td></tr>
+        <tr><th>입지 총평</th><td>구도심 생활권, 소형 임대 수요 꾸준</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="info-box">
+    💡 수원 장안구 송죽동은 구도심 생활 인프라가 갖춰진 지역으로 소형 주거 임대 수요가 안정적입니다. 수원화성 인근 지역으로 향후 정비사업 가능성도 검토 가치 있으나 국토부 고시 기준 별도 확인 필요.
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="card">
+  <h2>💰 STEP 5 · 배당 시뮬레이션</h2>
+  <div class="grid-2">
+    <div>
+      <div style="background:#e8eaf6;padding:8px;border-radius:8px;text-align:center;margin-bottom:12px;font-size:13px;font-weight:700;color:#1a237e">
+        시나리오 A — 최저가 낙찰<br><span style="font-weight:400;font-size:12px">486,583,000원</span>
+      </div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-date">1순위</div><div class="tl-title">경매비용</div><div class="tl-desc">-7,000,000 → 잔 479,583,000원</div></div>
+        <div class="tl-item warn"><div class="tl-date">2순위</div><div class="tl-title">소액임차인 최우선변제</div><div class="tl-desc">-49,000,000 → 잔 430,583,000원</div></div>
+        <div class="tl-item crit"><div class="tl-date">3순위</div><div class="tl-title">근저당권자 (수원화성오산축협)</div><div class="tl-desc">-272,344,655 → 잔 158,238,345원</div></div>
+        <div class="tl-item act"><div class="tl-date">4순위</div><div class="tl-title">손익휘 (우선변제, 2015.09.22)</div><div class="tl-desc">-120,000,000 → 잔 38,238,345원 ✅</div></div>
+        <div class="tl-item act"><div class="tl-date">5순위</div><div class="tl-title">박노영 (우선변제, 2018.10.16)</div><div class="tl-desc">38,238,345원 배당 / 보증금 1억 → <span style="color:#c62828">61,761,655원 부족</span></div></div>
+        <div class="tl-item"><div class="tl-date">이후</div><div class="tl-title" style="color:#c62828">이윤옥·문재성·황정부·한인실·진혁·강원영·김진하 — 배당 없음</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="background:#e8f5e9;padding:8px;border-radius:8px;text-align:center;margin-bottom:12px;font-size:13px;font-weight:700;color:#2e7d32">
+        시나리오 B — 적정가 낙찰<br><span style="font-weight:400;font-size:12px">530,000,000원</span>
+      </div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-date">1순위</div><div class="tl-title">경매비용</div><div class="tl-desc">-7,000,000 → 잔 523,000,000원</div></div>
+        <div class="tl-item warn"><div class="tl-date">2순위</div><div class="tl-title">소액임차인 최우선변제</div><div class="tl-desc">-49,000,000 → 잔 474,000,000원</div></div>
+        <div class="tl-item crit"><div class="tl-date">3순위</div><div class="tl-title">근저당권자</div><div class="tl-desc">-272,344,655 → 잔 201,655,345원</div></div>
+        <div class="tl-item act"><div class="tl-date">4순위</div><div class="tl-title">손익휘</div><div class="tl-desc">-120,000,000 → 잔 81,655,345원 ✅</div></div>
+        <div class="tl-item act"><div class="tl-date">5순위</div><div class="tl-title">박노영</div><div class="tl-desc">81,655,345원 배당 / <span style="color:#c62828">18,344,655원 부족</span></div></div>
+        <div class="tl-item"><div class="tl-date">이후</div><div class="tl-title" style="color:#c62828">나머지 임차인 — 배당 없음</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="warn-box">
+    ⚠️ <strong>교부권자 주의:</strong> 국세·지방세 교부권자 실청구액에 따라 우선변제 임차인 배당 재원이 추가 감소할 수 있습니다. 법원 교부권자 청구내역 열람 후 배당 재계산 필요.
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="card">
+  <h2>🎯 STEP 6 · 종합 판단 &amp; 적정 입찰가</h2>
+  <div class="verdict-box">
+    <h3>적정 입찰가 범위</h3>
+    <div class="price">500,000,000 ~ 560,000,000원</div>
+    <div class="sub">감정가 14.19억 대비 35.2~39.5% | 최저가 4.87억 대비 103~115%</div>
+  </div>
+  <div class="grid-2">
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">📌 입찰 전 확인사항</div>
+      <ul class="checklist">
+        <li>건축물대장 발급 — 위반건축물 이행강제금 금액 확인</li>
+        <li>수원시 도시정비 계획 (재개발·재건축 구역 여부)</li>
+        <li>교부권자 국세·지방세 실청구액 법원 열람</li>
+        <li>실측면적 vs 공부면적 건축사 동행 현장 확인</li>
+        <li>각 임차인 명도 협의 가능 여부 사전 타진</li>
+        <li>공실 현황 및 신규 임차인 변동 여부 재확인</li>
+        <li>인도명령 신청 준비 (잔금납부 즉시 가능)</li>
+        <li>명도 전문 법무사·변호사 선임 준비</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">📊 비용 개요 (낙찰가 530,000,000 기준)</div>
+      <table class="info-table">
+        <tr><th>낙찰금</th><td><strong>530,000,000원</strong></td></tr>
+        <tr><th>취득세 (4%)</th><td>21,200,000원</td></tr>
+        <tr><th>등기·법무사비</th><td>약 1,500,000원</td></tr>
+        <tr><th>명도비 (11세대)</th><td>약 50,000,000~80,000,000원</td></tr>
+        <tr><th>위반건축물 이행강제금</th><td>⚠️ 미확인 (별도 확인)</td></tr>
+        <tr><th>실투자금 합계</th><td><strong style="color:#c62828">약 602,700,000~632,700,000원</strong></td></tr>
+      </table>
+      <div class="info-box">💡 임대 재개 후 보증금 회수로 실투자금 대폭 감소 가능</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:14px;background:#fce4ec;border-radius:10px;border-left:4px solid #c62828">
+    <div style="font-size:13px;font-weight:700;color:#c62828;margin-bottom:6px">🟡 종합 리스크 등급: 중위험</div>
+    <div style="font-size:13px;line-height:1.7">
+      <strong>긍정:</strong> 대항력 임차인 없음 / 감정가 대비 34% 극단적 저가 / 9~10세대 수익형 / 수원 안정적 임대 수요<br>
+      <strong>부정:</strong> 위반건축물 가능성 / 11명 명도 비용 5,000~8,000만원 / 배당 미수 임차인 다수 명도 저항 / 지방세 체납 다수
+    </div>
+  </div>
+</div>
+
+<!-- STEP 7 수익 시뮬레이터 -->
+<div class="card">
+  <h2>📈 STEP 7 · 수익 계산 &amp; 출구 전략 시뮬레이터</h2>
+  <div class="grid-2">
+    <div>
+      <div class="slider-group">
+        <label>낙찰가 <span id="bidPrice">530,000,000원</span></label>
+        <input type="range" id="s_bid" min="486583000" max="700000000" step="1000000" value="530000000" oninput="calc()">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#888"><span>최저 4.87억</span><span>7억</span></div>
+      </div>
+      <div class="slider-group">
+        <label>평균 월세 (세대당) <span id="avgRent">500,000원</span></label>
+        <input type="range" id="s_rent" min="300000" max="800000" step="10000" value="500000" oninput="calc()">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#888"><span>30만원</span><span>80만원</span></div>
+      </div>
+      <div class="slider-group">
+        <label>월세 운영 세대수 <span id="rentUnits">8세대</span></label>
+        <input type="range" id="s_units" min="3" max="10" step="1" value="8" oninput="calc()">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#888"><span>3세대</span><span>10세대</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="profit-result">
+        <div class="row"><span>낙찰가</span><span id="r_bid">530,000,000원</span></div>
+        <div class="row"><span>취득세 4%</span><span id="r_tax">21,200,000원</span></div>
+        <div class="row"><span>명도비용 (추정)</span><span id="r_evict">65,000,000원</span></div>
+        <div class="row"><span>총 투자금</span><span id="r_total" style="color:#c62828">616,200,000원</span></div>
+        <div class="row"><span>월 임대수익</span><span id="r_monthly" style="color:#2e7d32">4,500,000원</span></div>
+        <div class="row"><span>연 임대수익</span><span id="r_annual" style="color:#2e7d32">54,000,000원</span></div>
+        <div class="row"><span>연 수익률</span><span id="r_yield">8.8%</span></div>
+      </div>
+      <div style="margin-top:12px">
+        <div style="font-size:12px;color:#666;margin-bottom:4px">손익분기 낙찰가 (목표 수익률 8%)</div>
+        <div style="font-size:16px;font-weight:700" id="bre_price">607,500,000원</div>
+        <div class="bre-bar"><div id="bre_fill" class="bre-fill bre-safe" style="width:60%"></div></div>
+        <div style="font-size:11px;color:#2e7d32" id="bre_msg">현재 입찰가 &lt; 손익분기 — 수익 목표 달성 가능</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">출구 전략 카드</div>
+    <div class="grid-3">
+      <div class="strategy-card rec" style="margin-top:16px">
+        <div class="rec-badge">✨ 최적 추천</div>
+        <div class="strategy-title">🏘️ 임대 운영 전략</div>
+        <div class="strategy-desc">
+          명도 후 9~10세대 재임대.<br>
+          세대당 월세 40~60만원 기준<br>
+          <strong>월 임대수익: 400~600만원</strong><br>
+          <strong>연 수익률: 8~12%</strong><br><br>
+          <em>장점: 안정 현금흐름, 자산 보유<br>
+          단점: 명도 기간 공실 손실</em>
+        </div>
+      </div>
+      <div class="strategy-card" style="margin-top:16px">
+        <div class="strategy-title">📊 단기 매각 전략</div>
+        <div class="strategy-desc">
+          명도·위반건축물 해소 후 매각.<br>
+          예상 매각가: <strong>8~10억원</strong><br>
+          예상 차익: <strong>2~4억원</strong><br>
+          투자 기간: 2~3년<br><br>
+          <em>장점: 대형 차익 가능<br>
+          단점: 매각 기간 불확실</em>
+        </div>
+      </div>
+      <div class="strategy-card" style="margin-top:16px">
+        <div class="strategy-title">🔄 혼합 전략</div>
+        <div class="strategy-desc">
+          임대 운영 2~3년 후 매각.<br>
+          임대수익으로 투자금 회수 후<br>
+          시세 상승 시 매각<br>
+          예상 총 수익: <strong>3~5억원</strong><br><br>
+          <em>장점: 수익+시세차익 동시<br>
+          단점: 장기 보유 필요</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="https://www.tankauction.com/ca/caView.php?tid=2327852&chkNo=1&TotNo=41" target="_blank" class="site-btn">🔗 사이트 보기</a>
+
+<div style="text-align:center;font-size:11px;color:#aaa;padding:10px 0 30px">
+  분석일: 2026-06-07 | 자료기준: 2026-06-05~06 | 열람용 — 입찰 전 법원경매 정보 재확인 필수
+</div>
+
+</div>
+<script>
+function fmt(n){return n.toLocaleString('ko-KR')+'원'}
+function calc(){
+  const bid=+document.getElementById('s_bid').value;
+  const rent=+document.getElementById('s_rent').value;
+  const units=+document.getElementById('s_units').value;
+  document.getElementById('bidPrice').textContent=fmt(bid);
+  document.getElementById('avgRent').textContent=fmt(rent);
+  document.getElementById('rentUnits').textContent=units+'세대';
+  const tax=Math.round(bid*0.04);
+  const evict=65000000;
+  const total=bid+tax+evict;
+  const monthly=rent*units+500000;
+  const annual=monthly*12;
+  const yld=(annual/total*100).toFixed(1);
+  document.getElementById('r_bid').textContent=fmt(bid);
+  document.getElementById('r_tax').textContent=fmt(tax);
+  document.getElementById('r_evict').textContent=fmt(evict);
+  document.getElementById('r_total').textContent=fmt(total);
+  document.getElementById('r_monthly').textContent=fmt(monthly);
+  document.getElementById('r_annual').textContent=fmt(annual);
+  document.getElementById('r_yield').textContent=yld+'%';
+  const brePrice=Math.round(annual/0.08-tax-evict);
+  document.getElementById('bre_price').textContent=fmt(brePrice);
+  const pct=Math.min(100,Math.round(bid/brePrice*100));
+  const fill=document.getElementById('bre_fill');
+  fill.style.width=pct+'%';
+  fill.className='bre-fill '+(pct<80?'bre-safe':pct<100?'bre-warn':'bre-danger');
+  const msg=document.getElementById('bre_msg');
+  if(bid<brePrice){msg.textContent='현재 입찰가 < 손익분기 — 수익률 '+yld+'% 달성 가능';msg.style.color='#2e7d32'}
+  else{msg.textContent='⚠️ 현재 입찰가 ≥ 손익분기 — 목표 수익률 미달';msg.style.color='#c62828'}
+}
+calc();
+</script>
+</body>
+</html>

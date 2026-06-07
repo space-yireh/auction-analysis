@@ -1,7 +1,5 @@
-cases/*
-reports/*
 archives/*
-docs/*
+# docs/*
 scripts/__pycache__/*
 scripts/.env
 scripts/**cookies.json
