@@ -3,13 +3,21 @@ session.py
 
 탱크옥션(tankauction.com) 서비스 로그인 세션을 생성 및 유지하고,
 로그인 여부, 장치 제한, 추가 휴대폰 인증 요구 상태를 철저히 검사하여 관리하는 모듈입니다.
+
+쿠키 우선 전략:
+  scripts/cookies.json 이 존재하면 브라우저 쿠키를 재사용 (재로그인 없음)
+  파일이 없으면 .env의 TANK_ID / TANK_PW 로 로그인
 """
 
 import os
 import sys
+import json
 import logging
 import requests
+from pathlib import Path
 from dotenv import load_dotenv
+
+COOKIE_FILE = Path(__file__).parent / "cookies.json"
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -45,6 +53,28 @@ def create_session() -> requests.Session:
         "sec-ch-ua-platform": '"Windows"'
     })
     return session
+
+
+def load_cookies(session: requests.Session) -> bool:
+    """
+    scripts/cookies.json 이 존재하면 저장된 브라우저 쿠키를 세션에 주입합니다.
+
+    Returns:
+        bool: 쿠키 파일이 존재하고 로드에 성공하면 True, 파일 없으면 False
+    """
+    if not COOKIE_FILE.exists():
+        return False
+
+    try:
+        data = json.loads(COOKIE_FILE.read_text(encoding="utf-8"))
+        cookies = data.get("cookies", [])
+        for c in cookies:
+            session.cookies.set(c["name"], c["value"], domain=c.get("domain", ""))
+        logger.info(f"브라우저 쿠키 {len(cookies)}개 로드 완료 (저장일: {data.get('saved_at', '알 수 없음')})")
+        return True
+    except Exception as e:
+        logger.warning(f"쿠키 파일 로드 실패 ({e}), 일반 로그인으로 전환합니다.")
+        return False
 
 
 def login(session: requests.Session) -> bool:
@@ -111,18 +141,30 @@ def login(session: requests.Session) -> bool:
         sys.exit(1)
 
 
+COOKIE_GUIDE = """
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔐 탱크옥션 로그인이 필요합니다 — 쿠키 수동 등록
+
+1. Chrome 에서 www.tankauction.com 에 로그인하세요.
+
+2. F12 → Console 탭을 열고 아래 코드를 붙여넣고 Enter:
+
+copy(JSON.stringify(document.cookie.split('; ').map(c=>{const[n,...v]=c.split('=');return{name:n,value:v.join('=')};})))
+
+3. 아무 곳에 붙여넣기(Ctrl+V) 하면 JSON이 나옵니다.
+   그 내용을 채팅창에 붙여넣어 주세요.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+
+
 def check_session_expired(html_content: str) -> bool:
     """
     조회된 HTML 내용에 로그인 요구 스크립트가 포함되어 있는지 검사하여 로그인 만료를 감지합니다.
 
-    Args:
-        html_content (str): 상세 페이지 등에서 받은 HTML 텍스트
-
     Returns:
         bool: 로그인 만료 상태인 경우 True, 정상 세션인 경우 False
     """
-    # 탱크옥션은 로그인 세션 만료 시 "로그인 후 이용하세요." 등의 스크립트 얼럿을 띄움
     if "로그인 후 이용하세요" in html_content or "logIn.php" in html_content:
-        logger.warning("로그인 세션 만료 또는 로그아웃 상태 전이가 감지되었습니다.")
+        print(COOKIE_GUIDE)
         return True
     return False

@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger(__name__)
 
 sys.path.insert(0, str(Path(__file__).parent))
-from session import create_session, login, check_session_expired
+from session import create_session, login, load_cookies, check_session_expired
 
 BASE_URL = "https://www.tankauction.com"
 
@@ -73,7 +73,6 @@ def fetch_dt_data(session: requests.Session, tid: str) -> dict:
     resp = session.get(url, timeout=15)
 
     if check_session_expired(resp.text):
-        logger.error("세션 만료 — 재실행 필요")
         sys.exit(1)
 
     match = re.search(r"var\s+dtData\s*=\s*(\{.*?\});", resp.text, re.DOTALL)
@@ -176,9 +175,10 @@ def main() -> None:
     tid = extract_tid(args.url) if args.url else args.tid
     logger.info(f"대상 tid: {tid}")
 
-    # 로그인
+    # 세션 준비: 브라우저 쿠키 우선, 없으면 로그인
     session = create_session()
-    login(session)
+    if not load_cookies(session):
+        login(session)
 
     # 상세페이지 가져오기
     detail_url = f"{BASE_URL}/ca/caView.php?tid={tid}"
@@ -186,7 +186,6 @@ def main() -> None:
     resp = session.get(detail_url, timeout=15)
 
     if check_session_expired(resp.text):
-        logger.error("세션 만료 — 재실행 필요")
         sys.exit(1)
 
     detail_html = resp.text

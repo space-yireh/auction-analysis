@@ -121,6 +121,81 @@ SKILL.md의 절차를 순서대로 수행한다.
 
 ---
 
+## 로그인 실패 시 처리 절차
+
+다운로드 중 세션 만료 또는 로그인 오류가 감지되면 아래 안내문을 출력하고 사용자를 기다린다.
+(자동 쿠키 추출 기능 없음 — 수동 입력 방식 사용)
+
+### 사용자에게 제시할 안내 메시지
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔐 탱크옥션 로그인이 필요합니다 — 쿠키 수동 등록
+
+1. Chrome 에서 www.tankauction.com 에 로그인하세요.
+
+2. F12 → Console 탭을 열고 아래 코드를 붙여넣고 Enter:
+
+copy(JSON.stringify(document.cookie.split('; ').map(c=>{const[n,...v]=c.split('=');return{name:n,value:v.join('=')};})))
+
+3. 아무 곳에 붙여넣기(Ctrl+V) 하면 JSON이 나옵니다.
+   그 내용을 이 채팅창에 붙여넣어 주세요.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### 사용자가 쿠키 JSON을 붙여넣으면
+아래 형식의 `scripts/cookies.json` 파일을 직접 작성한다.
+
+```json
+{
+  "saved_at": "현재 ISO 시각",
+  "domain": "tankauction.com",
+  "cookies": [
+    { "name": "...", "value": "...", "domain": ".tankauction.com", "path": "/" }
+  ]
+}
+```
+
+저장 후 다운로드를 재시도한다.
+
+---
+
+## relogin 명령어 — 쿠키 추출 스크립트 즉시 제공 + 클립보드 복사
+
+`relogin` 입력 시 아래 두 가지를 순서대로 수행한다.
+
+1. PowerShell로 스크립트를 클립보드에 복사한다.
+```powershell
+Set-Clipboard -Value "copy(JSON.stringify(document.cookie.split('; ').map(c=>{const[n,...v]=c.split('=');return{name:n,value:v.join('=')};})))"
+```
+
+2. 아래 코드블록을 출력한다. (설명 없이 코드만)
+```
+copy(JSON.stringify(document.cookie.split('; ').map(c=>{const[n,...v]=c.split('=');return{name:n,value:v.join('=')};})))
+```
+
+3. "클립보드에 복사되었습니다. Chrome Console에 붙여넣기(Ctrl+V) 하세요." 한 줄만 출력한다.
+
+사용자가 위 코드를 Chrome Console에서 실행한 뒤 JSON을 붙여넣으면,
+`scripts/cookies.json`을 갱신하고 "쿠키 저장 완료"만 출력한다.
+
+---
+
+## download 명령어 — 다운로드 전용
+
+`download {URL}` 형식으로 입력되면 분석 없이 서류 다운로드만 수행한다.
+
+```bash
+python scripts/download.py --url "{URL}"
+```
+
+완료 후 아래 형식으로 보고하고 종료한다. (SKILL.md 읽기·분석·index.html 생성 금지)
+
+```
+완료: docs/{사건번호}_{물건번호}/ — N개 파일 저장
+```
+
+---
+
 ## TODO.md 일괄 처리
 
 `todo` 또는 `TODO.md 처리해줘` 입력 시 아래를 수행한다.
@@ -158,6 +233,7 @@ auction-analyzer/
 ├── SKILL.md                     ← 분석 절차 지침
 ├── scripts/
 │   ├── .env                     ← TANK_ID / TANK_PW
+│   ├── cookies.json             ← 브라우저 쿠키 (수동 등록)
 │   ├── session.py
 │   ├── parser.py
 │   ├── storage.py
