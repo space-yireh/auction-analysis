@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "탱크옥션 AI 문서 다운로더",
+  "version": "1.0",
+  "description": "탱크옥션 사건 문서를 단일 ZIP 파일로 다운로드하고, AI에 최적화된 마크다운 표 및 텍스트 형태로 자동 변환해 줍니다.",
+  "permissions": [
+    "activeTab",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://www.tankauction.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

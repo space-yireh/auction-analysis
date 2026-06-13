@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>탱크옥션 AI 문서 다운로더</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.4);
+      --success: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-highlight: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 320px;
+      font-family: 'Inter', 'Malgun Gothic', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .logo {
+      font-size: 20px;
+      background: linear-gradient(to right, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .badge {
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    /* Glassmorphism Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .info-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    .info-label {
+      color: var(--text-muted);
+    }
+
+    .info-value {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .info-value.highlight {
+      color: var(--text-highlight);
+    }
+
+    /* Download Button */
+    .btn-download {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-download:hover:not(:disabled) {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px var(--primary-glow);
+    }
+
+    .btn-download:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-download:disabled {
+      background: #334155;
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Progress and Status */
+    .status-container {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .status-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Console Logs */
+    .console-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px;
+      height: 80px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 9px;
+      color: #a7f3d0;
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      scroll-behavior: smooth;
+    }
+
+    .console-line {
+      line-height: 1.3;
+    }
+
+    .console-line.error {
+      color: #f87171;
+    }
+
+    .console-line.success {
+      color: #34d399;
+    }
+
+    /* Error / Warning Alert */
+    .alert {
+      display: none;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">⚡</div>
+      <div class="title">탱크옥션 AI 다운로더</div>
+      <div class="badge">v1.0</div>
+    </header>
+
+    <!-- Page Info Card -->
+    <div class="card">
+      <div class="info-group">
+        <div class="info-row">
+          <span class="info-label">대상 주소:</span>
+          <span id="tab-status" class="info-value">확인 중...</span>
+        </div>
+        <div id="case-details" style="display: none; flex-direction: column; gap: 6px; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--card-border)">
+          <div class="info-row">
+            <span class="info-label">사건번호:</span>
+            <span id="case-no" class="info-value highlight">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">물건번호:</span>
+            <span id="item-no" class="info-value">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Box -->
+    <div id="alert-box" class="alert">
+      경매 상세 페이지(caView.php)에서만 동작합니다.
+    </div>
+
+    <!-- Action Section -->
+    <button id="btn-download" class="btn-download" disabled>
+      <span>📂</span> ZIP 다운로드 시작
+    </button>
+
+    <!-- Progress Tracker -->
+    <div id="status-container" class="status-container">
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
+      <div class="status-text">
+        <span id="current-action">대기 중...</span>
+        <span id="progress-pct">0%</span>
+      </div>
+    </div>
+
+    <!-- Console Logging -->
+    <div id="console-log" class="console-card"></div>
+  </div>
+
+  <!-- Include Local JS files -->
+  <script src="libs/jszip.min.js"></script>
+  <script src="libs/pdf.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
