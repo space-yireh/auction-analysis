@@ -21,16 +21,16 @@ let parsedItemNo = null;
 
 // Categories map matching download.py
 const CATEGORY_MAP = {
-  "사건내역":   ["AA-사건내역",   "html"],
-  "기일내역":   ["AB-기일내역",   "html"],
-  "문건/송달":  ["AC-문건송달",   "html"],
+  "사건내역": ["AA-사건내역", "html"],
+  "기일내역": ["AB-기일내역", "html"],
+  "문건/송달": ["AC-문건송달", "html"],
   "현황조사서": ["AD-현황조사서", "html"],
   "부동산표시": ["AE-부동산표시", "html"],
   "감정평가서": ["AF-감정평가서", "pdf"],
   "매물명세서": ["AG-매물명세서", "pdf"],
-  "토지등기":   ["DA-토지등기",   "pdf"],
-  "건물등기":   ["DB-건물등기",   "pdf"],
-  "세대열람":   ["EA-세대열람",   "pdf"],
+  "토지등기": ["DA-토지등기", "pdf"],
+  "건물등기": ["DB-건물등기", "pdf"],
+  "세대열람": ["EA-세대열람", "pdf"],
   "건축물대장": ["EC-건축물대장", "pdf"],
 };
 
@@ -87,11 +87,23 @@ async function fetchCaseDetails(tid) {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const htmlText = await response.text();
 
-    const saNoMatch = htmlText.match(/(\d{4}타경\d+)/);
-    const maemulMatch = htmlText.match(/물건번호\s*[:\s]+(\d+)/);
+    // Parse HTML using DOMParser to read the title tag
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlText, 'text/html');
+    const titleText = doc.title || "";
 
-    parsedCaseNo = saNoMatch ? saNoMatch[1] : `tid_${tid}`;
-    parsedItemNo = maemulMatch ? maemulMatch[1] : "1";
+    // Try parsing from title (format: "경매:2025타경54432(4) (상세정보)" or "경매:2025타경54432 (상세정보)")
+    const titleMatch = titleText.match(/경매:(\d{4}타경\d+)(?:\((\d+)\))?/);
+    if (titleMatch) {
+      parsedCaseNo = titleMatch[1];
+      parsedItemNo = titleMatch[2] || "1";
+    } else {
+      // Fallback to original body parsing if title match fails
+      const saNoMatch = htmlText.match(/(\d{4}타경\d+)/);
+      const maemulMatch = htmlText.match(/물건번호\s*[:\s]+(\d+)/);
+      parsedCaseNo = saNoMatch ? saNoMatch[1] : `tid_${tid}`;
+      parsedItemNo = maemulMatch ? maemulMatch[1] : "1";
+    }
 
     caseNoEl.textContent = parsedCaseNo;
     itemNoEl.textContent = parsedItemNo;
@@ -108,6 +120,16 @@ btnDownloadEl.addEventListener('click', async () => {
   btnDownloadEl.disabled = true;
   statusContainerEl.style.display = "flex";
   consoleLogEl.innerHTML = "";
+
+  // 클립보드에 사건번호 + 물건번호 복사
+  try {
+    const textToCopy = `${parsedCaseNo} (${parsedItemNo})`;
+    await navigator.clipboard.writeText(textToCopy);
+    log(`클립보드 복사 성공: "${textToCopy}" (AI 도구용)`, "success");
+  } catch (clipErr) {
+    log(`클립보드 복사 실패: ${clipErr.message}`, "error");
+  }
+
   log("문서 다운로드 및 AI 최적화 변환 프로세스 시작...");
   log("⚠️ 완료될 때까지 이 팝업 창을 닫지 마세요.", "success");
 
@@ -185,7 +207,7 @@ btnDownloadEl.addEventListener('click', async () => {
           // PDF 카테고리 -> 텍스트 추출 시도
           const arrayBuffer = await fileResp.arrayBuffer();
           log(` PDF 텍스트 추출 시도: ${task.filename}`);
-          
+
           let textContent = "";
           try {
             textContent = await extractTextFromPdf(arrayBuffer);
@@ -283,17 +305,17 @@ function resolveDownloadUrl(entry, tid) {
 function htmlToCleanMarkdown(htmlString) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, 'text/html');
-  
+
   // Remove script, style, link, head, meta tags
   doc.querySelectorAll('script, style, link, head, meta').forEach(el => el.remove());
-  
+
   let mdText = "";
-  
+
   const pageTitle = doc.querySelector('.center.bold')?.textContent?.trim();
   if (pageTitle) {
     mdText += `# ${pageTitle}\n\n`;
   }
-  
+
   const tables = doc.querySelectorAll('table');
   if (tables.length > 0) {
     tables.forEach(table => {
@@ -311,15 +333,15 @@ function htmlToCleanMarkdown(htmlString) {
         }
         prev = prev.previousElementSibling;
       }
-      
+
       mdText += `## ${title}\n\n`;
-      
+
       const rows = Array.from(table.querySelectorAll('tr'));
       rows.forEach((row, rowIndex) => {
         const cells = Array.from(row.querySelectorAll('th, td')).map(cell => {
           return cell.textContent.replace(/\s+/g, ' ').trim();
         });
-        
+
         if (cells.length > 0) {
           mdText += "| " + cells.join(" | ") + " |\n";
           // Add table divider header if it is index 0 or has <th> elements
@@ -333,22 +355,23 @@ function htmlToCleanMarkdown(htmlString) {
   } else {
     mdText = doc.body.innerText.replace(/\n\s*\n/g, '\n').trim();
   }
-  
+
   return mdText;
 }
 
 // Helper: Extract text page-by-page from PDF using pdf.js
 async function extractTextFromPdf(pdfArrayBuffer) {
-  const loadingTask = pdfjsLib.getDocument({ data: pdfArrayBuffer });
+  // Use a copy to prevent pdf.js from detaching the original ArrayBuffer
+  const loadingTask = pdfjsLib.getDocument({ data: pdfArrayBuffer.slice(0) });
   const pdf = await loadingTask.promise;
   let fullText = "";
-  
+
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const textContent = await page.getTextContent();
     const pageText = textContent.items.map(item => item.str).join(" ");
     fullText += `--- Page ${i} ---\n${pageText}\n\n`;
   }
-  
+
   return fullText;
 }

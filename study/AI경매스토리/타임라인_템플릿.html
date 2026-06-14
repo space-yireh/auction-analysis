@@ -1,417 +1,156 @@
 
 <style>
-.tl-wrap { padding: 16px 0 24px; font-size: 14px; }
-.tl-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
-.tl-filter button {
-  padding: 4px 12px; border-radius: 20px; border: 1px solid var(--color-border-secondary);
-  background: var(--color-background-secondary); color: var(--color-text-secondary);
-  cursor: pointer; font-size: 12px; transition: all .15s;
-}
-.tl-filter button.active {
-  background: var(--color-background-primary); color: var(--color-text-primary);
-  border-color: var(--color-border-primary); font-weight: 500;
-}
-.tl-list { position: relative; padding-left: 28px; }
-.tl-list::before {
-  content: ''; position: absolute; left: 8px; top: 6px; bottom: 6px;
-  width: 1.5px; background: var(--color-border-tertiary);
-}
-.tl-item { position: relative; margin-bottom: 3px; display: flex; align-items: flex-start; gap: 10px; }
-.tl-item.hidden { display: none; }
-.tl-dot {
-  position: absolute; left: -24px; top: 11px;
-  width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid; flex-shrink: 0;
-}
-.tl-dot.reg   { background: #E6F1FB; border-color: #185FA5; }
-.tl-dot.doc   { background: #EAF3DE; border-color: #3B6D11; }
-.tl-dot.send  { background: #EEEDFE; border-color: #534AB7; }
-.tl-dot.key   { background: #FAEEDA; border-color: #854F0B; width:10px; height:10px; left:-25px; top:10px; }
-.tl-dot.risk  { background: #FCEBEB; border-color: #A32D2D; width:10px; height:10px; left:-25px; top:10px; }
-.tl-card {
-  width: 100%; padding: 8px 12px; border-radius: var(--border-radius-md);
-  background: var(--color-background-secondary);
-  border: 1px solid var(--color-border-tertiary); margin-bottom: 4px;
-}
-.tl-card:hover { border-color: var(--color-border-secondary); }
-.tl-card.is-key  { border-color: #BA7517; }
-.tl-card.is-risk { border-color: #A32D2D; }
-.tl-card.is-reg  { border-color: #185FA5; }
-.tl-date { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 2px; }
-.tl-main { color: var(--color-text-primary); font-size: 13px; line-height: 1.5; }
-.tl-note { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.5; }
-.tl-result { font-size: 11px; margin-top: 2px; }
-.tl-result.ok   { color: #3B6D11; }
-.tl-result.warn { color: #A32D2D; }
-.tl-result.gray { color: var(--color-text-tertiary); }
-.tl-badge {
-  display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 10px;
-  margin-right: 5px; font-weight: 500; vertical-align: middle; white-space: nowrap;
-}
-.b-reg  { background: #B5D4F4; color: #0C447C; }
-.b-doc  { background: #C0DD97; color: #27500A; }
-.b-send { background: #CECBF6; color: #26215C; }
-.b-key  { background: #FAC775; color: #633806; }
-.b-risk { background: #F7C1C1; color: #501313; }
-.month-sep {
-  font-size: 11px; font-weight: 500; color: var(--color-text-tertiary);
-  padding: 14px 0 4px; letter-spacing: .05em; border-top: 1px solid var(--color-border-tertiary);
-  margin-top: 8px;
-}
-.month-sep:first-child { border-top: none; margin-top: 0; padding-top: 4px; }
-.infer-tag {
-  display: inline; font-size: 10px; color: var(--color-text-tertiary);
-  background: var(--color-background-primary); border: 1px solid var(--color-border-tertiary);
-  border-radius: 4px; padding: 0 4px; margin-left: 4px; vertical-align: middle;
-}
+.tl-wrap{padding:12px 0 24px;font-size:14px}
+.tl-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tl-filter button{padding:4px 12px;border-radius:20px;border:1px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-size:12px;transition:all .15s}
+.tl-filter button.active{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.tl-list{position:relative;padding-left:28px}
+.tl-list::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:1.5px;background:var(--color-border-tertiary)}
+.tl-item{position:relative;margin-bottom:3px;display:flex;align-items:flex-start;gap:10px}
+.tl-item.hidden{display:none}
+.tl-dot{position:absolute;left:-24px;top:11px;width:8px;height:8px;border-radius:50%;border:1.5px solid;flex-shrink:0}
+.tl-dot.reg{background:#E6F1FB;border-color:#185FA5}
+.tl-dot.doc{background:#EAF3DE;border-color:#3B6D11}
+.tl-dot.send{background:#EEEDFE;border-color:#534AB7}
+.tl-dot.key{background:#FAEEDA;border-color:#854F0B;width:10px;height:10px;left:-25px;top:10px}
+.tl-dot.risk{background:#FCEBEB;border-color:#A32D2D;width:10px;height:10px;left:-25px;top:10px}
+.tl-card{width:100%;padding:8px 12px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);margin-bottom:4px}
+.tl-card:hover{border-color:var(--color-border-secondary)}
+.tl-card.is-key{border-color:#BA7517}
+.tl-card.is-risk{border-color:#A32D2D}
+.tl-card.is-reg{border-color:#185FA5}
+.tl-date{font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px}
+.tl-main{color:var(--color-text-primary);font-size:13px;line-height:1.5}
+.tl-note{font-size:11px;color:var(--color-text-secondary);margin-top:3px;line-height:1.5}
+.tl-result{font-size:11px;margin-top:2px}
+.tl-result.ok{color:#3B6D11}
+.tl-result.warn{color:#A32D2D}
+.tl-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;margin-right:5px;font-weight:500;vertical-align:middle;white-space:nowrap}
+.b-reg{background:#B5D4F4;color:#0C447C}
+.b-doc{background:#C0DD97;color:#27500A}
+.b-send{background:#CECBF6;color:#26215C}
+.b-key{background:#FAC775;color:#633806}
+.b-risk{background:#F7C1C1;color:#501313}
+.month-sep{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding:14px 0 4px;letter-spacing:.05em;border-top:1px solid var(--color-border-tertiary);margin-top:8px}
+.month-sep:first-child{border-top:none;margin-top:0;padding-top:4px}
 </style>
-
 <div class="tl-wrap">
-  <div class="tl-filter">
-    <button class="active" onclick="filter('all',this)">전체</button>
-    <button onclick="filter('reg',this)">등기</button>
-    <button onclick="filter('doc',this)">문건접수</button>
-    <button onclick="filter('send',this)">송달</button>
-    <button onclick="filter('key',this)">주요 이벤트</button>
-    <button onclick="filter('risk',this)">⚠ 리스크</button>
-  </div>
-  <div class="tl-list" id="tl"></div>
+<div class="tl-filter">
+  <button class="active" onclick="tlFilter('all',this)">전체</button>
+  <button onclick="tlFilter('reg',this)">등기</button>
+  <button onclick="tlFilter('doc',this)">문건</button>
+  <button onclick="tlFilter('send',this)">송달</button>
+  <button onclick="tlFilter('key',this)">주요 이벤트</button>
+  <button onclick="tlFilter('risk',this)">⚠ 리스크</button>
 </div>
-
+<div class="tl-list" id="tl2"></div>
+</div>
 <script>
-const data = [
-
-  /* ───────── 등기 이력 (말소 제외, 유효 권리만) ───────── */
-  {
-    date:'1988.07.22', type:'reg',
-    label:'토지 소유권이전 — 이병삼 (단독소유)',
-    note:'매매 취득. 역북동 454-39 대 344㎡. 현재까지 토지 공부상 소유자는 이병삼이나, 소유권대지권 등기(2002)로 집합건물 대지권은 각 세대에 귀속.'
-  },
-  {
-    date:'2002.10.23', type:'reg',
-    label:'건물 소유권보존 — 이병삼',
-    note:'신축 집합건물(5층 다세대) 등기 완료. 역북동 454-39 제501호 전유 115.24㎡.'
-  },
-  {
-    date:'2002.10.23', type:'reg',
-    label:'대지권 등기 — 344분의 78.2027 (소유권)',
-    note:'토지 지분이 건물에 귀속됨. 단, 토지 을구 근저당·지상권 별도등기 존재(2002.10.29 설정) → 건물등기부 표제부에 "별도등기 있음" 표시.'
-  },
-  {
-    date:'2002.10.29', type:'reg',
-    label:'토지 을구 — 조흥은행 근저당 2건 설정 (공동담보)',
-    note:'채권최고액 각 108,000,000원. 501호 포함 전 세대 공동담보. 2014.12.05 501호 지분 일부포기 → 2015.01.16 토지 분 해지 완료. 현재 효력 없음.'
-  },
-  {
-    date:'2008.05.23', type:'reg',
-    label:'건물 소유권이전 — 이병삼 사망 → 민삼영 1/2, 이일기 1/2 상속',
-    note:'협의분할 상속. 이일기(아들 추정 예상)가 지분 절반 취득.'
-  },
-  {
-    date:'2014.10.28', type:'reg',
-    label:'이일기 지분 강제경매 낙찰 — 황재희 취득 (1/2 지분)',
-    note:'이일기 지분에 걸린 가압류·경매로 제3자 황재희가 낙찰. 이후 민삼영과 공유 상태.'
-  },
-  {
-    date:'2014.11.06', type:'reg',
-    label:'황재희 → 민삼영 지분 매매 (75,000,000원)',
-    note:'민삼영이 황재희로부터 나머지 1/2 지분을 7,500만원에 매수 → 단독소유 완성. 같은 날(12.05) 우리은행 근저당 설정과 연계된 거래. 매수자금 출처가 우리은행 대출일 가능성 높음 (예상).'
-  },
-  {
-    date:'2014.12.05', type:'reg',
-    label:'⭐ 말소기준권리 — 우리은행 근저당 설정 (채권최고액 110,000,000원)',
-    note:'채무자 민삼영. 황재희 지분 매수 자금 마련 목적 추정 (예상). 이 날 기존 조흥은행→신한은행 구 근저당(501호 지분) 일부포기. 현 채권자: 에이치에프더블유오이유동화 (NPL 양도).',
-    card: 'is-key'
-  },
-  {
-    date:'2024.11.06', type:'reg',
-    label:'압류 — 용인시 상수도사업소',
-    note:'수도요금 체납으로 압류. 체납 기간·금액 불명 → 현장 확인 필요. 말소기준 이후이므로 낙찰로 소멸.',
-    card: 'is-risk'
-  },
-  {
-    date:'2024.11.11', type:'reg',
-    label:'가압류 — 경기신용보증재단 (청구 21,280,000원)',
-    note:'보증채무 대위변제 후 구상권 행사 추정 (예상). 민삼영이 경기신보 보증으로 대출을 받았다가 연체된 구조. 낙찰로 소멸.',
-    card: 'is-risk'
-  },
-  {
-    date:'2025.02.21', type:'reg',
-    label:'강제경매개시결정 — 채권자 김동훈 (갑17번)',
-    note:'지급명령(2024차전10387) 집행권원으로 신청. 청구 61,104,657원. 주소: 금학로277번길 2-5 삼일주택 202호 → 같은 건물 또는 인근 거주자. 임대차 보증금 반환 청구 가능성 높음 (예상).'
-  },
-  {
-    date:'2026.03.24', type:'reg',
-    label:'임의경매개시결정 — 에이치에프더블유오이 (갑18번, 2026타경51279)',
-    note:'우리은행 NPL 양수 후 직접 임의경매 신청. 청구 80,905,968원. 강제경매(2025타경54693)와 중복 병합.'
-  },
-  {
-    date:'2026.05.28', type:'reg',
-    label:'압류 — 용인시 세무2과 (갑19번)',
-    note:'지방세(재산세·종합부동산세 추정) 체납 압류. 3회차 유찰 직후 추가 압류. 법정기일이 말소기준권리(2014.12.05)보다 선순위일 가능성 → 선순위 배당 위험. 규모 반드시 확인 필요.',
-    card: 'is-risk'
-  },
-
-  /* ───────── 경매 절차 타임라인 ───────── */
-  {
-    date:'2004.01.07', type:'key',
-    label:'임차인 김선홍 전입',
-    note:'말소기준권리(2014.12.05)보다 10년 선순위 → 대항력 발생. 그러나 보증금 불명 + 확정일자 없음 + 배당요구 없음. 소유자 민삼영도 1998년부터 동일 주소 거주 중. 위장임차인(가족·지인) 가능성 높음 (예상).',
-    card: 'is-risk'
-  },
-  {
-    date:'2024.09~10', type:'key',
-    label:'민삼영 자금사정 악화 시작 (예상)',
-    note:'2024.11 경기신보 가압류·상수도 압류가 연달아 등기됨. 늦어도 2024년 3분기부터 채무 연체 상태 추정 (예상).'
-  },
-  {
-    date:'2024.11.06', type:'doc',
-    label:'용인시 상수도사업소 압류 (수도 체납)',
-  },
-  {
-    date:'2024.11.11', type:'doc',
-    label:'경기신보 가압류 (21,280,000원)',
-  },
-  {
-    date:'2025.02.18', type:'key',
-    label:'강제경매 접수 — 김동훈 신청 (2025타경54693)',
-    note:'지급명령 집행권원. 청구 61,104,657원. 같은 건물 거주자가 채권자 → 임대차 보증금 반환 소송 후 경매 신청 가능성 높음 (예상).'
-  },
-  {
-    date:'2025.02.20', type:'key',
-    label:'경매개시결정',
-    note:'경매5계 배당.'
-  },
-  {
-    date:'2025.02.21', type:'doc',
-    label:'채권자 김동훈 보정서 제출',
-    note:'경매 신청 요건 보완 서류 제출.'
-  },
-  {
-    date:'2025.02.21', type:'send',
-    label:'채권자 김동훈 개시결정정본 발송',
-    result:'2025.02.24 도달', ok:true
-  },
-  {
-    date:'2025.02.25', type:'doc',
-    label:'등기소 등기필증 제출',
-  },
-  {
-    date:'2025.02.26', type:'send',
-    label:'이해관계인 전원 최고서 일괄 발송 (근저당권자·압류권자·가압류권자·주무관서)',
-    result:'2025.02.27 송달간주', ok:true,
-    note:'우리은행(근저당권자)도 이 시점에 최고서 수령. 이후 NPL 양도 절차 착수 추정 (예상).'
-  },
-  {
-    date:'2025.02.26', type:'send',
-    label:'감정인 평가명령 발송',
-    result:'2025.03.04 도달', ok:true
-  },
-  {
-    date:'2025.02.26', type:'send',
-    label:'집행관 현황조사 명령 발송',
-    result:'2025.02.27 도달', ok:true
-  },
-  {
-    date:'2025.03.05', type:'key',
-    label:'현황조사 실시',
-    note:'집행관 방문 — 민삼영·김선홍 모두 폐문부재. 안내문 부착. 민삼영이 의도적으로 집행관을 피했을 가능성 (예상).'
-  },
-  {
-    date:'2025.03.05', type:'doc',
-    label:'감정평가서 제출 (주)통일감정평가법인',
-    note:'감정평가액 255,000,000원 확정.'
-  },
-  {
-    date:'2025.03.07', type:'doc',
-    label:'국세청 교부청구서 제출',
-    note:'국세 체납 존재 확인. 법정기일 선순위 여부 → 배당 우선순위 영향 가능. 금액 불명.',
-    card: 'is-risk'
-  },
-  {
-    date:'2025.03.11', type:'send',
-    label:'채무자겸소유자 민삼영 개시결정정본 발송',
-    result:'2025.03.14 도달', ok:true,
-    note:'개시결정 후 3주 만에 겨우 도달. 주소지 회피 가능성 (예상).'
-  },
-  {
-    date:'2025.03.18', type:'doc',
-    label:'현황조사보고서 제출',
-    note:'임차인 김선홍(전입 2004.01.07) 등재. 보증금·차임 불명으로 기재.'
-  },
-  {
-    date:'2025.03.19', type:'send',
-    label:'임차인 김선홍 임차인통지서 발송',
-    result:'2025.03.24 도달', ok:true,
-    note:'김선홍이 직접 수령 → 실제 해당 주소 거주 중임은 확인됨. 그러나 이후 권리신고·배당요구 없음.'
-  },
-  {
-    date:'2025.03.24', type:'doc',
-    label:'용인시 교부청구 제출',
-    note:'지방세 체납분 교부청구. 상수도 외 별도 지방세 체납 추정 (예상).'
-  },
-  {
-    date:'2025.03.25', type:'doc',
-    label:'근저당권자(우리은행) 송달장소 변경신고',
-    note:'우리은행이 NPL 양도 직전 행정 처리를 위한 주소 변경으로 추정 (예상). 이후 2025.07 양도 공식 신고.'
-  },
-  {
-    date:'2025.04.29', type:'key',
-    label:'배당요구 — 신○○○○○○○ (권리신고 및 배당요구)',
-    note:'신○○○○○○○의 정체 불명 — 별도 채권자로 추정. 배당요구종기(05.07) 직전 신청.'
-  },
-  {
-    date:'2025.05.07', type:'key',
-    label:'배당요구종기일',
-    note:'이후 배당요구 불가. 임차인 김선홍은 통지서 수령 후에도 끝내 배당요구 없음 → 위장임차인 정황 강화 (예상).'
-  },
-  {
-    date:'2025.05.07', type:'doc',
-    label:'용인시 미체납교부청구서 제출',
-    note:'"미체납" = 현재 체납 없음 확인서. 상수도 외 추가 지방세 체납은 없을 수도 있음 (예상).'
-  },
-  {
-    date:'2025.05.09', type:'doc',
-    label:'우리은행(근저당권자) 사건기록 열람·복사 신청',
-    note:'NPL 양도 전 내부 실사 목적 추정 (예상).'
-  },
-  {
-    date:'2025.07.23', type:'key',
-    label:'NPL 양도 완료 — 우리은행 → 에이치에프더블유오이유동화',
-    note:'근저당권자 변경신고. 양도 대금은 청구액(80.9M) 이하로 추정, 통상 70~80% 수준 (예상). 에이치에프더블유오이가 본격적으로 경매 전략 수립 시작.'
-  },
-  {
-    date:'2025.07.29', type:'doc',
-    label:'에이치에프더블유오이 사건기록 열람·복사 신청',
-    note:'NPL 양수 6일 만에 즉시 기록 열람. 임의경매 준비 착수 (예상). 강제경매 단독 진행 시 배당 순위 불리할 수 있어 임의경매 병합이 유리하다고 판단한 것으로 보임 (예상).'
-  },
-  {
-    date:'2026.02.19', type:'key',
-    label:'⚠ 채권자 김동훈 — 배당배제 요청서 제출',
-    note:'임차인 김선홍에 대한 배당배제 요청으로 추정 (예상). "저 임차인은 가짜다"라고 법원에 이의 제기한 것. 같은 건물 거주자인 김동훈이 민삼영·김선홍의 관계를 직접 아는 위치. 위장임차인 의심의 가장 강력한 정황 증거.',
-    card: 'is-risk'
-  },
-  {
-    date:'2026.02.19', type:'doc',
-    label:'채권자 김동훈 — 법무사 기록열람신청 + 송달장소 신고',
-    note:'배당배제 요청과 같은 날. 법무사를 통해 대리인 선임 → 적극적 권리 행사 시작 (예상).'
-  },
-  {
-    date:'2026.03.20', type:'key',
-    label:'1회차 매각기일 — 유찰',
-    note:'최저가 255,000,000원. 임차인 리스크 + 체납 공과금 불명으로 아무도 입찰 안 함.'
-  },
-  {
-    date:'2026.03.20', type:'doc',
-    label:'기일입찰조서 제출 (집행관 최○)'
-  },
-  {
-    date:'2026.03.24', type:'key',
-    label:'에이치에프더블유오이 임의경매 개시결정 (2026타경51279)',
-    note:'1회차 유찰 직후 임의경매 추가 신청 → 강제경매와 중복 병합. 청구 80,905,968원. NPL 채권자가 직접 경매 주도권 확보. 낙찰 시 근저당 상계로 실납입 최소화 전략 (예상).'
-  },
-  {
-    date:'2026.04.21', type:'key',
-    label:'2회차 매각기일 — 유찰',
-    note:'최저가 178,500,000원. 여전히 유찰. 배당배제 요청 결과 불명 + 체납 규모 불명.'
-  },
-  {
-    date:'2026.04.21', type:'doc',
-    label:'기일입찰조서 제출 (집행관 조○○)'
-  },
-  {
-    date:'2026.04.27', type:'send',
-    label:'중복경매 통지서 — 김동훈·에이치에프더블유오이 발송',
-    result:'2026.04.27 도달', ok:true
-  },
-  {
-    date:'2026.04.27', type:'send',
-    label:'중복경매 통지서 — 채무자 민삼영 발송',
-    result:'2026.05.06 폐문부재 — 불달',
-    ok:false,
-    note:'민삼영이 주소지에 없거나 수령 회피. 도주 가능성 또는 장기 부재 (예상).'
-  },
-  {
-    date:'2026.05.27', type:'key',
-    label:'3회차 매각기일 — 유찰',
-    note:'최저가 124,950,000원. 3연속 유찰. 감정가의 49%까지 하락.'
-  },
-  {
-    date:'2026.05.27', type:'doc',
-    label:'기일입찰조서 제출 (집행관 나○○)'
-  },
-  {
-    date:'2026.05.28', type:'risk',
-    label:'⚠ 용인시 세무2과 압류 추가 (갑19번)',
-    note:'3회차 유찰 다음날 신규 압류. 지방세 체납 추정 (예상). 법정기일이 말소기준권리(2014.12.05)보다 선순위이면 낙찰가에서 먼저 공제 → 투자자 실질 배당 감소. 세무과 직접 확인 필수.',
-    card: 'is-risk'
-  },
-  {
-    date:'2026.07.03', type:'key',
-    label:'4회차 매각기일 예정',
-    note:'최저가 87,465,000원 (감정가의 34.3%). NPL 채권자 손익분기(약 82~83M) 직상방. NPL 채권자 직접 입찰 가능성 높음 (예상). 배당배제 요청 결과에 따라 일반 투자자 리스크 수준 결정.',
-    card: 'is-key'
-  },
+const tlData=[
+  {date:'2019.12.31',type:'reg',label:'건물 사용승인 — 라온지오피스텔',note:'지하5층~지상15층 집합건물. 업무시설·근린생활시설. 제1층 제106호 전유 32.97㎡.'},
+  {date:'2020.01.10',type:'reg',label:'건물 소유권보존 — 아시아신탁주식회사',note:'신탁재산 처분에 의한 신탁(신탁원부 제2020-427호). 라온지오피스텔 1층 106호.'},
+  {date:'2020.01.30',type:'reg',label:'소유권이전 — 신용주 57/100, 신영호 43/100 (신탁재산 귀속)',note:'1번 신탁등기 말소. 공유자 2인 체제 시작.'},
+  {date:'2020.01.30',type:'reg',label:'근저당권 설정 — 신안군수산업협동조합 (채권최고액 933,240,000원)',note:'채무자 신영호. 1층 105호와 공동담보. 미아지점 취급.'},
+  {date:'2021.09.01',type:'reg',label:'신영호 지분 압류 — 수원세무서 (국세 체납)',card:'is-risk'},
+  {date:'2022.02.24',type:'reg',label:'신용주·신영호 지분 각각 압류 — 수원시 장안구 (지방세 체납)',card:'is-risk'},
+  {date:'2022.03.14',type:'reg',label:'임의경매개시결정 — 신안군수산업협동조합 (2022타경2000)',note:'근저당 실행. 이후 2023.04.13 낙찰로 압류·경매개시 전부 말소.'},
+  {date:'2022.03.22',type:'reg',label:'신용주·신영호 지분 국민건강보험공단 압류 2건',card:'is-risk'},
+  {date:'2022.07.19',type:'reg',label:'신용주 지분 압류 — 수원세무서 (국세 체납)'},
+  {date:'2022.10.28',type:'reg',label:'근저당권 이전 — 신안군수산업협동조합 → 주식회사경인엔피엘대부',note:'확정채권 양도. 이후 채권질권 설정·해지 등 복잡한 NPL 거래 진행.'},
+  {date:'2023.04.13',type:'reg',label:'⭐ 말소기준권리 — 농협은행 근저당 설정 (채권최고액 259,200,000원)',note:'임의경매 낙찰로 공유자 전원 지분 김정주에게 이전됨과 동시에 농협은행이 신규 근저당 설정. 채무자 김정주. 청담동지점 취급.',card:'is-key'},
+  {date:'2023.04.13',type:'reg',label:'소유권이전 — 신용주·신영호 → 김정주 단독소유 (임의경매 낙찰)',note:'기존 모든 압류·임의경매개시결정·근저당 말소. 김정주가 낙찰로 취득.'},
+  {date:'2023.10.12',type:'reg',label:'근저당권 설정 — 이성우 (채권최고액 70,000,000원)',note:'채무자 김정주. 충청북도 보은군 거주 개인 근저당권자. 두 번째 담보 제공.'},
+  {date:'2024.01.10',type:'key',label:'임차인 유명신 점포 임대차 개시 (상가)',note:'점포 보증금 2,000만원·차임 30만원. 임대차기간 2024.01.10~2029.04.10. 사업자등록 2024.04.02. 말소기준권리(2023.04.13) 이후 → 낙찰 시 대항력 없음. 그러나 확정일자 없음에도 배당요구.'},
+  {date:'2024.04.02',type:'doc',label:'임차인 유명신 사업자등록 (VOVO 생활용품할인스토어)',note:'상가임대차보호법상 대항력 요건 중 하나. 경매개시 후 등록이므로 대항력 성립 여부 검토 필요.'},
+  {date:'2024.06.12',type:'key',label:'임차인 유명신 주거 전입',note:'점포 외 주거 용도로도 전입. 안현진(동거인)도 2024.06.14 전입. 말소기준권리 이후 → 인수 없음.'},
+  {date:'2024.06.24',type:'key',label:'임의경매 접수 — 농협은행 신청 (2024타경7122)',note:'청구금액 227,248,489원. 채권자 농협은행. 수원지방법원 경매19계.'},
+  {date:'2024.06.25',type:'key',label:'경매개시결정',note:'수원지방법원 경매19계. 배당요구종기 2024.09.05.'},
+  {date:'2024.06.26',type:'doc',label:'등기소 등기필증 제출'},
+  {date:'2024.06.27',type:'send',label:'채권자 농협은행 개시결정정본 발송',result:'2024.07.02 도달',ok:true},
+  {date:'2024.06.27',type:'send',label:'채무자겸소유자 김정주 개시결정정본 발송',result:'2024.07.04 폐문부재 — 불달',ok:false,note:'첫 발송부터 폐문부재. 주소지 회피 가능성.',card:'is-risk'},
+  {date:'2024.06.27',type:'send',label:'이해관계인 최고서 일괄 발송 (주무관서·근저당권자 이성우 포함)',result:'2024.06.28 송달간주',ok:true},
+  {date:'2024.06.27',type:'send',label:'감정인 (주)감정평가법인 신원 평가명령 발송',result:'2024.07.01 도달',ok:true},
+  {date:'2024.07.10',type:'doc',label:'배당요구 — 신○○○○ (권리신고 및 배당요구신청서)',note:'구체적 당사자 불명. 서류상 마스킹.'},
+  {date:'2024.07.10',type:'key',label:'현황조사 실시',note:'2024.07.10 집행관 방문. 폐문부재로 소유자·점유자 만나지 못함. 안내문 부착. 상가임대차현황서·전입세대확인서로 임차인 확인.'},
+  {date:'2024.07.16',type:'doc',label:'감정평가서 제출 — (주)감정평가법인 신원 경기지사',note:'감정평가액 582,000,000원 확정. 기준시점 2024.07.03.'},
+  {date:'2024.07.18',type:'doc',label:'현황조사보고서 제출',note:'임차인 유명신(점포+주거), 안현진(주거·동거인) 등재.'},
+  {date:'2024.07.18',type:'send',label:'임차인 유명신·안현진 임차인통지서 발송',result:'2024.07.22 도달',ok:true,note:'양 임차인 모두 직접 수령. 실거주 확인.'},
+  {date:'2024.07.16',type:'send',label:'채무자겸소유자 김정주 개시결정정본 재발송',result:'2024.07.18 기타(불달)',ok:false,card:'is-risk'},
+  {date:'2024.08.08',type:'doc',label:'삼○○○○ 권리신고 및 배당요구신청서 제출'},
+  {date:'2024.08.09',type:'doc',label:'롯○○○○○○ 권리신고 및 배당요구신청서 제출'},
+  {date:'2024.08.22',type:'doc',label:'국○○○○○○○ 교부청구서 제출 (국세)',note:'국세 체납분 교부청구. 법정기일 선순위 여부 → 배당 우선순위 영향 가능.'},
+  {date:'2024.08.26',type:'key',label:'⚠ 유치권 신고 — 유명신 (공사대금 4천만원)',note:'임차인 유명신이 유치권자로도 권리신고. 성립 여부 불분명 — 법원 물건명세서에 "성립여부 불분명"으로 기재됨. 공사대금 4천만원 주장.',card:'is-risk'},
+  {date:'2024.08.28',type:'doc',label:'주○○○○○ 권리신고 및 배당요구신청서 제출'},
+  {date:'2024.08.30',type:'doc',label:'근저당권자 이성우 채권계산서 + 송달장소 신고서 제출'},
+  {date:'2024.09.03',type:'doc',label:'수○○ 교부청구서 제출 (지방세 등)',note:'수원시 권선구 관련 지방세 체납분 교부청구 추정.'},
+  {date:'2024.09.05',type:'key',label:'배당요구종기일',note:'이후 배당요구 불가. 유명신은 통지 수령 후 별도 배당요구 없음(현황조사상 점포 임차인 등재로 갈음).'},
+  {date:'2024.09.05',type:'doc',label:'주○○○○○○ 권리신고 및 배당요구신청서 + 채권계산서 제출'},
+  {date:'2024.12.07',type:'send',label:'채권자 농협은행 주소보정명령등본 발송',result:'2024.12.11 도달',ok:true},
+  {date:'2024.12.20',type:'doc',label:'채권자 농협은행 주소보정서 제출'},
+  {date:'2024.12.23',type:'send',label:'채무자겸소유자 김정주 개시결정정본 3차 발송',result:'2025.01.07 도달',ok:true,note:'3차 발송 만에 도달. 초기 2회 불달 후 6개월 뒤 도달. 주소지 장기 회피 가능성.'},
+  {date:'2025.02.13',type:'reg',label:'압류 — 수원시 권선구청 (지방세 체납)',note:'법정기일이 말소기준권리(2023.04.13)보다 선순위이면 낙찰가에서 먼저 공제. 금액·법정기일 확인 필요.',card:'is-risk'},
+  {date:'2025.12.16',type:'key',label:'매각물건명세서 작성 (담임 사법보좌관 홍주현)',note:'유치권 성립 여부 불분명으로 기재. 최선순위 설정일 2023.04.13 근저당권.'},
+  {date:'2025.12.17',type:'send',label:'이해관계인 전원 매각기일·매각결정기일 통지서 일괄 발송',result:'2025.12.18 도달/송달간주',ok:true},
+  {date:'2026.01.07',type:'key',label:'1회차 매각기일 — 유찰',note:'최저가 582,000,000원. 유치권·복수 채권자 구조로 입찰 없음.'},
+  {date:'2026.02.09',type:'key',label:'2회차 매각기일 — 유찰',note:'최저가 407,400,000원.'},
+  {date:'2026.03.20',type:'key',label:'3회차 매각기일 — 유찰',note:'최저가 285,180,000원.'},
+  {date:'2026.04.21',type:'key',label:'4회차 매각기일 — 유찰',note:'최저가 199,626,000원. 감정가의 34.3%.'},
+  {date:'2026.06.12',type:'send',label:'임차인 유명신 보정명령등본 발송',result:'결과 미확인',ok:false,note:'배당요구·유치권 관련 보정 명령 추정. 결과 미도달 또는 서류 미수집.'},
+  {date:'2026.07.03',type:'key',label:'5회차 매각기일 예정',note:'최저가 139,738,000원 (감정가의 24%). 낙찰 시 유치권 성립 여부 및 수원시 압류 법정기일이 투자 수익성 핵심 변수.',card:'is-key'},
+  {date:'2026.07.10',type:'key',label:'매각결정기일 예정',note:'낙찰 시 이해관계인 즉시항고 기간.'},
 ];
 
-let curFilter = 'all';
-function getMonth(d){ return d.slice(0,7); }
-
-function render(){
-  const tl = document.getElementById('tl');
-  tl.innerHTML = '';
-  let lastMonth = '';
-  const typeFilter = {
-    all: ()=>true,
-    reg: i=>i.type==='reg',
-    doc: i=>i.type==='doc',
-    send: i=>i.type==='send',
-    key: i=>['key','risk'].includes(i.type),
-    risk: i=>i.card==='is-risk'||i.type==='risk'
+let curFilter='all';
+function tlGetMonth(d){return d.slice(0,7)}
+function tlRender(){
+  const tl=document.getElementById('tl2');
+  tl.innerHTML='';
+  const typeFilter={
+    all:()=>true,
+    reg:i=>i.type==='reg',
+    doc:i=>i.type==='doc',
+    send:i=>i.type==='send',
+    key:i=>['key','risk'].includes(i.type),
+    risk:i=>i.card==='is-risk'||i.type==='risk'
   };
-  const badgeMap = {reg:'등기', doc:'문건', send:'송달', key:'이벤트', risk:'리스크'};
-  const badgeClass = {reg:'b-reg', doc:'b-doc', send:'b-send', key:'b-key', risk:'b-risk'};
-  const dotClass = {reg:'reg', doc:'doc', send:'send', key:'key', risk:'risk'};
-
-  data.forEach(item => {
-    const show = typeFilter[curFilter](item);
-    const m = getMonth(item.date);
-    if(show && m !== lastMonth){
-      const sep = document.createElement('div');
-      sep.className = 'month-sep';
-      sep.textContent = m.replace('-','년 ') + '월';
+  const badgeMap={reg:'등기',doc:'문건',send:'송달',key:'이벤트',risk:'리스크'};
+  const badgeClass={reg:'b-reg',doc:'b-doc',send:'b-send',key:'b-key',risk:'b-risk'};
+  const dotClass={reg:'reg',doc:'doc',send:'send',key:'key',risk:'risk'};
+  let lastMonth='';
+  tlData.forEach(item=>{
+    const show=typeFilter[curFilter](item);
+    const m=tlGetMonth(item.date);
+    if(show&&m!==lastMonth){
+      const sep=document.createElement('div');
+      sep.className='month-sep';
+      sep.textContent=m.replace('-','년 ')+'월';
       tl.appendChild(sep);
-      lastMonth = m;
+      lastMonth=m;
     }
-    const wrap = document.createElement('div');
-    wrap.className = 'tl-item' + (show?'':' hidden');
-
-    const dot = document.createElement('div');
-    const dc = dotClass[item.type] || 'doc';
-    dot.className = 'tl-dot ' + (item.card==='is-risk'?'risk':dc);
-
-    const card = document.createElement('div');
-    const cardCls = item.card || '';
-    card.className = 'tl-card' + (cardCls?' '+cardCls:'');
-
-    const bt = item.type==='risk'?'risk':item.type;
-    const badge = `<span class="tl-badge ${badgeClass[bt]||'b-doc'}">${badgeMap[bt]||'문건'}</span>`;
-
-    let html = `<div class="tl-date">${item.date}</div><div class="tl-main">${badge}${item.label}</div>`;
-    if(item.note) html += `<div class="tl-note">${item.note}</div>`;
-    if(item.result) html += `<div class="tl-result ${item.ok?'ok':'warn'}">${item.result}</div>`;
-    card.innerHTML = html;
-
+    const wrap=document.createElement('div');
+    wrap.className='tl-item'+(show?'':' hidden');
+    const dot=document.createElement('div');
+    const dc=dotClass[item.type]||'doc';
+    dot.className='tl-dot '+(item.card==='is-risk'?'risk':dc);
+    const card=document.createElement('div');
+    const cardCls=item.card||'';
+    card.className='tl-card'+(cardCls?' '+cardCls:'');
+    const bt=item.type==='risk'?'risk':item.type;
+    const badge=`<span class="tl-badge ${badgeClass[bt]||'b-doc'}">${badgeMap[bt]||'문건'}</span>`;
+    let html=`<div class="tl-date">${item.date}</div><div class="tl-main">${badge}${item.label}</div>`;
+    if(item.note)html+=`<div class="tl-note">${item.note}</div>`;
+    if(item.result)html+=`<div class="tl-result ${item.ok?'ok':'warn'}">${item.result}</div>`;
+    card.innerHTML=html;
     wrap.appendChild(dot);
     wrap.appendChild(card);
     tl.appendChild(wrap);
   });
 }
-
-function filter(type, btn){
-  curFilter = type;
+function tlFilter(type,btn){
+  curFilter=type;
   document.querySelectorAll('.tl-filter button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  render();
+  tlRender();
 }
-render();
+tlRender();
 </script>
