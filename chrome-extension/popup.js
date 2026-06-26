@@ -413,7 +413,9 @@ function htmlToCleanMarkdown(htmlString) {
 
 // Helper: Extract text page-by-page from PDF using pdf.js
 async function extractTextFromPdf(pdfArrayBuffer) {
-  const loadingTask = pdfjsLib.getDocument({ data: pdfArrayBuffer });
+  // PDF.js transfers the ArrayBuffer to a worker (detaches it).
+  // Pass a copy so the caller's buffer stays intact for the ZIP fallback.
+  const loadingTask = pdfjsLib.getDocument({ data: pdfArrayBuffer.slice(0) });
   const pdf = await loadingTask.promise;
   let fullText = "";
   
