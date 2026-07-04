@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "탱크옥션 AI 문서 다운로더",
-  "version": "1.0",
-  "description": "탱크옥션 사건 문서를 단일 ZIP 파일로 다운로드하고, AI에 최적화된 마크다운 표 및 텍스트 형태로 자동 변환해 줍니다.",
+  "version": "2.0",
+  "description": "탱크옥션 신규 상세 API(AuctView) 기반으로 사건 개요·등기·임차인·법원문서·감정평가서 등을 단일 ZIP으로 받아 AI 분석에 최적화된 JSON/텍스트로 변환합니다.",
   "permissions": [
     "activeTab",
     "downloads"

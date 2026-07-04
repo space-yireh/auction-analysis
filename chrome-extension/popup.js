@@ -14,47 +14,57 @@ const currentActionEl = document.getElementById('current-action');
 const progressPctEl = document.getElementById('progress-pct');
 const consoleLogEl = document.getElementById('console-log');
 
+const ORIGIN = 'https://www.tankauction.com';
+// 신규 상세 데이터 API (2026 개편). fileInfo/baseInfo/등기/임차인 전부 이 하나로 조회.
+const AUCT_VIEW_API = (tid) => `${ORIGIN}/api/proxy/api1.php/ca/AuctView.php?tid=${encodeURIComponent(tid)}`;
+
 let activeTid = null;
-let activeUrl = null;
+let auctData = null;      // AuctView.php 응답 원본
 let parsedCaseNo = null;
 let parsedItemNo = null;
 
-// Categories map matching download.py
-const CATEGORY_MAP = {
-  "사건내역": ["AA-사건내역", "html"],
-  "기일내역": ["AB-기일내역", "html"],
-  "문건/송달": ["AC-문건송달", "html"],
-  "현황조사서": ["AD-현황조사서", "html"],
-  "부동산표시": ["AE-부동산표시", "html"],
-  "감정평가서": ["AF-감정평가서", "pdf"],
-  "매물명세서": ["AG-매물명세서", "pdf"],
-  "토지등기": ["DA-토지등기", "pdf"],
-  "건물등기": ["DB-건물등기", "pdf"],
-  "세대열람": ["EA-세대열람", "pdf"],
-  "건축물대장": ["EC-건축물대장", "pdf"],
+// 카테고리코드(ctgrCd) → 저장 파일 접두사
+const CTGR_MAP = {
+  AA: "AA-사건내역",
+  AB: "AB-기일내역",
+  AC: "AC-문건송달",
+  AD: "AD-현황조사서",
+  AE: "AE-부동산표시",
+  AF: "AF-감정평가서",
+  AG: "AG-매물명세서",
+  DA: "DA-토지등기",
+  DB: "DB-건물등기",
+  EA: "EA-세대열람",
+  EC: "EC-건축물대장",
 };
+// PDF 계열 (filePath 직접 다운로드 → 텍스트 추출)
+const PDF_CTGR = new Set(["AF", "AG", "DA", "DB", "EA", "EC"]);
 
 // Start initialization
 chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
   const tab = tabs[0];
-  if (tab && tab.url) {
-    activeUrl = tab.url;
-    if (activeUrl.includes("tankauction.com/ca/caView.php")) {
-      const urlObj = new URL(activeUrl);
-      activeTid = urlObj.searchParams.get("tid");
-      if (activeTid) {
-        tabStatusEl.textContent = "탱크옥션 상세 페이지 확인됨";
-        tabStatusEl.style.color = "#10b981";
-        await fetchCaseDetails(activeTid);
-      } else {
-        showError("URL에서 tid 파라미터를 찾을 수 없습니다.");
-      }
-    } else {
-      showError("탱크옥션 사건상세 페이지(caView.php)에서만 동작합니다.");
-    }
-  } else {
+  if (!tab || !tab.url) {
     showError("활성화된 탭을 조회할 수 없습니다.");
+    return;
   }
+
+  let tid = null;
+  try {
+    const urlObj = new URL(tab.url);
+    if (urlObj.hostname.includes("tankauction.com")) {
+      tid = urlObj.searchParams.get("tid");
+    }
+  } catch (e) { /* invalid url */ }
+
+  if (!tid) {
+    showError("탱크옥션 사건상세 페이지(tid 포함)에서만 동작합니다.");
+    return;
+  }
+
+  activeTid = tid;
+  tabStatusEl.textContent = "탱크옥션 상세 페이지 확인됨";
+  tabStatusEl.style.color = "#10b981";
+  await fetchCaseDetails(activeTid);
 });
 
 function showError(msg) {
@@ -80,38 +90,43 @@ function updateProgress(pct, actionText) {
   }
 }
 
-// Fetch case details to show 사건번호 / 물건번호 in popup
+// AuctView API 호출 → 사건번호/물건번호 표시 + 데이터 캐시
 async function fetchCaseDetails(tid) {
   try {
-    const response = await fetch(`https://www.tankauction.com/ca/caView.php?tid=${tid}`);
+    const response = await fetch(AUCT_VIEW_API(tid), {
+      headers: { accept: "application/json" },
+      credentials: "include",
+    });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const htmlText = await response.text();
 
-    // Parse HTML using DOMParser to read the title tag
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlText, 'text/html');
-    const titleText = doc.title || "";
+    const ct = response.headers.get("content-type") || "";
+    const raw = await response.text();
 
-    // Try parsing from title (format: "경매:2025타경54432(4) (상세정보)" or "경매:2025타경54432 (상세정보)")
-    const titleMatch = titleText.match(/경매:(\d{4}타경\d+)(?:\((\d+)\))?/);
-    if (titleMatch) {
-      parsedCaseNo = titleMatch[1];
-      parsedItemNo = titleMatch[2] || "1";
-    } else {
-      // Fallback to original body parsing if title match fails
-      const saNoMatch = htmlText.match(/(\d{4}타경\d+)/);
-      const maemulMatch = htmlText.match(/물건번호\s*[:\s]+(\d+)/);
-      parsedCaseNo = saNoMatch ? saNoMatch[1] : `tid_${tid}`;
-      parsedItemNo = maemulMatch ? maemulMatch[1] : "1";
+    // 세션 만료 시 로그인 HTML이 반환됨
+    if (!ct.includes("json") || raw.trim().startsWith("<")) {
+      throw new Error("SESSION");
     }
+
+    auctData = JSON.parse(raw);
+    const base = auctData.baseInfo || {};
+
+    const sn1 = String(base.sn1 || "").trim();
+    const sn2 = String(base.sn2 || "").trim();
+    parsedCaseNo = (sn1 && sn2) ? `${sn1}타경${sn2}` : `tid_${tid}`;
+    parsedItemNo = (base.pn && Number(base.pn) > 0) ? String(base.pn) : "1";
 
     caseNoEl.textContent = parsedCaseNo;
     itemNoEl.textContent = parsedItemNo;
     caseDetailsEl.style.display = "flex";
     btnDownloadEl.disabled = false;
   } catch (err) {
-    log(`사건 정보 로드 실패: ${err.message}`, "error");
-    showError("상세 정보를 파싱하는 데 실패했습니다. 세션 만료를 확인하세요.");
+    if (err.message === "SESSION") {
+      log("세션이 만료된 것으로 보입니다.", "error");
+      showError("탱크옥션 로그인이 필요합니다. 크롬 탭에서 로그인 후 다시 시도하세요.");
+    } else {
+      log(`사건 정보 로드 실패: ${err.message}`, "error");
+      showError("상세 정보를 불러오지 못했습니다. 세션 만료 또는 페이지 변경을 확인하세요.");
+    }
   }
 }
 
@@ -121,7 +136,7 @@ btnDownloadEl.addEventListener('click', async () => {
   statusContainerEl.style.display = "flex";
   consoleLogEl.innerHTML = "";
 
-  // 클립보드에 사건번호 + 물건번호 복사
+  // 클립보드에 사건번호 + 물건번호 복사 (AI 도구용)
   try {
     const textToCopy = `${parsedCaseNo} (${parsedItemNo})`;
     await navigator.clipboard.writeText(textToCopy);
@@ -134,108 +149,139 @@ btnDownloadEl.addEventListener('click', async () => {
   log("⚠️ 완료될 때까지 이 팝업 창을 닫지 마세요.", "success");
 
   try {
-    // 1. Fetch dtData
-    updateProgress(10, "문서 목록(dtData) 요청 중...");
-    const filePageUrl = `https://www.tankauction.com/ca/caFile.php?tid=${activeTid}&tp=AA&idx=0&free=`;
-    const response = await fetch(filePageUrl);
-    if (!response.ok) throw new Error(`목록 조회 실패: HTTP ${response.status}`);
-    const fileHtml = await response.text();
+    updateProgress(5, "상세 데이터 확인 중...");
 
-    // Verify Session Expiry
-    if (fileHtml.includes("로그인 후 이용하세요") || fileHtml.includes("logIn.php")) {
-      throw new Error("탱크옥션 세션이 만료되었습니다. 크롬 탭에서 다시 로그인해 주세요.");
+    // 최신 데이터로 재조회 (팝업이 오래 떠 있었을 경우 대비)
+    if (!auctData) {
+      const resp = await fetch(AUCT_VIEW_API(activeTid), {
+        headers: { accept: "application/json" },
+        credentials: "include",
+      });
+      if (!resp.ok) throw new Error(`상세 조회 실패: HTTP ${resp.status}`);
+      auctData = await resp.json();
     }
 
-    const dtDataMatch = fileHtml.match(/var\s+dtData\s*=\s*(\{.*?\});/s);
-    if (!dtDataMatch) {
-      throw new Error("문서 목록 데이터(dtData)를 찾을 수 없습니다.");
+    const items = (auctData.fileInfo && Array.isArray(auctData.fileInfo.items))
+      ? auctData.fileInfo.items
+      : [];
+    if (items.length === 0) {
+      throw new Error("문서 목록(fileInfo)이 비어 있습니다.");
     }
 
-    let dtData = {};
+    const zip = new JSZip();
+
+    // 0. 사건 개요 JSON (baseInfo·등기·임차인 등 분석용 요약)
+    updateProgress(8, "사건 개요 정리 중...");
     try {
-      dtData = JSON.parse(dtDataMatch[1]);
-    } catch (e) {
-      throw new Error(`dtData JSON 파싱 에러: ${e.message}`);
+      const summary = { ...auctData };
+      delete summary.fileInfo; // 문서 본문은 개별 파일로 저장
+      if (summary.bldgInfo && summary.bldgInfo.flrMap) {
+        summary.bldgInfo = { ...summary.bldgInfo };
+        delete summary.bldgInfo.flrMap; // 층 코드표(노이즈) 제거
+      }
+      zip.file("00-사건개요.json", JSON.stringify(summary, null, 2));
+      log("사건 개요 저장: 00-사건개요.json (물건정보·등기·임차인)", "success");
+    } catch (sumErr) {
+      log(`사건 개요 정리 실패: ${sumErr.message}`, "error");
     }
 
-    // 2. Prepare download tasks
-    const tasks = [];
-    for (const [category, [prefix, saveExt]] of Object.entries(CATEGORY_MAP)) {
-      const entries = resolveCategoryEntries(dtData, category, prefix.substring(0, 2));
-      if (entries.length === 0) continue;
+    // 1. 대상 문서 그룹화 (카테고리별)
+    const groups = {};
+    for (const it of items) {
+      const code = String(it.ctgrCd || "").trim();
+      if (!CTGR_MAP[code]) continue; // 사진(BA~BE) 등 제외
+      (groups[code] = groups[code] || []).push(it);
+    }
 
+    // 2. 태스크 구성
+    const tasks = [];
+    for (const code of Object.keys(groups)) {
+      const prefix = CTGR_MAP[code];
+      const entries = groups[code];
       entries.forEach((entry, seq) => {
-        const fileUrl = resolveDownloadUrl(entry, activeTid);
-        if (fileUrl) {
-          const isSingle = entries.length === 1;
-          const filename = isSingle ? `${prefix}.${saveExt}` : `${prefix}-${seq + 1}.${saveExt}`;
-          tasks.push({ category, fileUrl, filename, saveExt, entry });
-        }
+        const isSingle = entries.length === 1;
+        const baseName = isSingle ? prefix : `${prefix}-${seq + 1}`;
+        tasks.push({ code, prefix, baseName, entry });
       });
     }
 
     if (tasks.length === 0) {
       throw new Error("다운로드할 수 있는 문서가 존재하지 않습니다.");
     }
-
     log(`총 ${tasks.length}개의 분석 대상 문서 확인 완료.`, "info");
 
-    // 3. Process each task
-    const zip = new JSZip();
+    // 3. 태스크 처리
     let completedCount = 0;
-
     for (const task of tasks) {
       const pct = 10 + (completedCount / tasks.length) * 80;
-      updateProgress(pct, `${task.filename} 처리 중...`);
-      log(`다운로드 시도: ${task.filename}`);
 
       try {
-        const fileResp = await fetch(task.fileUrl);
-        if (!fileResp.ok) {
-          log(`다운로드 실패 (${task.filename}): HTTP ${fileResp.status}`, "error");
-          continue;
-        }
+        if (PDF_CTGR.has(task.code)) {
+          // PDF 계열: filePath 직접 다운로드 → 텍스트 추출
+          const filePath = String(task.entry.filePath || "").trim();
+          if (!filePath) {
+            log(`파일경로 없음: ${task.baseName}`, "error");
+            completedCount++;
+            continue;
+          }
+          const fileUrl = ORIGIN + (filePath.startsWith("/") ? filePath : "/" + filePath);
+          updateProgress(pct, `${task.baseName}.pdf 다운로드 중...`);
+          log(`PDF 다운로드 시도: ${task.baseName}.pdf`);
 
-        if (task.saveExt === "html") {
-          // HTML 카테고리 (JSON 확장자로 된 fileShow.php 렌더링 결과) -> 마크다운 변환
-          const htmlText = await fileResp.text();
-          const mdContent = htmlToCleanMarkdown(htmlText);
-          const mdFilename = task.filename.replace(".html", ".md");
-          zip.file(mdFilename, mdContent);
-          log(` 마크다운 표 변환 성공: ${mdFilename} (크기: ${mdContent.length}자)`, "success");
-        } else if (task.saveExt === "pdf") {
-          // PDF 카테고리 -> 텍스트 추출 시도
+          const fileResp = await fetch(encodeURI(fileUrl), { credentials: "include" });
+          if (!fileResp.ok) {
+            log(`다운로드 실패 (${task.baseName}): HTTP ${fileResp.status}`, "error");
+            completedCount++;
+            continue;
+          }
           const arrayBuffer = await fileResp.arrayBuffer();
-          log(` PDF 텍스트 추출 시도: ${task.filename}`);
 
           let textContent = "";
           try {
             textContent = await extractTextFromPdf(arrayBuffer);
           } catch (pdfErr) {
-            log(` PDF 텍스트 추출 중 에러 발생: ${pdfErr.message}. 원본 포함 처리 진행.`, "error");
+            log(`PDF 텍스트 추출 에러: ${pdfErr.message}. 원본 저장으로 대체.`, "error");
           }
 
-          // Check if we successfully extracted a meaningful amount of text
           if (textContent.trim().length > 100) {
-            const txtFilename = task.filename.replace(".pdf", ".txt");
-            zip.file(txtFilename, textContent);
-            log(` PDF 텍스트 추출 완료: ${txtFilename} (크기: ${textContent.length}자)`, "success");
+            zip.file(`${task.baseName}.txt`, textContent);
+            log(`PDF 텍스트 추출 완료: ${task.baseName}.txt (${textContent.length}자)`, "success");
           } else {
-            // Scanned image PDF fallback -> Add original PDF
-            zip.file(task.filename, arrayBuffer);
-            log(` [스캔본 대체] 텍스트가 없어 PDF 원본을 저장합니다: ${task.filename}`, "info");
+            zip.file(`${task.baseName}.pdf`, arrayBuffer);
+            log(`[스캔본 대체] 텍스트 없음 → PDF 원본 저장: ${task.baseName}.pdf`, "info");
           }
+
+          completedCount++;
+          await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
+        } else {
+          // AA~AE: content 필드에 법원 API JSON이 이미 포함됨 → 그대로 저장 (다운로드 불필요)
+          updateProgress(pct, `${task.baseName}.json 정리 중...`);
+          const content = String(task.entry.content || "").trim();
+          if (!content) {
+            log(`내용 없음(content 비어있음): ${task.baseName}`, "error");
+            completedCount++;
+            continue;
+          }
+          let out = content;
+          try {
+            const parsed = JSON.parse(content);
+            // 법원 응답은 {status, message, data, token} 형태 → data만 저장
+            const body = (parsed && parsed.data !== undefined) ? parsed.data : parsed;
+            out = JSON.stringify(body, null, 2);
+          } catch (e) {
+            log(`${task.baseName} JSON 파싱 실패 → 원문 저장`, "info");
+          }
+          zip.file(`${task.baseName}.json`, out);
+          log(`문서 저장 완료: ${task.baseName}.json (${out.length}자)`, "success");
+          completedCount++;
         }
       } catch (taskErr) {
-        log(`문서 처리 오류 (${task.filename}): ${taskErr.message}`, "error");
+        log(`문서 처리 오류 (${task.baseName}): ${taskErr.message}`, "error");
+        completedCount++;
       }
-
-      completedCount++;
-      // Random delay to avoid overloading (500ms - 1000ms)
-      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 500));
     }
 
-    // 4. Generate and download ZIP
+    // 4. ZIP 생성 및 다운로드
     updateProgress(90, "ZIP 압축 생성 중...");
     log("수집된 문서 ZIP 압축 파일 생성 중...");
 
@@ -265,99 +311,6 @@ btnDownloadEl.addEventListener('click', async () => {
     btnDownloadEl.disabled = false;
   }
 });
-
-// Helper: resolve category entries from dtData
-function resolveCategoryEntries(dtData, category, tpCode) {
-  let raw = dtData[category] || dtData[tpCode];
-  if (raw === undefined || raw === null) {
-    return [];
-  }
-  if (typeof raw === 'object' && !Array.isArray(raw)) {
-    raw = raw.list || raw.files || [raw];
-  }
-  if (!Array.isArray(raw)) {
-    raw = [raw];
-  }
-  return raw.map(item => (typeof item === 'object' ? item : { idx: item }));
-}
-
-// Helper: resolve final download URL
-function resolveDownloadUrl(entry, tid) {
-  let path = entry.파일경로 || entry.filePath || "";
-  path = path.replace(/\\/g, "/");
-  if (!path) return null;
-
-  const ext = entry.확장자 || "";
-  if (ext === "json") {
-    const idx = entry.idx || "";
-    const sn = entry.사건번호 || "";
-    const wdt = entry.수집일 || "";
-    return `https://www.tankauction.com/inc/fileShow.php?idx=${idx}&tid=${tid}&sn=${sn}&wdt=${wdt}&filePath=${path}`;
-  }
-
-  if (path.startsWith("http")) {
-    return path;
-  }
-  return path.startsWith("/") ? `https://www.tankauction.com${path}` : `https://www.tankauction.com/${path}`;
-}
-
-// Helper: Convert Tankauction Table HTML to clean Markdown format
-function htmlToCleanMarkdown(htmlString) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, 'text/html');
-
-  // Remove script, style, link, head, meta tags
-  doc.querySelectorAll('script, style, link, head, meta').forEach(el => el.remove());
-
-  let mdText = "";
-
-  const pageTitle = doc.querySelector('.center.bold')?.textContent?.trim();
-  if (pageTitle) {
-    mdText += `# ${pageTitle}\n\n`;
-  }
-
-  const tables = doc.querySelectorAll('table');
-  if (tables.length > 0) {
-    tables.forEach(table => {
-      let title = "세부 항목 정보";
-      let prev = table.previousElementSibling;
-      while (prev) {
-        if (prev.tagName === 'H3') {
-          title = prev.textContent.trim();
-          break;
-        }
-        if (prev.classList.contains('table_title')) {
-          const h3 = prev.querySelector('h3');
-          if (h3) title = h3.textContent.trim();
-          break;
-        }
-        prev = prev.previousElementSibling;
-      }
-
-      mdText += `## ${title}\n\n`;
-
-      const rows = Array.from(table.querySelectorAll('tr'));
-      rows.forEach((row, rowIndex) => {
-        const cells = Array.from(row.querySelectorAll('th, td')).map(cell => {
-          return cell.textContent.replace(/\s+/g, ' ').trim();
-        });
-
-        if (cells.length > 0) {
-          mdText += "| " + cells.join(" | ") + " |\n";
-          // Add table divider header if it is index 0 or has <th> elements
-          if (rowIndex === 0 || row.querySelector('th')) {
-            mdText += "| " + cells.map(() => "---").join(" | ") + " |\n";
-          }
-        }
-      });
-      mdText += "\n";
-    });
-  } else {
-    mdText = doc.body.innerText.replace(/\n\s*\n/g, '\n').trim();
-  }
-
-  return mdText;
-}
 
 // Helper: Extract text page-by-page from PDF using pdf.js
 async function extractTextFromPdf(pdfArrayBuffer) {
